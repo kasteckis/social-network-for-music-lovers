@@ -94,5 +94,7 @@
             "allow-contrib": false,
             "require": "5.2.*"
         }
-    }
+    },
+    "name": "musiclt/musiclt",
+    "description": "Music.lt website created by Valentinas Kasteckis 2021"
 }
