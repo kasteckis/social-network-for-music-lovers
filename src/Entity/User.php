@@ -35,6 +35,34 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $registrationIp;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ip;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,5 +142,53 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getRegistrationIp(): ?string
+    {
+        return $this->registrationIp;
+    }
+
+    public function setRegistrationIp(string $registrationIp): self
+    {
+        $this->registrationIp = $registrationIp;
+
+        return $this;
+    }
+
+    public function getIp(): ?string
+    {
+        return $this->ip;
+    }
+
+    public function setIp(string $ip): self
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
