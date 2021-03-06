@@ -1,46 +1,17 @@
 import React from 'react';
 
 import './App.css';
+import Navbar from "./Navbar/Navbar";
+import DaySong from "../RightContent/DaySong/DaySong";
+import WhatsHappening from "../RightContent/WhatsHappening/WhatsHappening";
+import Chatbox from "../RightContent/Chatbox/Chatbox";
+import Survey from "../RightContent/Survey/Survey";
+import InformationBox from "../RightContent/InformationBox/InformationBox";
 
 function App() {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-warning">
-                <a className="navbar-brand" href="#">MUSIC.LT</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
-                </button>
-
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Muzika</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Pramogos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Informacija</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Bendruomenė</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Kita</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <div className="mobile-navbar">
-                <a href="#home" className="active"><i className="fas fa-rss"/><br/>Srautas</a>
-                <a href="#news"><i className="fas fa-search"/><br/>Paieška</a>
-                <a href="#contact"><i className="fas fa-plus-circle"/><br/>Įkelti</a>
-                <a href="#contact"><i className="fas fa-users"/><br/>Draugai</a>
-                <a href="#contact"><i className="fas fa-user"/><br/>Profilis</a>
-            </div>
+            <Navbar />
 
             <div className="container mt-5">
                 <div className="row">
@@ -65,7 +36,7 @@ function App() {
                                         contentas</p>
                                     <a href="#">Skaityti daugiau</a>
                                     <iframe src="https://open.spotify.com/embed/playlist/3SWozV3F6KrBg69SBRyTod"
-                                            width="100%" height="80" frameBorder="0" allowTransparency="true"
+                                            width="100%" height="80" frameBorder="0"
                                             allow="encrypted-media"/>
                                     <a href="#" className="btn btn-success"><i className="far fa-heart"/> 102</a>
                                     <a href="#" className="btn btn-primary"><i className="far fa-comments"/> 3</a>
@@ -76,72 +47,15 @@ function App() {
                     </div>
                     <div className="col-12 col-md-3">
 
-                        <div className="card mt-2">
-                            <div className="card-body mx-auto">
-                                <h5 className="card-title">Dienos daina</h5>
-                                <p className="card-text"><b>Jaden - I'm ready</b></p>
-                                <iframe src="https://open.spotify.com/embed/playlist/3SWozV3F6KrBg69SBRyTod"
-                                        width="100%" height="80" frameBorder="0" allowTransparency="true"
-                                        allow="encrypted-media"/>
-                                <br/>
-                                    <a href="#" className="btn btn-success"><i className="far fa-heart"/> 4</a>
-                            </div>
-                        </div>
+                        <DaySong />
 
-                        <div className="card mt-2">
-                            <div className="card-body mx-auto">
-                                <h5 className="card-title">Kas vyksta?</h5>
-                                <p className="card-text"><a href="#">Admin</a> patiko dienos daina.</p>
-                                <p className="card-text"><a href="#">Admin</a> patiko Straipsnio pavadinimas</p>
-                                <p className="card-text"><a href="#">Admin</a> patiko Kitas straipsnis.</p>
-                            </div>
-                        </div>
+                        <WhatsHappening />
 
-                        <div className="card mt-2">
-                            <div className="card-body mx-auto">
-                                <h5 className="card-title">Šaukykla</h5>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item"><a href="#">Admin</a>: Sveiki</li>
-                                    <li className="list-group-item"><a href="#">Admin</a>: Sveiki</li>
-                                    <li className="list-group-item"><a href="#">Naudotojas</a>: Sveiki, kaip laikotes
-                                        siandien?
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <Chatbox />
 
-                        <div className="card mt-2">
-                            <div className="card-body mx-auto">
-                                <h5 className="card-title">Apklausa: Kaip sekasi?</h5>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="flexRadioDefault"
-                                           id="flexRadioDefault1"/>
-                                        <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                            Gerai
-                                        </label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="flexRadioDefault"
-                                           id="flexRadioDefault2"/>
-                                        <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                            Puikiai
-                                        </label>
-                                </div>
+                        <Survey />
 
-                                <button type="button" className="btn btn-primary mt-2">Balsuoti</button>
-                            </div>
-                        </div>
-
-                        <div className="card mt-2">
-                            <div className="card-body mx-auto">
-                                <h5 className="card-title">Informacija</h5>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">Šiuo metu naršo: <b>2</b></li>
-                                    <li className="list-group-item">Registruotų naudotojų: <b>100</b></li>
-                                    <li className="list-group-item">Naujausias naryhs: <b>Valerijus</b></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <InformationBox />
 
                     </div>
                 </div>
