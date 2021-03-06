@@ -24,7 +24,7 @@ jobs:
 #      - name: Run PHPUNIT
 #        run: docker exec music_web ./vendor/bin/phpunit
       - name: Run PHPSTAN
-        run: docker exec music_web ./tools/phpstan.sh
+        run: docker exec music_web chmod +x ./tools/phpstan.sh && ./tools/phpstan.sh
 #       - name: Deploy to live
 #         if: ${{ github.ref == 'refs/heads/master' }}
 #         run: wget ${{ secrets.DEPLOY_WEBHOOK }}
