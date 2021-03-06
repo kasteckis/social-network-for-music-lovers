@@ -1,46 +1,4 @@
-.mobile-navbar {
-    z-index: 1;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.mobile-navbar a {
-    width: 20%;
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 2px 15px;
-    text-decoration: none;
-    font-size: 13px;
-}
-
-.mobile-navbar a:hover {
-    background: #f1f1f1;
-    color: black;
-}
-
-.mobile-navbar a.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.navbar-second {
-    background-color: #ffc107;
-    border-radius: 10px;
-    padding: 10px;
-}
-
 .main {
     padding: 16px;
     margin-bottom: 30px;
-}
-
-@media only screen and (min-width: 768px) {
-    .mobile-navbar {
-        visibility: collapse;
-    }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Chatbox() {
+function ChatBox() {
     return (
         <div className="card mt-2">
             <div className="card-body mx-auto">
@@ -17,4 +17,4 @@ function Chatbox() {
     );
 }
 
-export default Chatbox;
+export default ChatBox;

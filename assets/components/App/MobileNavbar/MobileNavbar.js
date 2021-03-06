@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './MobileNavbar.css';
+
 function MobileNavbar() {
     return (
         <div className="mobile-navbar">
