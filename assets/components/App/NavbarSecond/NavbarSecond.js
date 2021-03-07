@@ -1,14 +1,15 @@
 import React from "react";
 
 import './NavbarSecond.css';
+import {Link} from "react-router-dom";
 
 function NavbarSecond() {
     return (
         <div className="navbar-second">
-            <a href="#" className="ml-1">Pagrindinis</a> /
-            <a href="top40.html" className="ml-1">Music.lt TOP40</a> /
-            <a href="#" className="ml-1">Lietuvos TOP30</a> /
-            <a href="#" className="ml-1">Galerija</a>
+            <Link className="ml-1" to="/">Pagrindinis</Link> /
+            <Link className="ml-1" to="/top40">Music.lt TOP40</Link> /
+            <Link className="ml-1" to="/top30lt">Lietuvos TOP30</Link> /
+            <Link className="ml-1" to="/galerija">Galerija</Link>
         </div>
     );
 }

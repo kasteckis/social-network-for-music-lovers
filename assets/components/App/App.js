@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
@@ -8,28 +8,37 @@ import NavbarSecond from "./NavbarSecond/NavbarSecond";
 import RightContent from "../RightContent/RightContent";
 import MiddleContent from "./MiddleContent/MiddleContent";
 
-function App() {
-    return (
-        <BrowserRouter>
-            <div>
-                <Navbar />
+class App extends Component {
 
-                <div className="container mt-5">
-                    <div className="row">
-                        <div className="col-12 col-md-9">
-                            <NavbarSecond />
-                            <MiddleContent />
+    state = {
+        selectedNavbarItem: 'muzika'
+    }
+
+    render() {
+        return (
+            <BrowserRouter>
+                <div>
+                    <Navbar
+                        selectedNavbarItem={this.state.selectedNavbarItem}
+                    />
+
+                    <div className="container mt-5">
+                        <div className="row">
+                            <div className="col-12 col-md-9">
+                                <NavbarSecond/>
+                                <MiddleContent/>
+                            </div>
+                            <div className="col-12 col-md-3">
+                                <RightContent/>
+                            </div>
                         </div>
-                        <div className="col-12 col-md-3">
-                            <RightContent />
-                        </div>
+                        <MarginBottom/>
                     </div>
-                    <MarginBottom />
-                </div>
 
-            </div>
-        </BrowserRouter>
-    );
+                </div>
+            </BrowserRouter>
+        );
+    }
 }
 
 export default App;

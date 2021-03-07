@@ -1,7 +1,7 @@
 import React from 'react';
 import MobileNavbar from "../MobileNavbar/MobileNavbar";
 
-function Navbar() {
+function Navbar(props) {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-warning">
@@ -15,19 +15,19 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Muzika</a>
+                            <a onClick={() => console.log("test")} className="nav-link">Muzika</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Pramogos</a>
+                            <a className="nav-link">Pramogos</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Informacija</a>
+                            <a className="nav-link">Informacija</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Bendruomenė</a>
+                            <a className="nav-link">Bendruomenė</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Kita</a>
+                            <a className="nav-link">Kita</a>
                         </li>
                     </ul>
                 </div>
