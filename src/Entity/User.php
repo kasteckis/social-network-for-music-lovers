@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -56,11 +58,17 @@ class User implements UserInterface
     private $createdAt;
 
     /**
+     * @ORM\ManyToMany(targetEntity=DaySong::class, mappedBy="likes")
+     */
+    private $daySongs;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->daySongs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +196,33 @@ class User implements UserInterface
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DaySong[]
+     */
+    public function getDaySongs(): Collection
+    {
+        return $this->daySongs;
+    }
+
+    public function addDaySong(DaySong $daySong): self
+    {
+        if (!$this->daySongs->contains($daySong)) {
+            $this->daySongs[] = $daySong;
+            $daySong->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDaySong(DaySong $daySong): self
+    {
+        if ($this->daySongs->removeElement($daySong)) {
+            $daySong->removeLike($this);
+        }
 
         return $this;
     }
