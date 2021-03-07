@@ -6,3 +6,7 @@ Quick startup:
 5. yarn build (or yarn watch)
 6. php bin/console lexik:jwt:generate-keypair
 7. bin/console app:create-user admin@admin.dev admin
+
+
+Cronjobs:
+1. php bin/console gesdinet:jwt:clear - delete expired jwt tokens from db
