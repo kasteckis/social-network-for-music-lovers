@@ -14,12 +14,19 @@ class App extends Component {
         selectedNavbarItem: 'muzika'
     }
 
+    selectNavbarItemHandler(name) {
+        this.setState({
+            selectedNavbarItem: name
+        });
+    }
+
     render() {
         return (
             <BrowserRouter>
                 <div>
                     <Navbar
                         selectedNavbarItem={this.state.selectedNavbarItem}
+                        selectNavbarItemHandler={(name) => this.selectNavbarItemHandler(name)}
                     />
 
                     <div className="container mt-5">
