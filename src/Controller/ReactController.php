@@ -25,8 +25,6 @@ class ReactController extends AbstractController
      */
     public function test(): Response
     {
-        $a = $this->getUser();
-        $b = null;
         return $this->json(['labas' => 'sensitive data']);
     }
 }
