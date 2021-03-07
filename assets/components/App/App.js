@@ -3,10 +3,10 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
 import Navbar from "./Navbar/Navbar";
-import Posts from "./Posts/Posts";
 import MarginBottom from "./MarginBottom/MarginBottom";
 import NavbarSecond from "./NavbarSecond/NavbarSecond";
 import RightContent from "../RightContent/RightContent";
+import MiddleContent from "./MiddleContent/MiddleContent";
 
 function App() {
     return (
@@ -18,7 +18,7 @@ function App() {
                     <div className="row">
                         <div className="col-12 col-md-9">
                             <NavbarSecond />
-                            <Posts />
+                            <MiddleContent />
                         </div>
                         <div className="col-12 col-md-3">
                             <RightContent />
