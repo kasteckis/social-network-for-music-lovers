@@ -29,7 +29,7 @@ class App extends Component {
                         selectNavbarItemHandler={(name) => this.selectNavbarItemHandler(name)}
                     />
 
-                    <div className="container mt-5">
+                    <div className="container-fluid mt-5">
                         <div className="row">
                             <div className="col-12 col-md-9">
                                 <NavbarSecond

@@ -4,7 +4,7 @@ function Post() {
     return (
         <div className="card mt-2">
             <img className="card-img-top"
-                 src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80"
+                 src="https://i.imgur.com/mT177Fe.png"
                  alt="Card image cap"/>
             <div className="card-body">
                 <h5 className="card-title">Straipsnio pavadinimas</h5>
