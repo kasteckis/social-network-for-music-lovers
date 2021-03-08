@@ -8,13 +8,13 @@ function WhatsHappening() {
                 <Typography color="textPrimary" gutterBottom>
                     Kas vyksta?
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Admin</a> patiko dienos daina.
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Admin</a> patiko dienos daina.
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Admin</a> patiko dienos daina.
                 </Typography>
             </CardContent>

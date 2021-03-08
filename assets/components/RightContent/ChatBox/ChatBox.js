@@ -8,13 +8,13 @@ function ChatBox() {
                 <Typography color="textPrimary" gutterBottom>
                     Šaukykla
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Admin</a>: Sveiki
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Admin</a>: Sveiki
                 </Typography>
-                <Typography variant="body" component="p">
+                <Typography variant="body1" component="p">
                     <a href="#">Naudotojas</a>: Sveiki, kaip laikotes
                 </Typography>
             </CardContent>

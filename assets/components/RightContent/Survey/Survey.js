@@ -1,28 +1,62 @@
 import React from "react";
+import {
+    Button,
+    Card,
+    CardContent,
+    CssBaseline,
+    FormControlLabel,
+    List,
+    ListItem,
+    Radio,
+    Typography
+} from "@material-ui/core";
 
 function Survey() {
     return (
-        <div className="card mt-2">
-            <div className="card-body mx-auto">
-                <h5 className="card-title">Apklausa: Kaip sekasi?</h5>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault"
-                           id="flexRadioDefault1"/>
-                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                        Gerai
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault"
-                           id="flexRadioDefault2"/>
-                    <label className="form-check-label" htmlFor="flexRadioDefault2">
-                        Puikiai
-                    </label>
-                </div>
+        <Card className="mt-2" variant="outlined">
+            <CardContent>
+                <CssBaseline />
 
-                <button type="button" className="btn btn-primary mt-2">Balsuoti</button>
-            </div>
-        </div>
+                <div>
+                    <Typography color="textPrimary" gutterBottom>
+                        Kaip sekasi?
+                    </Typography>
+                    <form noValidate>
+                        <List>
+                            <ListItem
+                                role={undefined}
+                                button
+                                // onClick={this.handleToggle(value)}
+                                // className={classes.listItem}
+                            >
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    // checked={this.state.checked === value}
+                                    tabIndex={-1}
+                                    label="Gerai"
+                                />
+                            </ListItem>
+                            <ListItem
+                                role={undefined}
+                                button
+                                // onClick={this.handleToggle(value)}
+                                // className={classes.listItem}
+                            >
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    // checked={this.state.checked === value}
+                                    tabIndex={-1}
+                                    label="Puikiai"
+                                />
+                            </ListItem>
+                        </List>
+                        <Button variant="contained" color="primary">
+                            Balsuoti
+                        </Button>
+                    </form>
+                </div>
+            </CardContent>
+        </Card>
     );
 }
 
