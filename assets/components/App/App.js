@@ -32,9 +32,9 @@ class App extends Component {
                     <div className="container-fluid mt-5">
                         <div className="row">
                             <div className="col-12 col-md-9">
-                                <NavbarSecond
-                                    selectedNavbarItem={this.state.selectedNavbarItem}
-                                />
+                                {/*<NavbarSecond*/}
+                                {/*    selectedNavbarItem={this.state.selectedNavbarItem}*/}
+                                {/*/>*/}
                                 <MiddleContent/>
                             </div>
                             <div className="col-12 col-md-3">
