@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {Badge, Card, CardActions, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
+import {Favorite} from "@material-ui/icons";
 
 class DaySong extends Component {
     state = {
@@ -19,17 +21,29 @@ class DaySong extends Component {
 
     render() {
         return (
-            <div className="card mt-2">
-                <div className="card-body mx-auto">
-                    <h5 className="card-title">Dienos daina</h5>
-                    <p className="card-text"><b>{this.state.daySong.title}</b></p>
-                    <iframe src={this.state.daySong.spotifyLink}
+            <Card>
+                <CardHeader
+                    title="Dienos daina"
+                />
+                <CardContent>
+                    <Typography variant="body2" component="p">
+                        {this.state.daySong.title}
+                    </Typography>
+                    <div className="mt-2">
+                        <iframe src={this.state.daySong.spotifyLink}
                             width="100%" height="80" frameBorder="0"
-                            allow="encrypted-media"/>
-                    <br/>
-                    <a href="#" className="btn btn-success"><i className="far fa-heart"/> {this.state.daySong.likes}</a>
-                </div>
-            </div>
+                            allow="encrypted-media"
+                        />
+                    </div>
+                </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton >
+                        <Badge badgeContent={this.state.daySong.likes} color="error">
+                            <Favorite />
+                        </Badge>
+                    </IconButton>
+                </CardActions>
+            </Card>
         );
     }
 }
