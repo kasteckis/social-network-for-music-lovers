@@ -21,7 +21,7 @@ class DaySong extends Component {
 
     render() {
         return (
-            <Card>
+            <Card className="mt-2">
                 <CardHeader
                     title="Dienos daina"
                 />

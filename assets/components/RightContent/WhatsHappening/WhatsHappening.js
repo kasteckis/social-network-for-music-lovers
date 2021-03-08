@@ -1,15 +1,24 @@
 import React from "react";
+import {Card, CardContent, Typography} from "@material-ui/core";
 
 function WhatsHappening() {
     return (
-        <div className="card mt-2">
-            <div className="card-body mx-auto">
-                <h5 className="card-title">Kas vyksta?</h5>
-                <p className="card-text"><a href="#">Admin</a> patiko dienos daina.</p>
-                <p className="card-text"><a href="#">Admin</a> patiko Straipsnio pavadinimas</p>
-                <p className="card-text"><a href="#">Admin</a> patiko Kitas straipsnis.</p>
-            </div>
-        </div>
+        <Card className="mt-2" variant="outlined">
+            <CardContent>
+                <Typography  color="textSecondary" gutterBottom>
+                    Kas vyksta?
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Admin</a> patiko dienos daina.
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Admin</a> patiko dienos daina.
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Admin</a> patiko dienos daina.
+                </Typography>
+            </CardContent>
+        </Card>
     );
 }
 
