@@ -17,6 +17,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@material-ui/core": "^4.11.3",
+        "@material-ui/icons": "^4.11.2",
         "axios": "^0.21.1",
         "bootstrap": "^4.6.0",
         "prop-types": "^15.7.2",
