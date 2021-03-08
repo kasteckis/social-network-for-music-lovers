@@ -22,10 +22,10 @@ class DaySong extends Component {
     render() {
         return (
             <Card className="mt-2">
-                <CardHeader
-                    title="Dienos daina"
-                />
                 <CardContent>
+                    <Typography color="textPrimary" gutterBottom>
+                        Dienos daina
+                    </Typography>
                     <Typography variant="body2" component="p">
                         {this.state.daySong.title}
                     </Typography>

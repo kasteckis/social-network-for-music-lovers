@@ -1,19 +1,24 @@
 import React from "react";
+import {Card, CardContent, Typography} from "@material-ui/core";
 
 function ChatBox() {
     return (
-        <div className="card mt-2">
-            <div className="card-body mx-auto">
-                <h5 className="card-title">Šaukykla</h5>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item"><a href="#">Admin</a>: Sveiki</li>
-                    <li className="list-group-item"><a href="#">Admin</a>: Sveiki</li>
-                    <li className="list-group-item"><a href="#">Naudotojas</a>: Sveiki, kaip laikotes
-                        siandien?
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <Card className="mt-2" variant="outlined">
+            <CardContent>
+                <Typography color="textPrimary" gutterBottom>
+                    Šaukykla
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Admin</a>: Sveiki
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Admin</a>: Sveiki
+                </Typography>
+                <Typography variant="body" component="p">
+                    <a href="#">Naudotojas</a>: Sveiki, kaip laikotes
+                </Typography>
+            </CardContent>
+        </Card>
     );
 }
 

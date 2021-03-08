@@ -5,7 +5,7 @@ function WhatsHappening() {
     return (
         <Card className="mt-2" variant="outlined">
             <CardContent>
-                <Typography  color="textSecondary" gutterBottom>
+                <Typography color="textPrimary" gutterBottom>
                     Kas vyksta?
                 </Typography>
                 <Typography variant="body" component="p">
