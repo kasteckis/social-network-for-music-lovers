@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Badge, CardActions, IconButton} from "@material-ui/core";
+import {Favorite} from "@material-ui/icons";
 
 class Top40 extends Component {
     render() {
@@ -21,23 +23,46 @@ class Top40 extends Component {
                         <tr>
                             <th scope="row">1</th>
                             <td>Jaden - I'm Ready</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart" /> 102</a>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={65} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>The Beatles - Hey Jude</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart" /> 60</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={45} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>The Beatles - Yesterday</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart" /> 30</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={30} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">40</th>
                             <td>Nirvana - Smells Like Teen Spirit</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart" /> 2</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={6} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

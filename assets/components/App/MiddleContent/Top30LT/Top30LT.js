@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Badge, IconButton} from "@material-ui/core";
+import {Favorite} from "@material-ui/icons";
 
 class Top30Lt extends Component {
     render() {
@@ -23,23 +25,46 @@ class Top30Lt extends Component {
                         <tr>
                             <th scope="row">1</th>
                             <td>Marijonas Mikutavičius - kažkas</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart"/> 102</a>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={68} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">2</th>
                             <td>Marijonas Mikutavičius - kažkas</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart"/> 60</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={60} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">3</th>
                             <td>Marijonas Mikutavičius - kažkas</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart"/> 30</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={30} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">30</th>
                             <td>Marijonas Mikutavičius - kažkas</td>
-                            <td><a href="#" className="btn btn-success"><i className="far fa-heart"/> 2</a></td>
+                            <td>
+                                <IconButton >
+                                    <Badge badgeContent={6} color="error">
+                                        <Favorite />
+                                    </Badge>
+                                </IconButton>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
