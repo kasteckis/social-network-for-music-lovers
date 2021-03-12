@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    AppBar, Button,
+    AppBar,
     IconButton, List,
     makeStyles,
-    Menu,
-    MenuItem, SwipeableDrawer,
+    SwipeableDrawer,
     Toolbar,
     Typography
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
-import {Group, Headset, Info, InsertEmoticon} from "@material-ui/icons";
 import clsx from "clsx";
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -37,6 +35,10 @@ function Navbar(props) {
         title: {
             flexGrow: 1,
         },
+        logo: {
+            maxWidth: '100px',
+            marginRight: '10px'
+        }
     }));
 
     const classes = useStyles();
@@ -102,6 +104,7 @@ function Navbar(props) {
                         <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
+                        <img src="https://www.musicinstrumentnews.co.uk/wp-content/uploads/2018/03/Yamaha-Music-Logo-200x100.png" className={classes.logo} />
                         <Typography variant="h6" className={classes.title}>
                             MUSIC.LT
                         </Typography>
