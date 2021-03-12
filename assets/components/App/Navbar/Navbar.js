@@ -61,8 +61,11 @@ function Navbar(props) {
     };
 
     const redirectToProfilePageHandler = () => {
-        console.log("profilis");
         history.push('./profilis');
+    };
+
+    const redirectToMainPageHandler = () => {
+        history.push('/');
     };
 
     const logoutHandler = () => {
@@ -131,10 +134,10 @@ function Navbar(props) {
                         <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
-                        <img src="https://www.musicinstrumentnews.co.uk/wp-content/uploads/2018/03/Yamaha-Music-Logo-200x100.png" className={classes.logo}  alt="music.lt logo"/>
-                        <Typography variant="h6" className={classes.title}>
-                            MUSIC.LT
-                        </Typography>
+                        <img onClick={redirectToMainPageHandler} src="https://www.freepnglogos.com/uploads/apple-music-logo-hd-png-10.png" className={classes.logo}  alt="music.lt logo"/>
+                        {/*<Typography onClick={redirectToMainPageHandler} variant="h6" className={classes.title}>*/}
+                        {/*    MUSIC.LT*/}
+                        {/*</Typography>*/}
                     </Toolbar>
                 </AppBar>
 
