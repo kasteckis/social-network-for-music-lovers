@@ -14,7 +14,6 @@ import {
 } from "@material-ui/icons";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import {useHistory} from "react-router";
 
 function LeftSideMenu() {
@@ -41,7 +40,19 @@ function LeftSideMenu() {
                     <ListItemIcon>
                         <ExitToApp />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Atsijungti" />
+                </ListItem>
+                <ListItem button onClick={() => history.push('./prisijungti')}>
+                    <ListItemIcon >
+                        <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Prisijungti" />
+                </ListItem>
+                <ListItem button onClick={() => history.push('./registruotis')}>
+                    <ListItemIcon>
+                        <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Registruotis" />
                 </ListItem>
             </List>
             <Divider />
