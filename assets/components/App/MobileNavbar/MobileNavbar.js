@@ -25,7 +25,7 @@ function MobileNavbar() {
 
     return (
         <BottomNavigation value={value} onChange={handleChange} classes={{root: classes.root}} className="mobile-navbar">
-            <BottomNavigationAction label="Srautas" value="srautas" icon={<RssFeed />} />
+            <BottomNavigationAction label="Srautas" value="" icon={<RssFeed />} />
             <BottomNavigationAction label="Paieška" value="paieska" icon={<Search />} />
             <BottomNavigationAction label="Įkelti" value="ikelti" icon={<AddCircle />} />
             <BottomNavigationAction label="Draugai" value="draugai" icon={<Group />} />
