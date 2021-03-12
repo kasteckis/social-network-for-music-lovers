@@ -18,6 +18,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {AccountCircle, ExitToApp} from "@material-ui/icons";
 import {useHistory} from "react-router";
+import LeftSideMenu from "./LeftSideMenu/LeftSideMenu";
 
 function Navbar(props) {
 
@@ -60,16 +61,8 @@ function Navbar(props) {
         setState({ ...state, [anchor]: open });
     };
 
-    const redirectToProfilePageHandler = () => {
-        history.push('./profilis');
-    };
-
     const redirectToMainPageHandler = () => {
         history.push('/');
-    };
-
-    const logoutHandler = () => {
-        console.log("logout");
     };
 
     const list = (anchor) => (
@@ -81,38 +74,7 @@ function Navbar(props) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <List>
-                <ListItem button onClick={redirectToProfilePageHandler}>
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary="admin@admin.dev" />
-                </ListItem>
-                <ListItem button onClick={logoutHandler}>
-                    <ListItemIcon>
-                        <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
+            <LeftSideMenu />
         </div>
     );
 
