@@ -16,6 +16,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {AccountCircle, ExitToApp} from "@material-ui/icons";
+import {useHistory} from "react-router";
 
 function Navbar(props) {
 
@@ -42,6 +44,7 @@ function Navbar(props) {
     }));
 
     const classes = useStyles();
+    const history = useHistory();
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -57,6 +60,15 @@ function Navbar(props) {
         setState({ ...state, [anchor]: open });
     };
 
+    const redirectToProfilePageHandler = () => {
+        console.log("profilis");
+        history.push('./profilis');
+    };
+
+    const logoutHandler = () => {
+        console.log("logout");
+    };
+
     const list = (anchor) => (
         <div
             className={clsx(classes.list, {
@@ -66,6 +78,21 @@ function Navbar(props) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
+            <List>
+                <ListItem button onClick={redirectToProfilePageHandler}>
+                    <ListItemIcon>
+                        <AccountCircle />
+                    </ListItemIcon>
+                    <ListItemText primary="admin@admin.dev" />
+                </ListItem>
+                <ListItem button onClick={logoutHandler}>
+                    <ListItemIcon>
+                        <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                </ListItem>
+            </List>
+            <Divider />
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
