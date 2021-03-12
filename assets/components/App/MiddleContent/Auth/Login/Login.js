@@ -1,7 +1,12 @@
 import React, {Component, createRef} from 'react';
-import {Button, Card, CardContent, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, FormControl, Grid, TextField, Typography} from "@material-ui/core";
 
 class Login extends Component {
+
+    state = {
+        emailError: false,
+        passwordError: false
+    }
 
     constructor(props) {
         super(props);
@@ -10,7 +15,26 @@ class Login extends Component {
     }
 
     loginHandler() {
-        // todo login user
+        let foundErrors = false;
+        this.setState({
+            emailError: false,
+            passwordError: false
+        });
+
+        if (this.emailRef.current.value === '' || !this.emailRef.current.value.match('.+@.+\\..+')) {
+            foundErrors = true;
+            this.setState({emailError: true});
+        }
+
+        if (this.passwordRef.current.value === '') {
+            foundErrors = true;
+            this.setState({passwordError: true});
+        }
+
+        if (foundErrors) {
+            return;
+        }
+
         console.log(this.emailRef.current.value);
         console.log(this.passwordRef.current.value);
     }
@@ -26,8 +50,9 @@ class Login extends Component {
                         container
                         justify="center"
                     >
-                        <form noValidate autoComplete="off">
+                        <form autoComplete="off">
                             <TextField
+                                error={this.state.emailError}
                                 fullWidth
                                 className="m-2"
                                 required
@@ -36,6 +61,7 @@ class Login extends Component {
                                 variant="outlined"
                             /><br/>
                             <TextField
+                                error={this.state.passwordError}
                                 fullWidth
                                 className="m-2"
                                 required
