@@ -24,10 +24,6 @@ function LeftSideMenu() {
         history.push('./profilis');
     };
 
-    const redirectToMainPageHandler = () => {
-        history.push('/');
-    };
-
     const logoutHandler = () => {
         console.log("logout");
     };
@@ -57,31 +53,31 @@ function LeftSideMenu() {
             {/*Paieška*/}
             {/*Įrašai*/}
             <List>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./naujienos')}>
                     <ListItemIcon><Announcement /></ListItemIcon>
                     <ListItemText primary={"Naujienos"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./draugai')}>
                     <ListItemIcon><Group /></ListItemIcon>
                     <ListItemText primary={"Draugai"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./')}>
                     <ListItemIcon><RssFeed /></ListItemIcon>
                     <ListItemText primary={"Srautas"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./top40')}>
                     <ListItemIcon><LabelImportant /></ListItemIcon>
                     <ListItemText primary={"TOP40"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./top30lt')}>
                     <ListItemIcon><LabelImportant /></ListItemIcon>
                     <ListItemText primary={"Lietuvos TOP30"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./paieska')}>
                     <ListItemIcon><Search /></ListItemIcon>
                     <ListItemText primary={"Paieška"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./irasai')}>
                     <ListItemIcon><ChatBubble /></ListItemIcon>
                     <ListItemText primary={"Įrašai"} />
                 </ListItem>
@@ -93,23 +89,23 @@ function LeftSideMenu() {
             {/*Dainų vertimai*/}
             {/*Renginiai*/}
             <List>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./grupes')}>
                     <ListItemIcon><SpeakerGroup /></ListItemIcon>
                     <ListItemText primary={"Grupės"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./albumai')}>
                     <ListItemIcon><Album /></ListItemIcon>
                     <ListItemText primary={"Albumai"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./klipai')}>
                     <ListItemIcon><VideoLibrary /></ListItemIcon>
                     <ListItemText primary={"Vaizdo klipai"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./vertimai')}>
                     <ListItemIcon><LibraryMusic /></ListItemIcon>
                     <ListItemText primary={"Dainų vertimai"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./renginiai')}>
                     <ListItemIcon><Event /></ListItemIcon>
                     <ListItemText primary={"Renginiai"} />
                 </ListItem>
@@ -118,11 +114,11 @@ function LeftSideMenu() {
             {/*Forumas*/}
             {/*Narių sąrašas*/}
             <List>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./diskusijos')}>
                     <ListItemIcon><Forum /></ListItemIcon>
                     <ListItemText primary={"Diskusijos"} />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => history.push('./nariai')}>
                     <ListItemIcon><Face /></ListItemIcon>
                     <ListItemText primary={"Narių sąrašas"} />
                 </ListItem>

@@ -7,7 +7,7 @@ import {makeStyles} from "@material-ui/styles";
 import {useHistory} from "react-router";
 
 function MobileNavbar() {
-    const [value, setValue] = React.useState('recents');
+    const [value, setValue] = React.useState('srautas');
     const history = useHistory();
 
     const handleChange = (event, newValue) => {
@@ -24,7 +24,7 @@ function MobileNavbar() {
     const classes = useStyles();
 
     return (
-        <BottomNavigation value={value} onChange={handleChange} classes={{root: classes.root}} className="mobile-navbar">
+        <BottomNavigation value={value} onChange={handleChange} classes={{root: classes.root}} className="mobile-navbar" showLabels>
             <BottomNavigationAction label="Srautas" value="" icon={<RssFeed />} />
             <BottomNavigationAction label="Paieška" value="paieska" icon={<Search />} />
             <BottomNavigationAction label="Įkelti" value="ikelti" icon={<AddCircle />} />
