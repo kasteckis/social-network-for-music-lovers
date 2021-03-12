@@ -5,13 +5,13 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.usernameRef = createRef();
+        this.emailRef = createRef();
         this.passwordRef = createRef();
     }
 
     loginHandler() {
         // todo login user
-        console.log(this.usernameRef.current.value);
+        console.log(this.emailRef.current.value);
         console.log(this.passwordRef.current.value);
     }
 
@@ -31,15 +31,14 @@ class Login extends Component {
                                 fullWidth
                                 className="m-2"
                                 required
-                                id="email"
-                                inputRef={this.usernameRef}
+                                inputRef={this.emailRef}
                                 label="El. paštas"
                                 variant="outlined"
                             /><br/>
                             <TextField
                                 fullWidth
                                 className="m-2"
-                                id="password"
+                                required
                                 label="Slaptažodis"
                                 inputRef={this.passwordRef}
                                 type="password"
