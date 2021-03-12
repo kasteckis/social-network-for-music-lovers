@@ -11,7 +11,7 @@ function MobileNavbar() {
     const history = useHistory();
 
     const handleChange = (event, newValue) => {
-        history.push('./' + newValue);
+        history.push('/' + newValue);
         setValue(newValue);
     };
 

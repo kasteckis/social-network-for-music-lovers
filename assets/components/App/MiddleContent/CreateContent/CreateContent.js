@@ -16,7 +16,7 @@ function CreateContent() {
                 </Typography>
                 <Divider />
                 <List>
-                    <ListItem button onClick={() => history.push('./irasai/naujas')}>
+                    <ListItem button onClick={() => history.push('/irasai/naujas')}>
                         <ListItemIcon>
                             <ChatBubble />
                         </ListItemIcon>
