@@ -1,17 +1,36 @@
 import React from 'react';
 
 import './MobileNavbar.css';
-import {Link} from "react-router-dom";
+import {BottomNavigation, BottomNavigationAction} from "@material-ui/core";
+import {AddCircle, Group, Person, RssFeed, Search} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/styles";
+import {useHistory} from "react-router";
 
 function MobileNavbar() {
+    const [value, setValue] = React.useState('recents');
+    const history = useHistory();
+
+    const handleChange = (event, newValue) => {
+        history.push('./' + newValue);
+        setValue(newValue);
+    };
+
+    const useStyles = makeStyles({
+        root: {
+            backgroundColor: 'orange',
+        }
+    });
+
+    const classes = useStyles();
+
     return (
-        <div className="mobile-navbar">
-            <Link to="/"><i className="fas fa-rss"/><br/>Srautas</Link>
-            <Link to="/paieska"><i className="fas fa-search"/><br/>Paieška</Link>
-            <Link to="/ikelti"><i className="fas fa-plus-circle"/><br/>Įkelti</Link>
-            <Link to="/draugai"><i className="fas fa-users"/><br/>Draugai</Link>
-            <Link to="/profilis"><i className="fas fa-user"/><br/>Profilis</Link>
-        </div>
+        <BottomNavigation value={value} onChange={handleChange} classes={{root: classes.root}} className="mobile-navbar">
+            <BottomNavigationAction label="Srautas" value="srautas" icon={<RssFeed />} />
+            <BottomNavigationAction label="Paieška" value="paieska" icon={<Search />} />
+            <BottomNavigationAction label="Įkelti" value="ikelti" icon={<AddCircle />} />
+            <BottomNavigationAction label="Draugai" value="draugai" icon={<Group />} />
+            <BottomNavigationAction label="Profilis" value="profilis" icon={<Person />} />
+        </BottomNavigation>
     );
 }
 

@@ -7,6 +7,7 @@ import MarginBottom from "./MarginBottom/MarginBottom";
 import NavbarSecond from "./NavbarSecond/NavbarSecond";
 import RightContent from "../RightContent/RightContent";
 import MiddleContent from "./MiddleContent/MiddleContent";
+import MobileNavbar from "./MobileNavbar/MobileNavbar";
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
                         selectedNavbarItem={this.state.selectedNavbarItem}
                         selectNavbarItemHandler={(name) => this.selectNavbarItemHandler(name)}
                     />
+                    <MobileNavbar />
 
                     <div className="container-fluid mt-5">
                         <div className="row">
