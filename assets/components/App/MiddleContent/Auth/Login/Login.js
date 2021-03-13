@@ -41,8 +41,6 @@ class Login extends Component {
         }
 
         this.props.onAuth(this.emailRef.current.value, this.passwordRef.current.value);
-        console.log(this.emailRef.current.value);
-        console.log(this.passwordRef.current.value);
     }
 
     render() {

@@ -37,10 +37,9 @@ export const logout = () => {
 };
 
 export const checkAuthTimeout = (expirationTime) => {{
-    // todo pakeist i refresh tokeno regeneravima
     return dispatch => {
         setTimeout(() => {
-            dispatch(logout());
+            dispatch(authCheckState());
         }, expirationTime * 1000);
     };
 }}
@@ -74,7 +73,8 @@ export const auth = (email, password) => {
                             response2.data.tokenExpiresAt,
                             response2.data.roles
                         ));
-                        dispatch(checkAuthTimeout(900));
+                        const timeTillTokenExpiration = (tokenExpiresAt.getTime() - new Date().getTime()) / 1000;
+                        dispatch(checkAuthTimeout(timeTillTokenExpiration));
                     })
                     .catch(error => {
                         switch (error.response.data.code) {
@@ -101,7 +101,6 @@ export const auth = (email, password) => {
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
-        console.log('dabartinis tokenas ' + token);
         const refreshToken = localStorage.getItem('refreshToken');
         const tokenExpiresAt = localStorage.getItem('tokenExpiresAt');
         if (!token && !tokenExpiresAt && !refreshToken) {
@@ -124,14 +123,13 @@ export const authCheckState = () => {
                             tokenExpiresAt,
                             response.data.roles
                         ));
-                        dispatch(checkAuthTimeout(900));
+                        const timeTillTokenExpiration = (tokenExpiresAtDate.getTime() - new Date().getTime()) / 1000;
+                        dispatch(checkAuthTimeout(timeTillTokenExpiration));
                     })
                     .catch(error => {
                         console.log(error);
                     });
             } else {
-                console.log("refreshinam tokena");
-
                 const refreshTokenData = {
                     refresh_token: refreshToken
                 };
@@ -162,13 +160,16 @@ export const authCheckState = () => {
                                     newTokenExpiresAt,
                                     response2.data.roles
                                 ));
-                                dispatch(checkAuthTimeout(900));
+                                const timeTillTokenExpiration = (newTokenExpiresAt.getTime() - new Date().getTime()) / 1000;
+                                dispatch(checkAuthTimeout(timeTillTokenExpiration));
                             })
                             .catch(error => {
                                 console.log(error);
                             });
                     })
                     .catch(error => {
+                        // Atsijungiame, nes pasibaige refresh tokenas.
+                        dispatch(logout());
                         console.log(error);
                     })
             }
