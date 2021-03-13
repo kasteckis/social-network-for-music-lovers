@@ -7,6 +7,7 @@ import RightContent from "../RightContent/RightContent";
 import MiddleContent from "./MiddleContent/MiddleContent";
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
 import { connect } from 'react-redux';
+import * as actions from '../../actions/index';
 
 class App extends Component {
 
@@ -18,6 +19,10 @@ class App extends Component {
         this.setState({
             selectedNavbarItem: name
         });
+    }
+
+    componentDidMount() {
+        this.props.authCheckState();
     }
 
     render() {
@@ -47,7 +52,7 @@ class App extends Component {
                 </div>
 
             </div>
-    );
+        );
     }
 }
 
@@ -57,4 +62,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+    return {
+        authCheckState: () => dispatch(actions.authCheckState())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
