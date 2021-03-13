@@ -35,7 +35,14 @@ export const auth = (email, password) => {
                 dispatch(authSuccess(response.data.token, response.data.refresh_token))
             })
             .catch(error => {
-                console.log(error);
+                console.log(error.response.data.code);
+                switch (error.response.data.code) {
+                    case 401:
+                        dispatch(authFail('Neteisingi prisijungimo duomenys!'));
+                        break;
+                    default:
+                        dispatch(authFail('Unhandled error'));
+                }
             });
     };
 };

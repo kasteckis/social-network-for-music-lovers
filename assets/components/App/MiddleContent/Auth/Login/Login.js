@@ -1,14 +1,14 @@
 import React, {Component, createRef} from 'react';
 import { connect } from 'react-redux';
 import {Button, Card, CardContent, CircularProgress, FormControl, Grid, TextField, Typography} from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import * as actions from '../../../../../actions/index';
 
 class Login extends Component {
 
     state = {
         emailError: false,
-        passwordError: false,
-        loading: false
+        passwordError: false
     }
 
     constructor(props) {
@@ -56,6 +56,12 @@ class Login extends Component {
                         justify="center"
                     >
                         <form onSubmit={(event) => this.loginHandler(event)}>
+                            {
+                                this.props.error !== null ?
+                                    <Alert severity="error">{this.props.error}</Alert>
+                                :
+                                    null
+                            }
                             <TextField
                                 error={this.state.emailError}
                                 fullWidth
@@ -76,7 +82,7 @@ class Login extends Component {
                                 variant="outlined"
                             /><br/>
                             <Grid
-                                hidden={!this.state.loading}
+                                hidden={!this.props.loading}
                                 container
                                 justify="center"
                             >
@@ -106,7 +112,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        error: state.auth.error
     };
 };
 
