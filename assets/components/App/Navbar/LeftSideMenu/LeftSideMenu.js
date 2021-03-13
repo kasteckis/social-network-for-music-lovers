@@ -24,7 +24,7 @@ function LeftSideMenu(props) {
     };
 
     const logoutHandler = () => {
-        console.log("logout");
+        history.push('/atsijungti')
     };
 
     return (
@@ -52,7 +52,7 @@ function LeftSideMenu(props) {
                         </ListItemIcon>
                         <ListItemText primary="admin@admin.dev" />
                     </ListItem>
-                        <ListItem button onClick={logoutHandler}>
+                    <ListItem button onClick={logoutHandler}>
                         <ListItemIcon>
                             <ExitToApp />
                         </ListItemIcon>

@@ -6,7 +6,11 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
-    refreshToken: null
+    refreshToken: null,
+    tokenExpiresAt: null,
+    email: null,
+    roles: null,
+    username: null,
 };
 
 const authStart = (state, action) => {
@@ -32,7 +36,14 @@ const authFail = (state, action) => {
 }
 
 const authLogout = (state, action) => {
-    return updateObject(state, {token: null, userId: null});
+    return updateObject(state, {
+        token: null,
+        userId: null,
+        refreshToken: null,
+        email: null,
+        username: null,
+        tokenExpiresAt: null
+    });
 };
 
 const reducer = (state = initialState, action) => {

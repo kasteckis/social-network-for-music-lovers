@@ -10,6 +10,7 @@ import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
 import CreateContent from "./CreateContent/CreateContent";
 import NewPost from "./CreateContent/NewPost/NewPost";
+import Logout from "./Auth/Logout/Logout";
 
 class MiddleContent extends Component {
     render() {
@@ -25,6 +26,7 @@ class MiddleContent extends Component {
                     <Route path="/registruotis" exact component={Register} />
                     <Route path="/ikelti" exact component={CreateContent} />
                     <Route path="/irasai/naujas" exact component={NewPost} />
+                    <Route path="/atsijungti" exact component={Logout} />
 
 
                     <Route component={Page404} />
