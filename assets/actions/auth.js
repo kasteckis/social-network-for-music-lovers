@@ -101,16 +101,13 @@ export const auth = (email, password) => {
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
+        console.log('dabartinis tokenas ' + token);
         const refreshToken = localStorage.getItem('refreshToken');
         const tokenExpiresAt = localStorage.getItem('tokenExpiresAt');
-        console.log("pradzia");
         if (!token && !tokenExpiresAt && !refreshToken) {
-            console.log("neturi but");
         } else {
-            console.log("turi but");
             const tokenExpiresAtDate = new Date(tokenExpiresAt);
             if (tokenExpiresAtDate.getTime() > new Date().getTime()) {
-                console.log("jungiam");
                 const headers = {
                     headers: {
                         Authorization: 'Bearer ' + token
@@ -130,17 +127,50 @@ export const authCheckState = () => {
                         dispatch(checkAuthTimeout(900));
                     })
                     .catch(error => {
-                        switch (error.response.data.code) {
-                            case 401:
-                                dispatch(authFail('Neteisingi prisijungimo duomenys!'));
-                                break;
-                            default:
-                                dispatch(authFail('Unhandled error'));
-                        }
+                        console.log(error);
                     });
             } else {
                 console.log("refreshinam tokena");
-                //refresh tokena
+
+                const refreshTokenData = {
+                    refresh_token: refreshToken
+                };
+                axios.post('./api/token/refresh', refreshTokenData)
+                    .then(response1 => {
+                        const newToken = response1.data.token;
+
+                        localStorage.setItem('token', newToken);
+
+                        const headers = {
+                            headers: {
+                                Authorization: 'Bearer ' + newToken
+                            }
+                        };
+
+                        axios.get('./api/user', headers)
+                            .then(response2 => {
+
+                                const newTokenExpiresAt = new Date(response2.data.tokenExpiresAt);
+                                localStorage.setItem('tokenExpiresAt', newTokenExpiresAt);
+
+                                dispatch(authSuccess(
+                                    newToken,
+                                    refreshToken,
+                                    response2.data.id,
+                                    response2.data.email,
+                                    response2.data.username,
+                                    newTokenExpiresAt,
+                                    response2.data.roles
+                                ));
+                                dispatch(checkAuthTimeout(900));
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
             }
         }
     };
