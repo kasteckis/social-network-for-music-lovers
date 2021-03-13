@@ -16,16 +16,24 @@ const authStart = (state, action) => {
 const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.token,
-        userId: 1, //todo pakeist
+        userId: action.userId,
+        refreshToken: action.refreshToken,
+        email: action.email,
+        roles: action.roles,
+        username: action.username,
+        tokenExpiresAt: action.tokenExpiresAt,
         error: null,
         loading: false,
-        refreshToken: action.refreshToken
     })
 }
 
 const authFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false});
 }
+
+const authLogout = (state, action) => {
+    return updateObject(state, {token: null, userId: null});
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -35,6 +43,8 @@ const reducer = (state = initialState, action) => {
             return authSuccess(state, action);
         case actionTypes.AUTH_FAIL:
             return authFail(state, action);
+        case actionTypes.AUTH_LOGOUT:
+            return authLogout(state, action);
         default:
             return state;
     }
