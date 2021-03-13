@@ -1,5 +1,7 @@
 import React, {Component, createRef} from 'react';
+import { connect } from 'react-redux';
 import {Button, Card, CardContent, FormControl, Grid, TextField, Typography} from "@material-ui/core";
+import * as actions from '../../../../../actions/index';
 
 class Login extends Component {
 
@@ -35,6 +37,7 @@ class Login extends Component {
             return;
         }
 
+        this.props.onAuth(this.emailRef.current.value, this.passwordRef.current.value);
         console.log(this.emailRef.current.value);
         console.log(this.passwordRef.current.value);
     }
@@ -86,4 +89,10 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
