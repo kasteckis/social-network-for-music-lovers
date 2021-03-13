@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Button, Card, CardContent, CircularProgress, FormControl, Grid, TextField, Typography} from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import * as actions from '../../../../../actions/index';
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
 
@@ -45,6 +46,10 @@ class Login extends Component {
     }
 
     render() {
+        if (this.props.token !== null) {
+            return (<Redirect to="/" />);
+        }
+
         return (
             <Card className="mt-2">
                 <CardContent>
