@@ -10,13 +10,6 @@ import {
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from "clsx";
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import {AccountCircle, ExitToApp} from "@material-ui/icons";
 import {useHistory} from "react-router";
 import LeftSideMenu from "./LeftSideMenu/LeftSideMenu";
 
@@ -74,7 +67,9 @@ function Navbar(props) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <LeftSideMenu />
+            <LeftSideMenu
+                auth={props.auth}
+            />
         </div>
     );
 

@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
 import Navbar from "./Navbar/Navbar";
 import MarginBottom from "./MarginBottom/MarginBottom";
-import NavbarSecond from "./NavbarSecond/NavbarSecond";
 import RightContent from "../RightContent/RightContent";
 import MiddleContent from "./MiddleContent/MiddleContent";
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
+import { connect } from 'react-redux';
 
 class App extends Component {
 
@@ -27,13 +26,18 @@ class App extends Component {
                 <Navbar
                     selectedNavbarItem={this.state.selectedNavbarItem}
                     selectNavbarItemHandler={(name) => this.selectNavbarItemHandler(name)}
+                    auth={this.props.auth}
                 />
-                <MobileNavbar />
+                <MobileNavbar
+                    auth={this.props.auth}
+                />
 
                 <div className="container-xl mt-5">
                     <div className="row">
                         <div className="col-12 col-md-9">
-                            <MiddleContent/>
+                            <MiddleContent
+                                auth={this.props.auth}
+                            />
                         </div>
                         <div className="col-12 col-md-3">
                             <RightContent/>
@@ -47,4 +51,10 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps)(App);

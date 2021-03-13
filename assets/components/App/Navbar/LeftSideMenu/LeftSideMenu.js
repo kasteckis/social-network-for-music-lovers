@@ -16,7 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import {useHistory} from "react-router";
 
-function LeftSideMenu() {
+function LeftSideMenu(props) {
     const history = useHistory();
 
     const redirectToProfilePageHandler = () => {
@@ -29,32 +29,37 @@ function LeftSideMenu() {
 
     return (
         <div>
-            <List>
-                <ListItem button onClick={redirectToProfilePageHandler}>
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary="admin@admin.dev" />
-                </ListItem>
-                <ListItem button onClick={logoutHandler}>
-                    <ListItemIcon>
-                        <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText primary="Atsijungti" />
-                </ListItem>
-                <ListItem button onClick={() => history.push('/prisijungti')}>
-                    <ListItemIcon >
-                        <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText primary="Prisijungti" />
-                </ListItem>
-                <ListItem button onClick={() => history.push('/registruotis')}>
-                    <ListItemIcon>
-                        <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText primary="Registruotis" />
-                </ListItem>
-            </List>
+            {props.auth.token === null ?
+                    <List>
+                        <ListItem button onClick={() => history.push('/prisijungti')}>
+                            <ListItemIcon >
+                                <ExitToApp />
+                            </ListItemIcon>
+                            <ListItemText primary="Prisijungti" />
+                        </ListItem>
+                        <ListItem button onClick={() => history.push('/registruotis')}>
+                            <ListItemIcon>
+                                <ExitToApp />
+                            </ListItemIcon>
+                            <ListItemText primary="Registruotis" />
+                        </ListItem>
+                    </List>
+                :
+                <List>
+                    <ListItem button onClick={redirectToProfilePageHandler}>
+                        <ListItemIcon>
+                            <AccountCircle />
+                        </ListItemIcon>
+                        <ListItemText primary="admin@admin.dev" />
+                    </ListItem>
+                        <ListItem button onClick={logoutHandler}>
+                        <ListItemIcon>
+                            <ExitToApp />
+                        </ListItemIcon>
+                        <ListItemText primary="Atsijungti" />
+                    </ListItem>
+                </List>
+            }
             <Divider />
             {/*Naujienos*/}
             {/*Draugai*/}
