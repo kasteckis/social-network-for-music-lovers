@@ -1,13 +1,14 @@
 import React, {Component, createRef} from 'react';
 import { connect } from 'react-redux';
-import {Button, Card, CardContent, FormControl, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, CircularProgress, FormControl, Grid, TextField, Typography} from "@material-ui/core";
 import * as actions from '../../../../../actions/index';
 
 class Login extends Component {
 
     state = {
         emailError: false,
-        passwordError: false
+        passwordError: false,
+        loading: false
     }
 
     constructor(props) {
@@ -16,7 +17,8 @@ class Login extends Component {
         this.passwordRef = createRef();
     }
 
-    loginHandler() {
+    loginHandler(event) {
+        event.preventDefault();
         let foundErrors = false;
         this.setState({
             emailError: false,
@@ -53,7 +55,7 @@ class Login extends Component {
                         container
                         justify="center"
                     >
-                        <form autoComplete="off">
+                        <form onSubmit={(event) => this.loginHandler(event)}>
                             <TextField
                                 error={this.state.emailError}
                                 fullWidth
@@ -73,14 +75,27 @@ class Login extends Component {
                                 type="password"
                                 variant="outlined"
                             /><br/>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className="ml-5"
-                                onClick={() => this.loginHandler()}
+                            <Grid
+                                hidden={!this.state.loading}
+                                container
+                                justify="center"
                             >
-                                Prisijungti
-                            </Button>
+                                <CircularProgress className="mb-2" />
+                            </Grid>
+
+                            <Grid
+                                container
+                                justify="center"
+                            >
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={(event) => this.loginHandler(event)}
+                                >
+                                    Prisijungti
+                                </Button>
+                            </Grid>
                         </form>
                     </Grid>
                 </CardContent>
@@ -89,10 +104,16 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password) => dispatch(actions.auth(email, password))
     }
-}
+};
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
