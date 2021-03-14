@@ -37,7 +37,8 @@ class UserController extends AbstractController
                 'tokenExpiresAt' => $tokenExpiresAt,
                 'roles' => $user->getRoles(),
                 'bio' => $user->getBio(),
-                'role' => $this->userService->getRoleText($user->getRoles())
+                'role' => $this->userService->getRoleText($user->getRoles()),
+                'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null
             ]);
         }
 
