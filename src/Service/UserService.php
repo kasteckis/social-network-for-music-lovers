@@ -62,4 +62,13 @@ class UserService
 
         return $tokenExpiresAt;
     }
+
+    public function getRoleText(array $roles): ?string
+    {
+        if (in_array('ROLE_ADMIN', $roles)) {
+            return 'Administratorius';
+        }
+
+        return 'Naudotojas';
+    }
 }

@@ -20,7 +20,8 @@ class Profile extends Component {
             username: null,
             email: null,
             roles: null,
-            bio: null
+            bio: null,
+            role: null
         }
     }
 
@@ -87,14 +88,28 @@ class Profile extends Component {
                             </ListItem>
                         </CardContent>
                     </CardActionArea>
+                    <CardActionArea>
+                        <CardContent>
+                            <ListItem>
+                                <ListItemText primary="Rolė" secondary={this.state.user.role} />
+                            </ListItem>
+                        </CardContent>
+                    </CardActionArea>
                     <Divider/>
                     <CardActionArea>
                         <CardContent>
                             <ListItem>
-                                <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-                                <ListItemSecondaryAction>
-                                    aa
-                                </ListItemSecondaryAction>
+                                <ListItemText primary="El. paštas" secondary={this.state.user.email} />
+                                {/*<ListItemSecondaryAction>*/}
+                                {/*    aa*/}
+                                {/*</ListItemSecondaryAction>*/}
+                            </ListItem>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActionArea>
+                        <CardContent>
+                            <ListItem>
+                                <ListItemText primary="Slapyvardis" secondary={this.state.user.username} />
                             </ListItem>
                         </CardContent>
                     </CardActionArea>

@@ -36,7 +36,8 @@ class UserController extends AbstractController
                 'email' => $user->getEmail(),
                 'tokenExpiresAt' => $tokenExpiresAt,
                 'roles' => $user->getRoles(),
-                'bio' => $user->getBio()
+                'bio' => $user->getBio(),
+                'role' => $this->userService->getRoleText($user->getRoles())
             ]);
         }
 
