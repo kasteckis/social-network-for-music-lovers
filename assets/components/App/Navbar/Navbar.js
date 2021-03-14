@@ -32,7 +32,7 @@ function Navbar(props) {
             flexGrow: 1,
         },
         logo: {
-            maxWidth: '100px',
+            maxWidth: '200px',
             marginRight: '10px'
         }
     }));
@@ -91,7 +91,7 @@ function Navbar(props) {
                         <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
-                        <img onClick={redirectToMainPageHandler} src="https://www.freepnglogos.com/uploads/apple-music-logo-hd-png-10.png" className={classes.logo}  alt="music.lt logo"/>
+                        <img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>
                         {/*<Typography onClick={redirectToMainPageHandler} variant="h6" className={classes.title}>*/}
                         {/*    MUSIC.LT*/}
                         {/*</Typography>*/}

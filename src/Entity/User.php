@@ -73,12 +73,18 @@ class User implements UserInterface
     private $bio;
 
     /**
+     * @ORM\OneToMany(targetEntity=ChatMessage::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $chatMessages;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->daySongs = new ArrayCollection();
+        $this->chatMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -257,6 +263,36 @@ class User implements UserInterface
     public function setBio(?string $bio): self
     {
         $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ChatMessage[]
+     */
+    public function getChatMessages(): Collection
+    {
+        return $this->chatMessages;
+    }
+
+    public function addChatMessage(ChatMessage $chatMessage): self
+    {
+        if (!$this->chatMessages->contains($chatMessage)) {
+            $this->chatMessages[] = $chatMessage;
+            $chatMessage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatMessage(ChatMessage $chatMessage): self
+    {
+        if ($this->chatMessages->removeElement($chatMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($chatMessage->getUser() === $this) {
+                $chatMessage->setUser(null);
+            }
+        }
 
         return $this;
     }
