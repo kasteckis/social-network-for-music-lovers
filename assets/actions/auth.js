@@ -187,8 +187,43 @@ export const register = (email, username, password) => {
         };
 
         axios.post('./api/register', body)
-            .then(response => {
-                console.log(response);
+            .then(response1 => {
+
+
+                const loginData = {
+                    username: email,
+                    password: password
+                };
+                axios.post('./api/login_check', loginData)
+                    .then(response2 => {
+                        const tokenExpiresAt = new Date(response1.data.tokenExpiresAt);
+                        localStorage.setItem('token', response2.data.token);
+                        localStorage.setItem('refreshToken', response2.data.refresh_token);
+                        localStorage.setItem('tokenExpiresAt', tokenExpiresAt);
+                        dispatch(authSuccess(
+                            response2.data.token,
+                            response2.data.refresh_token,
+                            response1.data.id,
+                            response1.data.email,
+                            response1.data.username,
+                            response1.data.tokenExpiresAt,
+                            response1.data.roles
+                        ));
+                        const timeTillTokenExpiration = (tokenExpiresAt.getTime() - new Date().getTime()) / 1000;
+                        dispatch(checkAuthTimeout(timeTillTokenExpiration));
+                    })
+                    .catch(error => {
+                        switch (error.response.data.code) {
+                            case 401:
+                                dispatch(authFail('Neteisingi prisijungimo duomenys!'));
+                                break;
+                            default:
+                                dispatch(authFail('Unhandled error'));
+                        }
+                    });
+
+
+
             })
             .catch(error => {
                 console.log(error.response);
