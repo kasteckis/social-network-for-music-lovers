@@ -2,7 +2,7 @@ import React, {Component, createRef} from 'react';
 import {
     Button,
     Card,
-    CardContent, Checkbox,
+    CardContent, Checkbox, CircularProgress,
     FormControlLabel,
     FormGroup, FormHelperText,
     Grid,
@@ -12,6 +12,7 @@ import {
 import * as actions from "../../../../../actions";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
+import {Alert} from "@material-ui/lab";
 
 class Register extends Component {
     state = {
@@ -81,9 +82,7 @@ class Register extends Component {
             return;
         }
 
-        // todo register user
-        console.log(this.emailRef.current.value);
-        console.log(this.passwordRef.current.value);
+        this.props.register(this.emailRef.current.value, this.usernameRef.current.value, this.passwordRef.current.value);
     }
 
     render() {
@@ -102,6 +101,7 @@ class Register extends Component {
                         justify="center"
                     >
                         <form autoComplete="off">
+                            <Alert hidden={this.props.error === null} severity="error">{this.props.error}</Alert>
                             <TextField
                                 fullWidth
                                 className="m-2"
@@ -150,15 +150,26 @@ class Register extends Component {
                             </FormGroup>
                             <FormHelperText hidden={!this.state.checkboxError} style={{color: 'red'}}>Norint užsiregistruoti, būtina sutikti su taisyklėmis</FormHelperText>
                             <FormHelperText hidden={this.state.errorText === null} style={{color: 'red'}}>{this.state.errorText}</FormHelperText>
-                            <br/>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className="ml-5"
-                                onClick={() => this.registerHandler()}
+                            <Grid
+                                hidden={!this.props.loading}
+                                container
+                                justify="center"
                             >
-                                Registruotis
-                            </Button>
+                                <CircularProgress className="mb-2" />
+                            </Grid>
+                            <br/>
+                            <Grid
+                                container
+                                justify="center"
+                            >
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => this.registerHandler()}
+                                >
+                                    Registruotis
+                                </Button>
+                            </Grid>
                         </form>
                     </Grid>
                 </CardContent>
@@ -177,7 +188,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        register: (email, password) => dispatch(actions.register(email, password))
+        register: (email, username, password) => dispatch(actions.register(email, username, password))
     }
 };
 

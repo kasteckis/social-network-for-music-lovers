@@ -177,9 +177,31 @@ export const authCheckState = () => {
     };
 };
 
-export const register = (email, password) => {
+export const register = (email, username, password) => {
     return dispatch => {
         dispatch(authStart());
-        console.log('register pradzia');
+        const body = {
+            email: email,
+            username: username,
+            password: password
+        };
+
+        axios.post('./api/register', body)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error.response);
+                switch (error.response.status) {
+                    case 400:
+                        dispatch(authFail('Blogi duomenys!'));
+                        break;
+                    case 409:
+                        dispatch(authFail(error.response.data.error));
+                        break;
+                    default:
+                        dispatch(authFail('Unhandled error'));
+                }
+            })
     }
 };
