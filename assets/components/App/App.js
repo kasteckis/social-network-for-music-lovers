@@ -45,7 +45,9 @@ class App extends Component {
                             />
                         </div>
                         <div className="col-12 col-md-3">
-                            <RightContent/>
+                            <RightContent
+                                auth={this.props.auth}
+                            />
                         </div>
                     </div>
                     <MarginBottom/>

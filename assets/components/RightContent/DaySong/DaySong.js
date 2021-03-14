@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Badge, Card, CardActions, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
+import {Redirect} from "react-router-dom";
 
 class DaySong extends Component {
     state = {
@@ -9,7 +10,8 @@ class DaySong extends Component {
             title: '',
             spotifyLink: '',
             likes: 0
-        }
+        },
+        redirectToLoginPage: false
     }
 
     componentDidMount() {
@@ -19,9 +21,29 @@ class DaySong extends Component {
             })
     }
 
+    likeSongHandler() {
+        if (this.props.auth.token) {
+            const headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                }
+            };
+            axios.get('./api/day-song/like', headers)
+                .then(response => {
+                    this.setState({daySong: response.data})
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
+            this.setState({redirectToLoginPage: true});
+        }
+    }
+
     render() {
         return (
             <Card className="mt-2">
+                {this.state.redirectToLoginPage ? <Redirect to="/prisijungti" /> : null}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
                         Dienos daina
@@ -37,7 +59,7 @@ class DaySong extends Component {
                     </div>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton >
+                    <IconButton onClick={() => this.likeSongHandler()} >
                         <Badge badgeContent={this.state.daySong.likes} color="error">
                             <Favorite />
                         </Badge>

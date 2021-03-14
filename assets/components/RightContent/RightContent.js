@@ -9,7 +9,9 @@ class RightContent extends Component {
     render() {
         return (
             <div>
-                <DaySong />
+                <DaySong
+                    auth={this.props.auth}
+                />
                 <WhatsHappening />
                 <ChatBox />
                 <Survey />
