@@ -27,6 +27,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -38,12 +43,12 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $registrationIp;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ip;
 
@@ -157,7 +162,7 @@ class User implements UserInterface
         return $this->registrationIp;
     }
 
-    public function setRegistrationIp(string $registrationIp): self
+    public function setRegistrationIp(?string $registrationIp): self
     {
         $this->registrationIp = $registrationIp;
 
@@ -169,7 +174,7 @@ class User implements UserInterface
         return $this->ip;
     }
 
-    public function setIp(string $ip): self
+    public function setIp(?string $ip): self
     {
         $this->ip = $ip;
 
@@ -223,6 +228,18 @@ class User implements UserInterface
         if ($this->daySongs->removeElement($daySong)) {
             $daySong->removeLike($this);
         }
+
+        return $this;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

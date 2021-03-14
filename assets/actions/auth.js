@@ -176,3 +176,10 @@ export const authCheckState = () => {
         }
     };
 };
+
+export const register = (email, password) => {
+    return dispatch => {
+        dispatch(authStart());
+        console.log('register pradzia');
+    }
+};

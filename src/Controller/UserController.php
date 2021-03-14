@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,5 +34,25 @@ class UserController extends AbstractController
         return $this->json([
             'error' => 'User is not connected!'
         ], 401);
+    }
+
+    /**
+     * @Route("/api/register", name="api_register_user")
+     * @param Request $request
+     * @return Response
+     */
+    public function registerUser(Request $request): Response
+    {
+        $user = new User();
+        $user
+            ->setRegistrationIp($request->getClientIp())
+            ->setIp($request->getClientIp())
+            ->setEmail('emi')
+            ->setName('name')
+            ->setPassword('pakeistpsw');
+
+        return $this->json([
+            'created' => 'ok'
+        ], 201);
     }
 }

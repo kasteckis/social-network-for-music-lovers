@@ -9,6 +9,9 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
+import * as actions from "../../../../../actions";
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 
 class Register extends Component {
     state = {
@@ -18,6 +21,7 @@ class Register extends Component {
         passwordRepeatError: false,
         checkboxError: false,
         rulesAccepted: false,
+        errorText: null
     }
 
     constructor(props) {
@@ -36,6 +40,7 @@ class Register extends Component {
             passwordError: false,
             passwordRepeatError: false,
             checkboxError: false,
+            errorText: null
         });
 
         if (this.emailRef.current.value === '' || !this.emailRef.current.value.match('.+@.+\\..+')) {
@@ -60,8 +65,11 @@ class Register extends Component {
 
         if (this.passwordRef.current.value !== this.passwordRepeatRef.current.value) {
             foundErrors = true;
-            this.setState({passwordError: true});
-            this.setState({passwordRepeatError: true});
+            this.setState({
+                passwordError: true,
+                passwordRepeatError: true,
+                errorText: 'Slaptažodžiai privalo sutapti!'
+            });
         }
 
         if (!this.state.rulesAccepted) {
@@ -79,6 +87,10 @@ class Register extends Component {
     }
 
     render() {
+        if (this.props.token !== null) {
+            return (<Redirect to="/" />);
+        }
+
         return (
             <Card className="mt-2">
                 <CardContent>
@@ -137,6 +149,7 @@ class Register extends Component {
                                 />
                             </FormGroup>
                             <FormHelperText hidden={!this.state.checkboxError} style={{color: 'red'}}>Norint užsiregistruoti, būtina sutikti su taisyklėmis</FormHelperText>
+                            <FormHelperText hidden={this.state.errorText === null} style={{color: 'red'}}>{this.state.errorText}</FormHelperText>
                             <br/>
                             <Button
                                 variant="contained"
@@ -154,4 +167,18 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        token: state.auth.token
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        register: (email, password) => dispatch(actions.register(email, password))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
