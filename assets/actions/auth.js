@@ -189,7 +189,6 @@ export const register = (email, username, password) => {
         axios.post('./api/register', body)
             .then(response1 => {
 
-
                 const loginData = {
                     username: email,
                     password: password
@@ -221,8 +220,6 @@ export const register = (email, username, password) => {
                                 dispatch(authFail('Unhandled error'));
                         }
                     });
-
-
 
             })
             .catch(error => {

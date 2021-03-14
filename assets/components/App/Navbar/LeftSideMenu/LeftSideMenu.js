@@ -50,7 +50,7 @@ function LeftSideMenu(props) {
                         <ListItemIcon>
                             <AccountCircle />
                         </ListItemIcon>
-                        <ListItemText primary="admin@admin.dev" />
+                        <ListItemText primary={props.auth.email} />
                     </ListItem>
                     <ListItem button onClick={logoutHandler}>
                         <ListItemIcon>

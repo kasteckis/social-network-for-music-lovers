@@ -32,10 +32,11 @@ class UserController extends AbstractController
 
             return $this->json([
                 'id' => $user->getId(),
-                'username' => $user->getUsername(),
+                'username' => $user->getName(),
                 'email' => $user->getEmail(),
                 'tokenExpiresAt' => $tokenExpiresAt,
-                'roles' => $user->getRoles()
+                'roles' => $user->getRoles(),
+                'bio' => $user->getBio()
             ]);
         }
 

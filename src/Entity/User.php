@@ -68,6 +68,11 @@ class User implements UserInterface
     private $daySongs;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bio;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -240,6 +245,18 @@ class User implements UserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
 
         return $this;
     }
