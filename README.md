@@ -10,3 +10,6 @@ Quick startup:
 
 Cronjobs:
 1. php bin/console gesdinet:jwt:clear - delete expired jwt tokens from db
+
+Dev notes:
+1. bin/console make:admin:crud
