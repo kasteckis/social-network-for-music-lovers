@@ -51,14 +51,14 @@ export const auth = (email, password) => {
             username: email,
             password: password
         };
-        axios.post('./api/login_check', loginData)
+        axios.post('/api/login_check', loginData)
             .then(response1 => {
                 const headers = {
                     headers: {
                         Authorization: 'Bearer ' + response1.data.token
                     }
                 };
-                axios.get('./api/user', headers)
+                axios.get('/api/user', headers)
                     .then(response2 => {
                         const tokenExpiresAt = new Date(response2.data.tokenExpiresAt);
                         localStorage.setItem('token', response1.data.token);
@@ -112,7 +112,7 @@ export const authCheckState = () => {
                         Authorization: 'Bearer ' + token
                     }
                 };
-                axios.get('./api/user', headers)
+                axios.get('/api/user', headers)
                     .then(response => {
                         dispatch(authSuccess(
                             token,
@@ -133,7 +133,7 @@ export const authCheckState = () => {
                 const refreshTokenData = {
                     refresh_token: refreshToken
                 };
-                axios.post('./api/token/refresh', refreshTokenData)
+                axios.post('/api/token/refresh', refreshTokenData)
                     .then(response1 => {
                         const newToken = response1.data.token;
 
@@ -145,7 +145,7 @@ export const authCheckState = () => {
                             }
                         };
 
-                        axios.get('./api/user', headers)
+                        axios.get('/api/user', headers)
                             .then(response2 => {
 
                                 const newTokenExpiresAt = new Date(response2.data.tokenExpiresAt);
@@ -186,14 +186,14 @@ export const register = (email, username, password) => {
             password: password
         };
 
-        axios.post('./api/register', body)
+        axios.post('/api/register', body)
             .then(response1 => {
 
                 const loginData = {
                     username: email,
                     password: password
                 };
-                axios.post('./api/login_check', loginData)
+                axios.post('/api/login_check', loginData)
                     .then(response2 => {
                         const tokenExpiresAt = new Date(response1.data.tokenExpiresAt);
                         localStorage.setItem('token', response2.data.token);

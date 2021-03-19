@@ -42,7 +42,7 @@ class Profile extends Component {
                 }
             };
 
-            axios.get('./api/user', headers)
+            axios.get('/api/user', headers)
                 .then(response => {
                     this.setState({user: response.data})
                 })

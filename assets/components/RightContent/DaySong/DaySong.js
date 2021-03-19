@@ -28,7 +28,7 @@ class DaySong extends Component {
                     Authorization: 'Bearer ' + this.props.auth.token
                 }
             };
-            axios.get('./api/day-song/like', headers)
+            axios.get('/api/day-song/like', headers)
                 .then(response => {
                     this.setState({daySong: response.data})
                 })
