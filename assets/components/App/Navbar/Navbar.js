@@ -86,7 +86,7 @@ function Navbar(props) {
                     </SwipeableDrawer>
                 </React.Fragment>
 
-                <AppBar position="static">
+                <AppBar position="static" style={{ background: '#808080' }}>
                     <Toolbar>
                         <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuIcon />
