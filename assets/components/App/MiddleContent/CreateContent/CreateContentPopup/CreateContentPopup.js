@@ -4,12 +4,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import {ChatBubble, Description, MusicNote, Poll, PostAdd, QueueMusic, RecordVoiceOver} from "@material-ui/icons";
+import {useHistory} from "react-router";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function CreateContentPopup(props) {
+
+    const history = useHistory();
 
     return (
         <div>
@@ -23,7 +26,10 @@ function CreateContentPopup(props) {
             >
                 <DialogTitle id="simple-dialog-title">Kurti turinį</DialogTitle>
                 <List>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
+                    <ListItem button onClick={() => {
+                        history.push('/irasai/naujas');
+                        props.close();
+                    }}>
                         <ListItemAvatar>
                             <Avatar>
                                 <ChatBubble />
