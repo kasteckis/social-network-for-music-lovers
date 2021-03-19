@@ -1,17 +1,28 @@
-import React from 'react';
-import {IconButton, useMediaQuery} from "@material-ui/core";
+import React, {useState} from 'react';
+import {IconButton} from "@material-ui/core";
 import {AddCircle} from "@material-ui/icons";
 import './NavbarTopIcons.css';
-import {useHistory} from "react-router";
+import CreateContentPopup from "../../MiddleContent/CreateContent/CreateContentPopup/CreateContentPopup";
 
 function NavbarTopIcons() {
 
-    const history = useHistory();
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const openCreateContentDialogHandler = () => {
+        setDialogOpen(true);
+    };
+
+    const closeCreateContentDialogHandler = () => {
+        setDialogOpen(false);
+    }
 
     return (
-        <IconButton className="navbar-top-icons" color="inherit" onClick={() => history.push('/ikelti')}>
-            <AddCircle />
-        </IconButton>
+        <React.Fragment>
+            {dialogOpen ? <CreateContentPopup open={dialogOpen} close={closeCreateContentDialogHandler} /> : null}
+            <IconButton className="navbar-top-icons" color="inherit" onClick={() => openCreateContentDialogHandler()}>
+                <AddCircle />
+            </IconButton>
+        </React.Fragment>
     );
 }
 
