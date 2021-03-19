@@ -78,6 +78,16 @@ class User implements UserInterface
     private $chatMessages;
 
     /**
+     * @ORM\ManyToMany(targetEntity=Post::class, mappedBy="likes")
+     */
+    private $likedPosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PostComment::class, mappedBy="user")
+     */
+    private $postComments;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -85,6 +95,8 @@ class User implements UserInterface
         $this->createdAt = new \DateTime();
         $this->daySongs = new ArrayCollection();
         $this->chatMessages = new ArrayCollection();
+        $this->likedPosts = new ArrayCollection();
+        $this->postComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -300,5 +312,62 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getLikedPosts(): Collection
+    {
+        return $this->likedPosts;
+    }
+
+    public function addLikedPost(Post $likedPost): self
+    {
+        if (!$this->likedPosts->contains($likedPost)) {
+            $this->likedPosts[] = $likedPost;
+            $likedPost->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedPost(Post $likedPost): self
+    {
+        if ($this->likedPosts->removeElement($likedPost)) {
+            $likedPost->removeLike($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostComment[]
+     */
+    public function getPostComments(): Collection
+    {
+        return $this->postComments;
+    }
+
+    public function addPostComment(PostComment $postComment): self
+    {
+        if (!$this->postComments->contains($postComment)) {
+            $this->postComments[] = $postComment;
+            $postComment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostComment(PostComment $postComment): self
+    {
+        if ($this->postComments->removeElement($postComment)) {
+            // set the owning side to null (unless already changed)
+            if ($postComment->getUser() === $this) {
+                $postComment->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
