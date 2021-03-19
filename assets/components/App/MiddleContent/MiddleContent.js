@@ -24,7 +24,7 @@ class MiddleContent extends Component {
                     <Route path="/top40" exact component={Top40} />
                     <Route path="/prisijungti" exact component={Login} />
                     <Route path="/registruotis" exact component={Register} />
-                    <Route path="/ikelti" exact component={CreateContent} />
+                    {/*<Route path="/ikelti" exact component={CreateContent} />*/}
                     <Route path="/irasai/naujas" exact component={NewPost} />
                     <Route path="/atsijungti" exact component={Logout} />
 
