@@ -1,0 +1,9 @@
+.navbar-top-icons {
+    visibility: collapse;
+}
+
+@media only screen and (min-width: 768px) {
+    .navbar-top-icons {
+        visibility: visible;
+    }
+}

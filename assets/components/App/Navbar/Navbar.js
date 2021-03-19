@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     AppBar,
-    IconButton, List,
+    IconButton,
     makeStyles,
     SwipeableDrawer,
     Toolbar,
@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from "clsx";
 import {useHistory} from "react-router";
 import LeftSideMenu from "./LeftSideMenu/LeftSideMenu";
+import NavbarTopIcons from "./NavbarTopIcons/NavbarTopIcons";
 
 function Navbar(props) {
 
@@ -33,7 +34,8 @@ function Navbar(props) {
         },
         logo: {
             maxWidth: '200px',
-            marginRight: '10px'
+            marginRight: '10px',
+            flexGrow: 1, // padaro kad visas kitas contentas butu desniausioje puseje
         }
     }));
 
@@ -92,9 +94,10 @@ function Navbar(props) {
                             <MenuIcon />
                         </IconButton>
                         <img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>
-                        {/*<Typography onClick={redirectToMainPageHandler} variant="h6" className={classes.title}>*/}
-                        {/*    MUSIC.LT*/}
-                        {/*</Typography>*/}
+                        <Typography className={classes.title}>
+                            {/*Tuscias komponentas, kad komponentai po juo butu desnioje puseje*/}
+                        </Typography>
+                        <NavbarTopIcons />
                     </Toolbar>
                 </AppBar>
             </div>
