@@ -15,7 +15,7 @@ class DaySong extends Component {
     }
 
     componentDidMount() {
-        axios.get('./api/day-song')
+        axios.get('/api/day-song')
             .then(response => {
                 this.setState({ daySong: response.data });
             })

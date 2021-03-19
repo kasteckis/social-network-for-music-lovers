@@ -9,7 +9,7 @@ class ChatBox extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('./api/chat-messages')
+        axios.get('/api/chat-messages')
             .then(response => {
                 this.setState({messages: response.data});
             })
