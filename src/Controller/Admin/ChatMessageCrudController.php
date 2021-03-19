@@ -4,6 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\ChatMessage;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ChatMessageCrudController extends AbstractCrudController
 {
@@ -12,14 +15,12 @@ class ChatMessageCrudController extends AbstractCrudController
         return ChatMessage::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            DateTimeField::new('createdAt'),
+            TextField::new('message'),
+            AssociationField::new('user')
         ];
     }
-    */
 }

@@ -18,13 +18,14 @@ class AdminDashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        return $this->render('easyadminbundle/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Html');
+            ->setTitle('Music.lt admin valdymo skydas')
+            ;
     }
 
     public function configureMenuItems(): iterable
