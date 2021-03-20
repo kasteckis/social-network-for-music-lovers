@@ -27,18 +27,23 @@ class FeedService
         /** @var Post[] $posts */
         $posts = $this->entityManager->getRepository(Post::class)->findAll();
         foreach ($posts as $post) {
-            $feedArray[] = [
-                'id' => $post->getId(),
-                'image' => $post->getImage(),
-                'title' => $post->getTitle(),
-                'text' => $post->getText(),
-                'spotifyIframeUrl' => $post->getSpotifyIframeUrl(),
-                'likes' => $post->getLikes()->count(),
-                'comments' => $post->getComments()->count(),
-                'type' => FeedContentType::POST
-            ];
+            $feedArray[] = $this->postEntityToArray($post);
         }
 
         return $feedArray;
+    }
+
+    public function postEntityToArray(Post $post): array
+    {
+        return [
+            'id' => $post->getId(),
+            'image' => $post->getImage(),
+            'title' => $post->getTitle(),
+            'text' => $post->getText(),
+            'spotifyIframeUrl' => $post->getSpotifyIframeUrl(),
+            'likes' => $post->getLikes()->count(),
+            'comments' => $post->getComments()->count(),
+            'type' => FeedContentType::POST
+        ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Service\FeedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
+    private FeedService $feedService;
+
+    /**
+     * PostController constructor.
+     * @param FeedService $feedService
+     */
+    public function __construct(FeedService $feedService)
+    {
+        $this->feedService = $feedService;
+    }
+
     /**
      * @IsGranted("ROLE_USER")
      * @Route("/api/post", name="create_post", methods={"POST"})
@@ -39,6 +51,20 @@ class PostController extends AbstractController
             'success' => 'ok',
             'postId' => $post->getId()
         ], 201);
+    }
+
+    /**
+     * @Route("/api/post/{post}", name="create_post", methods={"GET"})
+     * @param ?Post $post
+     * @return Response
+     */
+    public function getPost(?Post $post): Response
+    {
+        if ($post instanceof Post) {
+            return $this->json($this->feedService->postEntityToArray($post));
+        }
+
+        return $this->json(['error' => 'Įrašas nerastas'], 404);
     }
 
     /**

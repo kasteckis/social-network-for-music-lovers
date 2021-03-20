@@ -12,8 +12,10 @@ import {
     Typography
 } from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
+import {useHistory} from "react-router";
 
 function Post(props) {
+    const history = useHistory();
     const useStyles = makeStyles({
         root: {
             maxWidth: '100%'
@@ -27,10 +29,10 @@ function Post(props) {
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={() => history.push('/irasai/' + props.post.id)}>
                 <CardMedia
                     className={classes.media}
-                    image={window.location.href + 'images/' + props.post.image}
+                    image={window.location.origin + '/images/' + props.post.image}
                     title={props.post.title}
                 />
                 <CardContent>
@@ -38,7 +40,7 @@ function Post(props) {
                         {props.post.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {props.post.text}
+                        {props.post.text.substring(0, 140)}...
                     </Typography>
                 </CardContent>
             </CardActionArea>
