@@ -54,6 +54,29 @@ class PostController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/post/{post}/like", name="like_post", methods={"PUT"})
+     * @param Post|null $post
+     * @return Response
+     */
+    public function likePost(?Post $post): Response
+    {
+        if ($post instanceof Post) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $post->addLike($user);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->json($this->feedService->postEntityToArray($post));
+        }
+
+        return $this->json([
+            'error' => 'Įrašas neegzistuoja'
+        ], 404);
+    }
+
+    /**
      * @Route("/api/post/{post}", name="create_post", methods={"GET"})
      * @param ?Post $post
      * @return Response

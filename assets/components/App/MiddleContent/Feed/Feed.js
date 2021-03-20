@@ -29,7 +29,7 @@ class Feed extends React.Component {
                 {this.state.feedArray.map((feed) => (
                     <div className="mt-2" key={feed.id}>
                         {feed.type === 'post' ?
-                            <Post post={feed}/> : null}
+                            <Post auth={this.props.auth} post={feed}/> : null}
                     </div>
                 ))}
             </React.Fragment>

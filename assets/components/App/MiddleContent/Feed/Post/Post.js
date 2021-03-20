@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {
     Badge,
@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
 import {useHistory} from "react-router";
+import axios from "axios";
 
 function Post(props) {
     const history = useHistory();
@@ -25,7 +26,34 @@ function Post(props) {
         },
     });
 
+    const [likes, setLikes] = useState(props.post.likes);
+
     const classes = useStyles();
+
+    const likePostHandler = (id) => {
+        if (props.auth.token === null) {
+            history.push('/prisijungti');
+            return;
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + props.auth.token
+            }
+        };
+
+        axios.put('/api/post/' + id + '/like', {}, headers)
+            .then(response => {
+                setLikes(response.data.likes);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const commentPostHandler = (id) => {
+        console.log("coment post");
+    }
 
     return (
         <Card className={classes.root}>
@@ -51,12 +79,12 @@ function Post(props) {
                 />
             </div>
             <CardActions>
-                <IconButton >
-                    <Badge badgeContent={props.post.likes} color="error">
+                <IconButton onClick={() => likePostHandler(props.post.id)} >
+                    <Badge badgeContent={likes} color="error">
                         <Favorite />
                     </Badge>
                 </IconButton>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={() => commentPostHandler(props.post.id)}>
                     Komentuoti ({props.post.comments})
                 </Button>
             </CardActions>
