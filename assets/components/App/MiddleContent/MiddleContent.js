@@ -17,7 +17,9 @@ class MiddleContent extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path="/" exact component={Feed} />
+                    <Route path="/" exact render={(props) => (
+                        <Feed {...props} auth={this.props.auth} rightContentMobile={this.props.rightContentMobile} />
+                    )} />
                     <Route path="/paieska" exact component={Search} />
                     <Route path="/top30lt" exact component={Top30Lt} />
                     <Route path="/top40" exact component={Top40} />

@@ -25,6 +25,7 @@ class Feed extends React.Component {
     render() {
         return (
             <React.Fragment>
+                {this.props.rightContentMobile}
                 {this.state.feedArray.map((feed) => (
                     <div className="mt-2" key={feed.id}>
                         {feed.type === 'post' ?

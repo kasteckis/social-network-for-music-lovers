@@ -108,9 +108,4 @@ function Navbar(props) {
     );
 }
 
-Navbar.propTypes = {
-    selectedNavbarItem: PropTypes.string,
-    selectNavbarItemHandler: PropTypes.func
-};
-
 export default Navbar;

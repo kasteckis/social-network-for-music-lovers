@@ -15,16 +15,6 @@ import {
 
 class App extends Component {
 
-    state = {
-        selectedNavbarItem: 'muzika'
-    }
-
-    selectNavbarItemHandler(name) {
-        this.setState({
-            selectedNavbarItem: name
-        });
-    }
-
     componentDidMount() {
         this.props.authCheckState();
     }
@@ -36,11 +26,15 @@ class App extends Component {
             />
         );
 
+        const rightContentOnMobileFeed = (
+            <MobileView>
+                {rightContent}
+            </MobileView>
+        );
+
         return (
             <div>
                 <Navbar
-                    selectedNavbarItem={this.state.selectedNavbarItem}
-                    selectNavbarItemHandler={(name) => this.selectNavbarItemHandler(name)}
                     auth={this.props.auth}
                 />
                 <MobileNavbar
@@ -50,11 +44,9 @@ class App extends Component {
                 <div className="container-xl mt-5">
                     <div className="row">
                         <div className="col-12 col-md-9">
-                            <MobileView>
-                                {rightContent}
-                            </MobileView>
                             <MiddleContent
                                 auth={this.props.auth}
+                                rightContentMobile={rightContentOnMobileFeed}
                             />
                         </div>
                         <div className="col-12 col-md-3">
