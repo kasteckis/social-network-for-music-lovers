@@ -8,6 +8,10 @@ import MiddleContent from "./MiddleContent/MiddleContent";
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
+import {
+    BrowserView,
+    MobileView
+} from "react-device-detect";
 
 class App extends Component {
 
@@ -26,6 +30,12 @@ class App extends Component {
     }
 
     render() {
+        const rightContent = (
+            <RightContent
+                auth={this.props.auth}
+            />
+        );
+
         return (
             <div>
                 <Navbar
@@ -40,14 +50,17 @@ class App extends Component {
                 <div className="container-xl mt-5">
                     <div className="row">
                         <div className="col-12 col-md-9">
+                            <MobileView>
+                                {rightContent}
+                            </MobileView>
                             <MiddleContent
                                 auth={this.props.auth}
                             />
                         </div>
                         <div className="col-12 col-md-3">
-                            <RightContent
-                                auth={this.props.auth}
-                            />
+                            <BrowserView>
+                                {rightContent}
+                            </BrowserView>
                         </div>
                     </div>
                     <MarginBottom/>
