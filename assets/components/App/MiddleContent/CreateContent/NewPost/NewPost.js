@@ -111,6 +111,18 @@ class NewPost extends Component {
                                 label="Pavadinimas"
                                 variant="outlined"
                             /><br/>
+                            <Button
+                                variant="contained"
+                                component="label"
+                                className="mt-2"
+                            >
+                                Upload a photo cover
+                                <input
+                                    type="file"
+                                    onChange={() => console.log("ikeltas")}
+                                    hidden
+                                />
+                            </Button><br/>
                             <TextField
                                 error={this.state.spotifyIframeUrlError.length > 0}
                                 helperText={this.state.spotifyIframeUrlError}

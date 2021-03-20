@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ChatMessage;
 use App\Entity\DaySong;
+use App\Entity\Post;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -36,5 +37,6 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);
         yield MenuItem::linkToCrud('Chat messages', 'fas fa-list', ChatMessage::class);
         yield MenuItem::linkToCrud('Day Songs', 'fas fa-list', DaySong::class);
+        yield MenuItem::linkToCrud('Posts', 'fas fa-list', Post::class);
     }
 }

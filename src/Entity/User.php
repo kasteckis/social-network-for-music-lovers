@@ -88,6 +88,11 @@ class User implements UserInterface
     private $postComments;
 
     /**
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="createdBy")
+     */
+    private $posts;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -97,6 +102,7 @@ class User implements UserInterface
         $this->chatMessages = new ArrayCollection();
         $this->likedPosts = new ArrayCollection();
         $this->postComments = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -365,6 +371,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($postComment->getUser() === $this) {
                 $postComment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getCreatedBy() === $this) {
+                $post->setCreatedBy(null);
             }
         }
 
