@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import Posts from "./Posts/Posts";
 import {Route, Switch} from "react-router";
 import Page404 from "./Page404/Page404";
 import Search from "./Search/Search";
@@ -8,17 +7,17 @@ import Top30Lt from "./Top30LT/Top30LT";
 import Top40 from "./Top40/Top40";
 import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
-import CreateContent from "./CreateContent/CreateContent";
 import NewPost from "./CreateContent/NewPost/NewPost";
 import Logout from "./Auth/Logout/Logout";
 import {connect} from "react-redux";
+import Feed from "./Feed/Feed";
 
 class MiddleContent extends Component {
     render() {
         return (
             <div>
                 <Switch>
-                    <Route path="/" exact component={Posts} />
+                    <Route path="/" exact component={Feed} />
                     <Route path="/paieska" exact component={Search} />
                     <Route path="/top30lt" exact component={Top30Lt} />
                     <Route path="/top40" exact component={Top40} />

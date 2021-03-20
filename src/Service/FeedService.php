@@ -28,6 +28,7 @@ class FeedService
         $posts = $this->entityManager->getRepository(Post::class)->findAll();
         foreach ($posts as $post) {
             $feedArray[] = [
+                'id' => $post->getId(),
                 'image' => $post->getImage(),
                 'title' => $post->getTitle(),
                 'text' => $post->getText(),
