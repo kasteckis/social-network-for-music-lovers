@@ -52,7 +52,12 @@ function Post(props) {
     }
 
     const commentPostHandler = (id) => {
-        console.log("coment post");
+        if (props.auth.token === null) {
+            history.push('/prisijungti');
+            return;
+        }
+
+        // todo implementint commentavima
     }
 
     return (

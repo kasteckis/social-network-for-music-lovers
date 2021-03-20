@@ -11,6 +11,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
+import {Redirect} from "react-router-dom";
 
 class ViewPost extends Component {
 
@@ -25,7 +26,40 @@ class ViewPost extends Component {
             comments: 0,
             type: 'post'
         },
-        error: false
+        error: false,
+        redirectToLoginPage: false
+    }
+
+    likePostHandler = (id) => {
+        if (this.props.auth.token === null) {
+            this.setState({redirectToLoginPage: true});
+            return;
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.put('/api/post/' + id + '/like', {}, headers)
+            .then(response => {
+                let postClone = {...this.state.post};
+                postClone.likes = response.data.likes;
+
+                this.setState({post: postClone});
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    commentPostHandler = (id) => {
+        if (this.props.auth.token === null) {
+            this.setState({redirectToLoginPage: true});
+        }
+
+        // todo implementint commentavima
     }
 
     componentDidMount() {
@@ -41,6 +75,7 @@ class ViewPost extends Component {
     render() {
         return (
             <Card>
+                {this.state.redirectToLoginPage ? <Redirect to="/prisijungti" /> : null}
                 {this.state.error ?
                         <CardActionArea>
                             <CardContent>
@@ -75,12 +110,12 @@ class ViewPost extends Component {
                                 />
                             </div>
                             <CardActions>
-                                <IconButton >
+                                <IconButton onClick={() => this.likePostHandler(this.state.post.id)}>
                                     <Badge badgeContent={this.state.post.likes} color="error">
                                         <Favorite />
                                     </Badge>
                                 </IconButton>
-                                <Button size="small" color="primary">
+                                <Button size="small" color="primary" onClick={() => this.commentPostHandler(this.state.post.id)}>
                                     Komentuoti ({this.state.post.comments})
                                 </Button>
                             </CardActions>
