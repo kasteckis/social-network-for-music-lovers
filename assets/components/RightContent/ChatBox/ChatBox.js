@@ -1,11 +1,62 @@
 import React from "react";
-import {Card, CardContent, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Dialog, DialogActions,
+    DialogContent, DialogContentText,
+    DialogTitle, TextField,
+    Typography
+} from "@material-ui/core";
 import axios from "axios";
 
 class ChatBox extends React.Component {
 
+    constructor(props, context) {
+        super(props, context);
+        this.newMessageRef = React.createRef();
+    }
+
     state = {
-        messages: []
+        messages: [],
+        openDialog: false
+    }
+
+    handleClickOpen = () => {
+        this.setState({openDialog: true});
+    };
+
+    handleClose = () => {
+        this.setState({openDialog: false});
+    };
+
+    handleSubmitMessage = (event) => {
+        event.preventDefault();
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        const data = {
+            message: this.newMessageRef.current.value
+        }
+
+        axios.post('/api/chat-messages', data, headers)
+            .then(response => {
+                // const newMessage = response.data;
+                // const messagesClone = {...this.state.messages};
+                // messagesClone.push(newMessage);
+                //
+                // this.setState({messages: messagesClone});
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        this.setState({openDialog: false});
     }
 
     componentDidMount() {
@@ -19,8 +70,32 @@ class ChatBox extends React.Component {
     }
 
     render() {
+
+        const dialog = (
+            <Dialog open={this.state.openDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Šaukykla</DialogTitle>
+                <DialogContent>
+                    <form onSubmit={(event) => this.handleSubmitMessage(event)}>
+                        <TextField
+                            autoFocus
+                            inputRef={this.newMessageRef}
+                            margin="dense"
+                            label="Žinutė"
+                            fullWidth
+                        />
+                    </form>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={(event) => this.handleSubmitMessage(event)} color="primary">
+                        Rašyti
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+
         return (
             <Card className="mt-2" variant="outlined">
+                {dialog}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
                         Šaukykla
@@ -35,6 +110,13 @@ class ChatBox extends React.Component {
                             </Typography>
                         </React.Fragment>
                     ))}
+                    {this.props.auth.token === null ?
+                        null
+                        :
+                        <Button variant="contained" color="primary" onClick={() => this.handleClickOpen()}>
+                            Komentuoti
+                        </Button>
+                    }
                 </CardContent>
             </Card>
         );
