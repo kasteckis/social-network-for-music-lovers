@@ -33,6 +33,9 @@ class PostController extends AbstractController
         $entityManager->persist($post);
         $entityManager->flush();
 
-        return $this->json(['success' => 'ok'], 201);
+        return $this->json([
+            'success' => 'ok',
+            'postId' => $post->getId()
+        ], 201);
     }
 }
