@@ -30,7 +30,7 @@ function Post(props) {
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={props.post.image}
+                    image={window.location.href + 'images/' + props.post.image}
                     title={props.post.title}
                 />
                 <CardContent>
