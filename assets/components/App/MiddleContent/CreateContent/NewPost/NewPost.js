@@ -17,7 +17,9 @@ class NewPost extends Component {
     state = {
         titleError: '',
         spotifyIframeUrlError: '',
-        textError: ''
+        textError: '',
+        uploadedFileError: '',
+        uploadedFileName: ''
     }
 
 
@@ -37,7 +39,8 @@ class NewPost extends Component {
             loading: false,
             titleError: '',
             spotifyIframeUrlError: '',
-            textError: ''
+            textError: '',
+            uploadedFileError: ''
         });
 
         if (this.titleRef.current.value.length < 5) {
@@ -61,16 +64,22 @@ class NewPost extends Component {
             });
         }
 
+        if (this.state.uploadedFileName.length === 0) {
+            foundErrors = true;
+            this.setState({
+                uploadedFileError: 'Nuotrauką įkelti privaloma'
+            });
+        }
 
         if (foundErrors) {
             return;
         }
 
-
         const postData = {
             title: this.titleRef.current.value,
             spotifyIframeUrl: 'https://open.spotify.com/embed/track/' + this.spotifyIframeUrlRef.current.value,
-            text: this.textRef.current.value
+            text: this.textRef.current.value,
+            image: this.state.uploadedFileName
         };
         const headers = {
             headers: {
@@ -87,6 +96,22 @@ class NewPost extends Component {
                 console.log(error);
                 this.setState({loading: false});
             })
+    }
+
+    imageUploadHandler(event) {
+        const file = event.target.files[0];
+
+        axios.post('/api/post/image', file, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        }).then(response => {
+            this.setState({uploadedFileName: response.data.fileName})
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     render() {
@@ -115,14 +140,24 @@ class NewPost extends Component {
                                 variant="contained"
                                 component="label"
                                 className="mt-2"
+                                disabled={this.state.uploadedFileName.length > 0}
                             >
-                                Upload a photo cover
+                                {this.state.uploadedFileName.length > 0 ?
+                                        <React.Fragment>
+                                            Nuotrauka įkelta ir išsaugota
+                                        </React.Fragment>
+                                    :
+                                        <React.Fragment>
+                                            Įkelti nuotrauką
+                                        </React.Fragment>
+                                }
                                 <input
                                     type="file"
-                                    onChange={() => console.log("ikeltas")}
+                                    onChange={(event) => this.imageUploadHandler(event)}
                                     hidden
                                 />
                             </Button><br/>
+                            <span style={{color: 'red'}}>{this.state.uploadedFileError}</span>
                             <TextField
                                 error={this.state.spotifyIframeUrlError.length > 0}
                                 helperText={this.state.spotifyIframeUrlError}
