@@ -13,10 +13,10 @@ import {
 } from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
 
-function Post() {
+function Post(props) {
     const useStyles = makeStyles({
         root: {
-            maxWidth: '100%',
+            maxWidth: '100%'
         },
         media: {
             height: 140,
@@ -31,34 +31,31 @@ function Post() {
                 <CardMedia
                     className={classes.media}
                     image="https://i.imgur.com/mT177Fe.png"
-                    title="Contemplative Reptile"
+                    title={props.post.title}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        Straipsnio pavadinimas
+                        {props.post.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        Straipsnio contentasStraipsnio contentasStraipsnio
-                         contentasStraipsnio contentasStraipsnio contentasStraipsnio contentasStraipsnio
-                        contentasStraipsnio contentasStraipsnio contentasStraipsnio contentasStraipsnio
-                         contentas
+                        {props.post.text}
                     </Typography>
                 </CardContent>
             </CardActionArea>
             <div className="m-2">
-                <iframe src="https://open.spotify.com/embed/playlist/3SWozV3F6KrBg69SBRyTod"
+                <iframe src={props.post.spotifyIframeUrl}
                         width="100%" height="80" frameBorder="0"
                         allow="encrypted-media"
                 />
             </div>
             <CardActions>
                 <IconButton >
-                    <Badge badgeContent="5" color="error">
+                    <Badge badgeContent={props.post.likes} color="error">
                         <Favorite />
                     </Badge>
                 </IconButton>
                 <Button size="small" color="primary">
-                    Komentuoti (4)
+                    Komentuoti ({props.post.comments})
                 </Button>
             </CardActions>
         </Card>
