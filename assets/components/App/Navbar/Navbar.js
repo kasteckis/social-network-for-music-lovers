@@ -97,7 +97,11 @@ function Navbar(props) {
                         <Typography className={classes.title}>
                             {/*Tuscias komponentas, kad komponentai po juo butu desnioje puseje*/}
                         </Typography>
-                        <NavbarTopIcons />
+                        {props.auth.token === null ?
+                                null
+                            :
+                                <NavbarTopIcons/>
+                        }
                     </Toolbar>
                 </AppBar>
             </div>
