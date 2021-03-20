@@ -7,10 +7,11 @@ import Top30Lt from "./Top30LT/Top30LT";
 import Top40 from "./Top40/Top40";
 import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
-import NewPost from "./CreateContent/NewPost/NewPost";
+import NewPost from "../FeedContent/CreateContent/NewPost/NewPost";
 import Logout from "./Auth/Logout/Logout";
 import {connect} from "react-redux";
 import Feed from "./Feed/Feed";
+import ViewPost from "../FeedContent/ViewContent/ViewPost/ViewPost";
 
 class MiddleContent extends Component {
     render() {
@@ -34,6 +35,10 @@ class MiddleContent extends Component {
 
                     <Route path="/irasai/naujas" exact render={(props) => (
                         <NewPost {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/irasai/:id" exact render={(props) => (
+                        <ViewPost {...props} auth={this.props.auth} />
                     )} />
 
                     <Route component={Page404} />

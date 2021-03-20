@@ -5,7 +5,7 @@ import {BottomNavigation, BottomNavigationAction} from "@material-ui/core";
 import {AddCircle, ExitToApp, Group, Person, RssFeed, Search} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
 import {useHistory} from "react-router";
-import CreateContentPopup from "../MiddleContent/CreateContent/CreateContentPopup/CreateContentPopup";
+import CreateContentPopup from "../FeedContent/CreateContent/CreateContentPopup/CreateContentPopup";
 
 function MobileNavbar(props) {
     const [dialogOpen, setDialogOpen] = useState(false);

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {IconButton} from "@material-ui/core";
 import {AddCircle} from "@material-ui/icons";
 import './NavbarTopIcons.css';
-import CreateContentPopup from "../../MiddleContent/CreateContent/CreateContentPopup/CreateContentPopup";
+import CreateContentPopup from "../../FeedContent/CreateContent/CreateContentPopup/CreateContentPopup";
 
 function NavbarTopIcons() {
 
