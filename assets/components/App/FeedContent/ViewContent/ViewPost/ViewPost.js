@@ -18,7 +18,7 @@ class ViewPost extends Component {
     state = {
         post: {
             id: null,
-            image: null,
+            image: '',
             title: null,
             text: null,
             spotifyIframeUrl: null,
@@ -87,11 +87,15 @@ class ViewPost extends Component {
                     :
                         <React.Fragment>
                             <CardActionArea>
-                                <CardMedia
-                                    style={{height: 140}}
-                                    image={window.location.origin + '/images/' + this.state.post.image}
-                                    title={this.state.post.title}
-                                />
+                                {this.state.post.image === null || this.state.post.image.length === 0 ?
+                                        null
+                                    :
+                                        <CardMedia
+                                            style={{height: 140}}
+                                            image={window.location.origin + '/images/' + this.state.post.image}
+                                            title={this.state.post.title}
+                                        />
+                                }
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
                                         {this.state.post.title}
@@ -103,12 +107,16 @@ class ViewPost extends Component {
                                     {this.state.post.text}
                                 </Typography>
                             </CardContent>
-                            <div className="m-2">
-                                <iframe src={this.state.post.spotifyIframeUrl}
-                                        width="100%" height="80" frameBorder="0"
-                                        allow="encrypted-media"
-                                />
-                            </div>
+                            {this.state.post.spotifyIframeUrl ?
+                                    <div className="m-2">
+                                        <iframe src={this.state.post.spotifyIframeUrl}
+                                                width="100%" height="80" frameBorder="0"
+                                                allow="encrypted-media"
+                                        />
+                                    </div>
+                                :
+                                    null
+                            }
                             <CardActions>
                                 <IconButton onClick={() => this.likePostHandler(this.state.post.id)}>
                                     <Badge badgeContent={this.state.post.likes} color="error">

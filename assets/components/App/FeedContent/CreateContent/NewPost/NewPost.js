@@ -53,7 +53,7 @@ class NewPost extends Component {
             });
         }
 
-        if (this.spotifyIframeUrlRef.current.value.length < 8) {
+        if (this.spotifyIframeUrlRef.current.value.length < 8 && this.spotifyIframeUrlRef.current.value.length !== 0) {
             foundErrors = true;
             this.setState({
                 spotifyIframeUrlError: 'Per trumpas spotify kodas, pavyzdys - 7sWRlDoTDX8geTR8zzr2vt'
@@ -67,20 +67,22 @@ class NewPost extends Component {
             });
         }
 
-        if (this.state.uploadedFileName.length === 0) {
-            foundErrors = true;
-            this.setState({
-                uploadedFileError: 'Nuotrauką įkelti privaloma'
-            });
-        }
+        // if (this.state.uploadedFileName.length === 0) {
+        //     foundErrors = true;
+        //     this.setState({
+        //         uploadedFileError: 'Nuotrauką įkelti privaloma'
+        //     });
+        // }
 
         if (foundErrors) {
             return;
         }
 
+
+        const spotifyUrl = this.spotifyIframeUrlRef.current.value ? 'https://open.spotify.com/embed/track/' + this.spotifyIframeUrlRef.current.value : null;
         const postData = {
             title: this.titleRef.current.value,
-            spotifyIframeUrl: 'https://open.spotify.com/embed/track/' + this.spotifyIframeUrlRef.current.value,
+            spotifyIframeUrl: spotifyUrl,
             text: this.textRef.current.value,
             image: this.state.uploadedFileName
         };

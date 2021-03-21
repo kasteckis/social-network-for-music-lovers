@@ -63,11 +63,15 @@ function Post(props) {
     return (
         <Card className={classes.root}>
             <CardActionArea onClick={() => history.push('/irasai/' + props.post.id)}>
-                <CardMedia
-                    className={classes.media}
-                    image={window.location.origin + '/images/' + props.post.image}
-                    title={props.post.title}
-                />
+                {props.post.image === null || props.post.image.length === 0 ?
+                    null
+                    :
+                    <CardMedia
+                        className={classes.media}
+                        image={window.location.origin + '/images/' + props.post.image}
+                        title={props.post.title}
+                    />
+                }
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {props.post.title}
@@ -77,12 +81,16 @@ function Post(props) {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <div className="m-2">
-                <iframe src={props.post.spotifyIframeUrl}
-                        width="100%" height="80" frameBorder="0"
-                        allow="encrypted-media"
-                />
-            </div>
+            {props.post.spotifyIframeUrl ?
+                <div className="m-2">
+                    <iframe src={props.post.spotifyIframeUrl}
+                            width="100%" height="80" frameBorder="0"
+                            allow="encrypted-media"
+                    />
+                </div>
+                :
+                null
+            }
             <CardActions>
                 <IconButton onClick={() => likePostHandler(props.post.id)} >
                     <Badge badgeContent={likes} color="error">
