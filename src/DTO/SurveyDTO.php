@@ -30,8 +30,20 @@ class SurveyDTO
         $this->answers[] = [
             'id' => $id,
             'title' => $title,
-            'answered' => $answered
+            'answered' => $answered,
+            'percentage' => 0
         ];
+    }
+
+    public function calculateSurveyAnswerPercentages(): void
+    {
+        foreach ($this->answers as $key => $answer) {
+            if ($this->answeredTotal === 0) {
+                $this->answers[$key]['percentage'] = 0;
+            } else {
+                $this->answers[$key]['percentage'] = $answer['answered'] * 100 / $this->answeredTotal;
+            }
+        }
     }
 
     public function toArray(): array

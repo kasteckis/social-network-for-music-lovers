@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SurveyController extends AbstractController
 {
     /**
-     * @Route("/api/survey", name="get_survey")
+     * @Route("/api/survey", name="get_survey", methods={"GET"})
      */
     public function getSurvey(): Response
     {
@@ -33,6 +33,8 @@ class SurveyController extends AbstractController
                 $surveyAnswer->getAnsweredUser()->count()
             );
         }
+
+        $surveyDTO->calculateSurveyAnswerPercentages();
 
         return $this->json($surveyDTO->toArray());
     }

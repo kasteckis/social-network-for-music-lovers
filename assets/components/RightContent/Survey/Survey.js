@@ -10,11 +10,33 @@ import {
     Radio,
     Typography
 } from "@material-ui/core";
+import axios from "axios";
 
 class Survey extends React.Component {
 
     state = {
-        checked: -1
+        checked: -1,
+        survey: {
+            id: -1,
+            title: null,
+            answeredTotal: 0,
+            answers: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get('/api/survey')
+            .then(response => {
+                console.log(response.data);
+                this.setState({survey: response.data});
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    submitSurveyHandler() {
+        console.log("balsuoti");
     }
 
     handleToggle(value) {
@@ -29,38 +51,27 @@ class Survey extends React.Component {
 
                     <div>
                         <Typography color="textPrimary" gutterBottom>
-                            Kaip sekasi?
+                            {this.state.survey.title}
                         </Typography>
                         <form noValidate>
                             <List>
+                            {this.state.survey.answers.map((surveyAnswer) => (
                                 <ListItem
+                                    key={surveyAnswer.id}
                                     role={undefined}
                                     button
-                                    onClick={() => this.handleToggle(0)}
-                                    // className={classes.listItem}
+                                    onClick={() => this.handleToggle(surveyAnswer.id)}
                                 >
                                     <FormControlLabel
                                         control={<Radio/>}
-                                        checked={this.state.checked === 0}
+                                        checked={this.state.checked === surveyAnswer.id}
                                         tabIndex={-1}
-                                        label="Gerai"
+                                        label={surveyAnswer.title}
                                     />
                                 </ListItem>
-                                <ListItem
-                                    role={undefined}
-                                    button
-                                    onClick={() => this.handleToggle(1)}
-                                    // className={classes.listItem}
-                                >
-                                    <FormControlLabel
-                                        control={<Radio/>}
-                                        checked={this.state.checked === 1}
-                                        tabIndex={-1}
-                                        label="Puikiai"
-                                    />
-                                </ListItem>
+                            ))}
                             </List>
-                            <Button variant="contained" color="primary">
+                            <Button onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
                                 Balsuoti
                             </Button>
                         </form>
