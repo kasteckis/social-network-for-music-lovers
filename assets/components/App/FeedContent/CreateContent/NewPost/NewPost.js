@@ -53,10 +53,19 @@ class NewPost extends Component {
             });
         }
 
-        if (this.spotifyIframeUrlRef.current.value.length < 8 && this.spotifyIframeUrlRef.current.value.length !== 0) {
+        const start = this.spotifyIframeUrlRef.current.value.lastIndexOf('/');
+        const last = this.spotifyIframeUrlRef.current.value.lastIndexOf('?');
+
+        if (start !== -1 && last !== -1) {
+            this.spotifyIframeUrlRef.current.value = this.spotifyIframeUrlRef.current.value.substring(start+1, last);
+        } else if (start !== -1) {
+            this.spotifyIframeUrlRef.current.value = this.spotifyIframeUrlRef.current.value.substring(start+1);
+        }
+
+        if (this.spotifyIframeUrlRef.current.value.length < 15 && this.spotifyIframeUrlRef.current.value.length !== 0) {
             foundErrors = true;
             this.setState({
-                spotifyIframeUrlError: 'Per trumpas spotify kodas, pavyzdys - 7sWRlDoTDX8geTR8zzr2vt'
+                spotifyIframeUrlError: 'Per trumpas spotify kodas, pavyzdys - 7sWRlDoTDX8geTR8zzr2vt arba https://open.spotify.com/track/7sWRlDoTDX8geTR8zzr2vt'
             });
         }
 
