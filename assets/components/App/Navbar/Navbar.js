@@ -88,14 +88,14 @@ function Navbar(props) {
                     </SwipeableDrawer>
                 </React.Fragment>
 
-                <AppBar position="static" style={{ background: '#808080' }}>
+                <AppBar position="static" style={{ background: '#000000' }}>
                     <Toolbar>
                         <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <MenuIcon />
+                            <img style={{maxWidth: 40}} src="/menu.svg" alt="menu button"/>
                         </IconButton>
-                        <img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>
-                        <Typography className={classes.title}>
-                            {/*Tuscias komponentas, kad komponentai po juo butu desnioje puseje*/}
+                        {/*<img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>*/}
+                        <Typography className={classes.title} variant="h5" component="h2">
+                            MUSIC.LT
                         </Typography>
                         {props.auth.token === null ?
                                 null
