@@ -19,8 +19,7 @@ class SurveyCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
-            BooleanField::new('active'),
-            AssociationField::new('surveyAnswers')
+            BooleanField::new('active')
         ];
     }
 }
