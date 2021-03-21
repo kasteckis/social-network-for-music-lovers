@@ -16,7 +16,9 @@ class RightContent extends Component {
                 <ChatBox
                     auth={this.props.auth}
                 />
-                <Survey />
+                <Survey
+                    auth={this.props.auth}
+                />
                 <InformationBox />
             </div>
         );
