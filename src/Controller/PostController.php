@@ -77,7 +77,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/api/post/{post}", name="create_post", methods={"GET"})
+     * @Route("/api/post/{post}", name="get_post", methods={"GET"})
      * @param ?Post $post
      * @return Response
      */
