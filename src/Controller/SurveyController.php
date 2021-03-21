@@ -32,6 +32,8 @@ class SurveyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $survey = $em->getRepository(Survey::class)->findOneBy(['active' => true]);
+        /** @var ?User $user */
+        $user = $this->getUser();
 
         if (!($survey instanceof Survey)) {
             return $this->json([
@@ -39,7 +41,7 @@ class SurveyController extends AbstractController
             ]);
         }
 
-        return $this->json($this->surveyService->getFinalSurveyDataArray($survey));
+        return $this->json($this->surveyService->getFinalSurveyDataArray($survey, $user));
     }
 
     /**
@@ -75,6 +77,6 @@ class SurveyController extends AbstractController
         $surveyAnswer->addAnsweredUser($user);
         $em->flush();
 
-        return $this->json($this->surveyService->getFinalSurveyDataArray($activeSurvey));
+        return $this->json($this->surveyService->getFinalSurveyDataArray($activeSurvey, $user));
     }
 }

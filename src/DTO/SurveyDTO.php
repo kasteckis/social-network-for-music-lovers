@@ -8,6 +8,8 @@ class SurveyDTO
 
     private ?string $title = null;
 
+    private $showResults = false; // Ar rodyti atsakymus per UI (true) ar dar leisti balsuoti (false)
+
     private array $answers = [];
 
     private int $answeredTotal = 0;
@@ -46,12 +48,23 @@ class SurveyDTO
         }
     }
 
+    public function isShowResults(): bool
+    {
+        return $this->showResults;
+    }
+
+    public function setShowResults(bool $showResults): void
+    {
+        $this->showResults = $showResults;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->id,
             'title' => $this->title,
             'answeredTotal' => $this->answeredTotal,
+            'showResults' => $this->showResults,
             'answers' => $this->answers
         ];
     }

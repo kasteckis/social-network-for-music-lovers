@@ -6,7 +6,7 @@ import {
     CssBaseline, Dialog, DialogContent, DialogTitle,
     FormControlLabel,
     List,
-    ListItem,
+    ListItem, ListItemText,
     Radio,
     Typography
 } from "@material-ui/core";
@@ -21,9 +21,9 @@ class Survey extends React.Component {
             id: -1,
             title: null,
             answeredTotal: 0,
+            showResults: true,
             answers: []
         },
-        redirectToLoginPage: false,
         errorDialog: false
     }
 
@@ -37,6 +37,26 @@ class Survey extends React.Component {
             .catch(error => {
                 console.log(error);
             })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.auth.token === null && this.props.auth.token) {
+            const headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                }
+            };
+
+            axios.get('/api/survey', headers)
+                .then(response => {
+                    if (!response.data.error) {
+                        this.setState({survey: response.data});
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     submitSurveyHandler() {
@@ -58,7 +78,7 @@ class Survey extends React.Component {
 
         axios.post('/api/survey', data, headers)
             .then(response => {
-                console.log(response.data);
+                this.setState({survey: response.data});
             })
             .catch(error => {
                 console.log(error);
@@ -74,13 +94,6 @@ class Survey extends React.Component {
     }
 
     render() {
-        let redirectToLoginPage = null;
-        if (this.state.redirectToLoginPage) {
-            redirectToLoginPage = (
-                <Redirect to="/prisijungti" />
-            );
-        }
-
         let dialogError = (
             <Dialog onClose={() => this.handleDialogClose()} aria-labelledby="customized-dialog-title" open={this.state.errorDialog}>
                 <DialogTitle onClose={() => this.handleDialogClose()}>
@@ -97,7 +110,6 @@ class Survey extends React.Component {
         return (
             <React.Fragment>
                 {dialogError}
-                {redirectToLoginPage}
                 {this.state.survey.id === -1 ?
                     null
                     :
@@ -118,16 +130,23 @@ class Survey extends React.Component {
                                                 button
                                                 onClick={() => this.handleToggle(surveyAnswer.id)}
                                             >
-                                                <FormControlLabel
-                                                    control={<Radio/>}
-                                                    checked={this.state.checked === surveyAnswer.id}
-                                                    tabIndex={-1}
-                                                    label={surveyAnswer.title}
-                                                />
+                                                {this.state.survey.showResults ?
+                                                    <ListItemText
+                                                        primary={surveyAnswer.title + ' (' + Number.parseFloat(surveyAnswer.percentage).toPrecision(4) + '%)'}
+                                                        tabIndex={-1}
+                                                    />
+                                                    :
+                                                    <FormControlLabel
+                                                        control={<Radio/>}
+                                                        checked={this.state.checked === surveyAnswer.id}
+                                                        tabIndex={-1}
+                                                        label={surveyAnswer.title}
+                                                    />
+                                                }
                                             </ListItem>
                                         ))}
                                     </List>
-                                    <Button disabled={this.props.auth.token === null} onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
+                                    <Button disabled={this.props.auth.token === null || this.state.survey.showResults} onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
                                         Balsuoti
                                     </Button>
                                 </form>
