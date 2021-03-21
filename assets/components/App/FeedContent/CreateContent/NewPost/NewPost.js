@@ -53,19 +53,24 @@ class NewPost extends Component {
             });
         }
 
-        const start = this.spotifyIframeUrlRef.current.value.lastIndexOf('/');
-        const last = this.spotifyIframeUrlRef.current.value.lastIndexOf('?');
+        // Gaunam pozicija kur baigiasi open.spotify.com/ kad veliau pridet +/embed/+
+        const start = this.spotifyIframeUrlRef.current.value.lastIndexOf('.com/');
+        // Norint pridet +/embed/+ cia turi buti false, t.y. jo turi kolkas nebuti, nes useris gali ir su juo idet
+        const isAlreadyEmbed = this.spotifyIframeUrlRef.current.value.lastIndexOf('embed');
 
-        if (start !== -1 && last !== -1) {
-            this.spotifyIframeUrlRef.current.value = this.spotifyIframeUrlRef.current.value.substring(start+1, last);
-        } else if (start !== -1) {
-            this.spotifyIframeUrlRef.current.value = this.spotifyIframeUrlRef.current.value.substring(start+1);
+        if (start !== -1 && isAlreadyEmbed === -1) {
+            this.spotifyIframeUrlRef.current.value  =
+                this.spotifyIframeUrlRef.current.value.substring(0, start + 4) +
+                '/embed' +
+                this.spotifyIframeUrlRef.current.value.substring(start + 4)
+            ;
         }
+
 
         if (this.spotifyIframeUrlRef.current.value.length < 15 && this.spotifyIframeUrlRef.current.value.length !== 0) {
             foundErrors = true;
             this.setState({
-                spotifyIframeUrlError: 'Per trumpas spotify kodas, pavyzdys - 7sWRlDoTDX8geTR8zzr2vt arba https://open.spotify.com/track/7sWRlDoTDX8geTR8zzr2vt'
+                spotifyIframeUrlError: 'Per trumpas spotify kodas, pavyzdys - https://open.spotify.com/track/7sWRlDoTDX8geTR8zzr2vt'
             });
         }
 
@@ -88,7 +93,7 @@ class NewPost extends Component {
         }
 
 
-        const spotifyUrl = this.spotifyIframeUrlRef.current.value ? 'https://open.spotify.com/embed/track/' + this.spotifyIframeUrlRef.current.value : null;
+        const spotifyUrl = this.spotifyIframeUrlRef.current.value ? this.spotifyIframeUrlRef.current.value : null;
         const postData = {
             title: this.titleRef.current.value,
             spotifyIframeUrl: spotifyUrl,
