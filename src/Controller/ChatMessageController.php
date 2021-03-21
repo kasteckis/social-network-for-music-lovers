@@ -29,18 +29,7 @@ class ChatMessageController extends AbstractController
      */
     public function getChatMessages(): Response
     {
-        $chatMessages = $this->getDoctrine()->getRepository(ChatMessage::class)->findBy([], [
-            'createdAt' => 'DESC'
-        ], 10);
-
-        $chatMessagesArray = [];
-
-        // TODO: pafixint timezone
-        foreach ($chatMessages as $chatMessage) {
-            $chatMessagesArray[] = $this->chatMessageService->chatMessageEntityToArray($chatMessage);
-        }
-
-        return $this->json($chatMessagesArray);
+        return $this->json($this->chatMessageService->getLast10ChatMessages());
     }
 
     /**
@@ -67,6 +56,6 @@ class ChatMessageController extends AbstractController
         $em->persist($message);
         $em->flush();
 
-        return $this->json($this->chatMessageService->chatMessageEntityToArray($message));
+        return $this->json($this->chatMessageService->getLast10ChatMessages());
     }
 }

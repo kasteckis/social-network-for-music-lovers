@@ -46,11 +46,7 @@ class ChatBox extends React.Component {
 
         axios.post('/api/chat-messages', data, headers)
             .then(response => {
-                // const newMessage = response.data;
-                // const messagesClone = {...this.state.messages};
-                // messagesClone.push(newMessage);
-                //
-                // this.setState({messages: messagesClone});
+                this.setState({messages: response.data});
             })
             .catch(error => {
                 console.log(error);
