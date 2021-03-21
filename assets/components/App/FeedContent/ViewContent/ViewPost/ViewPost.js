@@ -110,7 +110,7 @@ class ViewPost extends Component {
                             {this.state.post.spotifyIframeUrl ?
                                     <div className="m-2">
                                         <iframe src={this.state.post.spotifyIframeUrl}
-                                                width="100%" height="80" frameBorder="0"
+                                                width="100%" height={this.state.post.spotifyIframeUrl.indexOf('track') === -1 ? 380 : 80} frameBorder="0"
                                                 allow="encrypted-media"
                                         />
                                     </div>

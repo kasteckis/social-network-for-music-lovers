@@ -84,7 +84,7 @@ function Post(props) {
             {props.post.spotifyIframeUrl ?
                 <div className="m-2">
                     <iframe src={props.post.spotifyIframeUrl}
-                            width="100%" height="80" frameBorder="0"
+                            width="100%" height={props.post.spotifyIframeUrl.indexOf('track') === -1 ? 380 : 80} frameBorder="0"
                             allow="encrypted-media"
                     />
                 </div>
