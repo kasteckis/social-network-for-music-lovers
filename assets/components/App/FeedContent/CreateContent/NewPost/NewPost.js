@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 class NewPost extends Component {
 
@@ -19,7 +20,9 @@ class NewPost extends Component {
         spotifyIframeUrlError: '',
         textError: '',
         uploadedFileError: '',
-        uploadedFileName: ''
+        uploadedFileName: '',
+        redirectToCreatedPost: false,
+        redirectToCreatedPostId: null
     }
 
 
@@ -89,8 +92,7 @@ class NewPost extends Component {
         this.setState({loading: true});
         axios.post('/api/post', postData, headers)
             .then(response => {
-                console.log(response);
-                this.setState({loading: false});
+                this.setState({loading: false, redirectToCreatedPost: true, redirectToCreatedPostId: response.data.postId});
             })
             .catch(error => {
                 console.log(error);
@@ -115,8 +117,18 @@ class NewPost extends Component {
     }
 
     render() {
+
+        let redirectToCreatedPost = null;
+        if (this.state.redirectToCreatedPost) {
+            const redirectPath = "/irasai/" + this.state.redirectToCreatedPostId;
+            redirectToCreatedPost = (
+                <Redirect to={redirectPath} />
+            );
+        }
+
         return (
             <Card className="mt-2">
+                {redirectToCreatedPost}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom align="center">
                         Naujo įrašo kūrimas
