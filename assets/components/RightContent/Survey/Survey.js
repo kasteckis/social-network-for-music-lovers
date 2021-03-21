@@ -3,7 +3,7 @@ import {
     Button,
     Card,
     CardContent,
-    CssBaseline,
+    CssBaseline, Dialog, DialogContent, DialogTitle,
     FormControlLabel,
     List,
     ListItem,
@@ -11,6 +11,7 @@ import {
     Typography
 } from "@material-ui/core";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 class Survey extends React.Component {
 
@@ -21,7 +22,9 @@ class Survey extends React.Component {
             title: null,
             answeredTotal: 0,
             answers: []
-        }
+        },
+        redirectToLoginPage: false,
+        errorDialog: false
     }
 
     componentDidMount() {
@@ -37,9 +40,8 @@ class Survey extends React.Component {
     }
 
     submitSurveyHandler() {
-
         if (this.state.checked === -1) {
-            console.log("nepasirinkta reiksme");
+            this.setState({errorDialog: true});
 
             return;
         }
@@ -67,9 +69,35 @@ class Survey extends React.Component {
         this.setState({checked: value});
     }
 
+    handleDialogClose() {
+        this.setState({errorDialog: false});
+    }
+
     render() {
+        let redirectToLoginPage = null;
+        if (this.state.redirectToLoginPage) {
+            redirectToLoginPage = (
+                <Redirect to="/prisijungti" />
+            );
+        }
+
+        let dialogError = (
+            <Dialog onClose={() => this.handleDialogClose()} aria-labelledby="customized-dialog-title" open={this.state.errorDialog}>
+                <DialogTitle onClose={() => this.handleDialogClose()}>
+                    Balsavimo klaida
+                </DialogTitle>
+                <DialogContent dividers>
+                    <Typography gutterBottom>
+                        Pasirinkite balsavimo atsakymą
+                    </Typography>
+                </DialogContent>
+            </Dialog>
+        );
+
         return (
             <React.Fragment>
+                {dialogError}
+                {redirectToLoginPage}
                 {this.state.survey.id === -1 ?
                     null
                     :
@@ -99,7 +127,7 @@ class Survey extends React.Component {
                                             </ListItem>
                                         ))}
                                     </List>
-                                    <Button onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
+                                    <Button disabled={this.props.auth.token === null} onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
                                         Balsuoti
                                     </Button>
                                 </form>
