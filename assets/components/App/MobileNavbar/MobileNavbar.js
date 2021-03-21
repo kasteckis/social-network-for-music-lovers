@@ -33,7 +33,7 @@ function MobileNavbar(props) {
 
     const useStyles = makeStyles({
         root: {
-            backgroundColor: 'orange',
+            backgroundColor: '#2882CE',
         }
     });
 
