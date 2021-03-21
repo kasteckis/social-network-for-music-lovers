@@ -94,7 +94,7 @@ function Navbar(props) {
                             <img style={{maxWidth: 40}} src="/menu.svg" alt="menu button"/>
                         </IconButton>
                         {/*<img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>*/}
-                        <Typography className={classes.title} variant="h5" component="h2">
+                        <Typography onClick={redirectToMainPageHandler} className={classes.title} variant="h5" component="h2">
                             MUSIC.LT
                         </Typography>
                         {props.auth.token === null ?

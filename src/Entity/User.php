@@ -93,6 +93,11 @@ class User implements UserInterface
     private $posts;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -403,6 +408,18 @@ class User implements UserInterface
                 $post->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

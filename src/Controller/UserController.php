@@ -28,6 +28,9 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         if ($user instanceof User) {
+            $user->setLastLogin(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+
             $tokenExpiresAt = $this->userService->getTokenExpirationDateTime();
 
             return $this->json([
