@@ -2,25 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\DaySong;
+use App\Entity\Survey;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
-class DaySongCrudController extends AbstractCrudController
+class SurveyCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return DaySong::class;
+        return Survey::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             TextField::new('title'),
-            UrlField::new('spotifyLink'),
-            DateField::new('date'),
+            BooleanField::new('active'),
+            AssociationField::new('surveyAnswers')
         ];
     }
 }

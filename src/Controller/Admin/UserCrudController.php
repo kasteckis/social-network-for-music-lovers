@@ -33,6 +33,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('ip'),
             BooleanField::new('active'),
             DateTimeField::new('createdAt'),
+            DateTimeField::new('lastLogin'),
             TextField::new('bio'),
         ];
     }

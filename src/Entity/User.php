@@ -98,6 +98,11 @@ class User implements UserInterface
     private $lastLogin;
 
     /**
+     * @ORM\ManyToMany(targetEntity=SurveyAnswer::class, mappedBy="answeredUser")
+     */
+    private $surveyAnswers;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -108,6 +113,7 @@ class User implements UserInterface
         $this->likedPosts = new ArrayCollection();
         $this->postComments = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->surveyAnswers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -420,6 +426,33 @@ class User implements UserInterface
     public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SurveyAnswer[]
+     */
+    public function getSurveyAnswers(): Collection
+    {
+        return $this->surveyAnswers;
+    }
+
+    public function addSurveyAnswer(SurveyAnswer $surveyAnswer): self
+    {
+        if (!$this->surveyAnswers->contains($surveyAnswer)) {
+            $this->surveyAnswers[] = $surveyAnswer;
+            $surveyAnswer->addAnsweredUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSurveyAnswer(SurveyAnswer $surveyAnswer): self
+    {
+        if ($this->surveyAnswers->removeElement($surveyAnswer)) {
+            $surveyAnswer->removeAnsweredUser($this);
+        }
 
         return $this;
     }
