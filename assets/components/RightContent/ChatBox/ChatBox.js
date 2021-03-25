@@ -123,7 +123,7 @@ class ChatBox extends React.Component {
                                 {message.date}
                             </Typography>
                             <Typography variant="body1" component="p" className="mb-2">
-                                <a href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-all'}}>{message.message}</span></Linkify>
+                                <a href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-word'}}>{message.message}</span></Linkify>
                             </Typography>
                         </React.Fragment>
                     ))}
