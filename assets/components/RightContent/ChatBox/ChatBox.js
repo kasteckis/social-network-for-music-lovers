@@ -10,6 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import axios from "axios";
+import Linkify from 'react-linkify';
 
 class ChatBox extends React.Component {
 
@@ -72,6 +73,14 @@ class ChatBox extends React.Component {
             });
     }
 
+    formatMessageHandler(message) {
+        let formattedMessage = message;
+
+
+
+        return message;
+    }
+
     render() {
 
         const dialog = (
@@ -115,7 +124,7 @@ class ChatBox extends React.Component {
                                 {message.date}
                             </Typography>
                             <Typography variant="body1" component="p" className="mb-2">
-                                <a href="#">{message.username}</a>: {message.message}
+                                <a href="#">{message.username}</a>: <Linkify>{message.message}</Linkify>
                             </Typography>
                         </React.Fragment>
                     ))}
