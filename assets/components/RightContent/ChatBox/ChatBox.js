@@ -20,7 +20,8 @@ class ChatBox extends React.Component {
 
     state = {
         messages: [],
-        openDialog: false
+        openDialog: false,
+        newMessageErrorText: ''
     }
 
     handleClickOpen = () => {
@@ -33,6 +34,12 @@ class ChatBox extends React.Component {
 
     handleSubmitMessage = (event) => {
         event.preventDefault();
+        this.setState({newMessageErrorText: ''});
+
+        if (this.newMessageRef.current.value.length === 0) {
+            this.setState({newMessageErrorText: 'Žinutė negali būti tusčia'});
+            return;
+        }
 
         const headers = {
             headers: {
@@ -73,11 +80,16 @@ class ChatBox extends React.Component {
                 <DialogContent>
                     <form onSubmit={(event) => this.handleSubmitMessage(event)}>
                         <TextField
+                            error={this.state.newMessageErrorText.length !== 0}
+                            helperText={this.state.newMessageErrorText}
                             autoFocus
                             inputRef={this.newMessageRef}
                             margin="dense"
                             label="Žinutė"
                             fullWidth
+                            multiline
+                            rows={10}
+                            rowsMax={Infinity}
                         />
                     </form>
                 </DialogContent>
