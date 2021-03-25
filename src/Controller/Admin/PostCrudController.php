@@ -21,8 +21,8 @@ class PostCrudController extends AbstractCrudController
     {
         return [
             ImageField::new('image')
-                ->setBasePath('images')
-                ->setUploadDir('public/images'),
+                ->setBasePath('images/posts')
+                ->setUploadDir('public/images/posts'),
             TextField::new('title'),
             TextField::new('text'),
             UrlField::new('spotifyIframeUrl'),

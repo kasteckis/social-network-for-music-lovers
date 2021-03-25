@@ -92,7 +92,7 @@ class ViewPost extends Component {
                                     :
                                         <CardMedia
                                             style={{height: 140}}
-                                            image={window.location.origin + '/images/' + this.state.post.image}
+                                            image={window.location.origin + '/images/posts/' + this.state.post.image}
                                             title={this.state.post.title}
                                         />
                                 }

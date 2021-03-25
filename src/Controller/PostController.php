@@ -106,7 +106,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
         $photoName = time() . $user->getName() . '.png';
 
-        file_put_contents('./images/' . $photoName, $photo);
+        file_put_contents('./images/posts/' . $photoName, $photo);
 
         return $this->json([
             'success' => 'ok',

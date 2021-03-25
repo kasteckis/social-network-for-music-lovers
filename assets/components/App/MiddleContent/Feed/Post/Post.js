@@ -68,7 +68,7 @@ function Post(props) {
                     :
                     <CardMedia
                         className={classes.media}
-                        image={window.location.origin + '/images/' + props.post.image}
+                        image={window.location.origin + '/images/posts/' + props.post.image}
                         title={props.post.title}
                     />
                 }
