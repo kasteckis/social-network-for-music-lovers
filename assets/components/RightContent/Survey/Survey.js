@@ -28,7 +28,28 @@ class Survey extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/api/survey')
+
+        if (this.props.auth.token) {
+            this.loadSurveyDataWithAuth();
+        } else {
+            this.loadSurveyDataWithoutAuth();
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.auth.token === null && this.props.auth.token) {
+            this.loadSurveyDataWithAuth();
+        }
+    }
+
+    loadSurveyDataWithAuth() {
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.get('/api/survey', headers)
             .then(response => {
                 if (!response.data.error) {
                     this.setState({survey: response.data});
@@ -39,24 +60,16 @@ class Survey extends React.Component {
             })
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.auth.token === null && this.props.auth.token) {
-            const headers = {
-                headers: {
-                    Authorization: 'Bearer ' + this.props.auth.token
+    loadSurveyDataWithoutAuth() {
+        axios.get('/api/survey')
+            .then(response => {
+                if (!response.data.error) {
+                    this.setState({survey: response.data});
                 }
-            };
-
-            axios.get('/api/survey', headers)
-                .then(response => {
-                    if (!response.data.error) {
-                        this.setState({survey: response.data});
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     submitSurveyHandler() {
