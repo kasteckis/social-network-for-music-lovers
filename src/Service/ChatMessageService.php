@@ -33,7 +33,7 @@ class ChatMessageService
     public function getLast10ChatMessages(): array
     {
         $chatMessages = $this->entityManager->getRepository(ChatMessage::class)->findBy([], [
-            'createdAt' => 'DESC'
+            'createdAt' => 'ASC'
         ], 10);
 
         $chatMessagesArray = [];

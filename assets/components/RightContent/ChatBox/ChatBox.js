@@ -73,14 +73,6 @@ class ChatBox extends React.Component {
             });
     }
 
-    formatMessageHandler(message) {
-        let formattedMessage = message;
-
-
-
-        return message;
-    }
-
     render() {
 
         const dialog = (
@@ -94,7 +86,7 @@ class ChatBox extends React.Component {
                             autoFocus
                             inputRef={this.newMessageRef}
                             margin="dense"
-                            label="Žinutė"
+                            label="Jūsų tekstas"
                             fullWidth
                             multiline
                             rows={10}
@@ -118,6 +110,13 @@ class ChatBox extends React.Component {
                         <b>Pokalbiai</b>
                     </Typography>
                     <Divider />
+                    {this.props.auth.token === null ?
+                        null
+                        :
+                        <Button className="mt-2 mb-2" variant="contained" style={{backgroundColor: 'orange'}} onClick={() => this.handleClickOpen()}>
+                            Komentuoti
+                        </Button>
+                    }
                     {this.state.messages.map((message) => (
                         <React.Fragment key={message.id}>
                             <Typography variant="body2" component="p">
@@ -128,13 +127,6 @@ class ChatBox extends React.Component {
                             </Typography>
                         </React.Fragment>
                     ))}
-                    {this.props.auth.token === null ?
-                        null
-                        :
-                        <Button variant="contained" style={{backgroundColor: 'orange'}} onClick={() => this.handleClickOpen()}>
-                            Komentuoti
-                        </Button>
-                    }
                 </CardContent>
             </Card>
         );
