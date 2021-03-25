@@ -46,10 +46,10 @@ class NewPost extends Component {
             uploadedFileError: ''
         });
 
-        if (this.titleRef.current.value.length < 5) {
+        if (this.titleRef.current.value.length === 0) {
             foundErrors = true;
             this.setState({
-                titleError: 'Per trumpas pavadinimas'
+                titleError: 'Pavadinimas negali būti tusčias'
             });
         }
 
@@ -74,10 +74,10 @@ class NewPost extends Component {
             });
         }
 
-        if (this.textRef.current.value.length < 30) {
+        if (this.textRef.current.value.length === 0) {
             foundErrors = true;
             this.setState({
-                textError: 'Turinys privalo turėti bentjau 30 simbolių'
+                textError: 'Turinys negali būti tusčias'
             });
         }
 
