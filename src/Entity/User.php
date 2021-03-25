@@ -103,6 +103,11 @@ class User implements UserInterface
     private $surveyAnswers;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $profilePicture;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -453,6 +458,18 @@ class User implements UserInterface
         if ($this->surveyAnswers->removeElement($surveyAnswer)) {
             $surveyAnswer->removeAnsweredUser($this);
         }
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }
