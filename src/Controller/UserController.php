@@ -21,14 +21,17 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/user", name="api_user_data")
+     * @param Request $request
+     * @return Response
      */
-    public function getUserData(): Response
+    public function getUserData(Request $request): Response
     {
         /** @var User|null $user */
         $user = $this->getUser();
 
         if ($user instanceof User) {
             $user->setLastLogin(new \DateTime());
+            $user->setIp($request->getClientIp());
             $this->getDoctrine()->getManager()->flush();
 
             $tokenExpiresAt = $this->userService->getTokenExpirationDateTime();
