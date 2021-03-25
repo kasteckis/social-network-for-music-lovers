@@ -6,6 +6,7 @@ class InformationBox extends React.Component {
 
     state = {
         information: {
+            todayVisited: 0,
             loggedIn: 0,
             registered: 0,
             lastRegisteredUser: {
@@ -30,7 +31,11 @@ class InformationBox extends React.Component {
             <Card className="mt-2" variant="outlined">
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
-                        Informacija
+                        <b>Informacija</b>
+                    </Typography>
+                    <hr />
+                    <Typography variant="body1" component="p">
+                        Šiandien apsilankė: <b>{this.state.information.todayVisited}</b>
                     </Typography>
                     <Typography variant="body1" component="p">
                         Šiuo metu naršo: <b>{this.state.information.loggedIn}</b>
