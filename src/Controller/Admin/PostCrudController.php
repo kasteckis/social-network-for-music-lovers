@@ -27,6 +27,7 @@ class PostCrudController extends AbstractCrudController
             TextField::new('text'),
             UrlField::new('spotifyIframeUrl'),
             DateTimeField::new('createdAt'),
+            DateTimeField::new('modifiedAt'),
             AssociationField::new('createdBy')
         ];
     }

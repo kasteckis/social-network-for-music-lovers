@@ -59,10 +59,16 @@ class Post
      */
     private $createdBy;
 
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $modifiedAt;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->modifiedAt = new \DateTime();
         $this->comments = new ArrayCollection();
     }
 
@@ -193,6 +199,18 @@ class Post
     public function setCreatedBy(?User $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }
