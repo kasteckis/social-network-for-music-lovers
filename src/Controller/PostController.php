@@ -33,11 +33,14 @@ class PostController extends AbstractController
     public function createPost(Request $request): Response
     {
         $postData = json_decode($request->getContent());
+        /** @var User $user */
+        $user = $this->getUser();
 
         $entityManager = $this->getDoctrine()->getManager();
 
         $post = new Post();
         $post
+            ->setCreatedBy($user)
             ->setText($postData->text)
             ->setTitle($postData->title)
             ->setSpotifyIframeUrl($postData->spotifyIframeUrl)
