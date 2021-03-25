@@ -44,7 +44,8 @@ class UserController extends AbstractController
                 'roles' => $user->getRoles(),
                 'bio' => $user->getBio(),
                 'role' => $this->userService->getRoleText($user->getRoles()),
-                'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null
+                'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null,
+                'profilePicture' => $user->getProfilePicture()
             ]);
         }
 

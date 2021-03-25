@@ -22,8 +22,10 @@ class Profile extends Component {
             roles: null,
             bio: null,
             role: null,
-            registered: null
-        }
+            registered: null,
+            profilePicture: null
+        },
+        dataLoaded: false
     }
 
     componentDidMount() {
@@ -44,7 +46,7 @@ class Profile extends Component {
 
             axios.get('/api/user', headers)
                 .then(response => {
-                    this.setState({user: response.data})
+                    this.setState({user: response.data, dataLoaded: true})
                 })
                 .catch(error => {
                     console.log(error);
@@ -56,20 +58,30 @@ class Profile extends Component {
         return (
             <Card>
                 <List>
-                   <CardActionArea>
-                        <CardContent>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar>
-                                        <Face />
-                                    </Avatar>
-                                </ListItemAvatar>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {this.state.user.username} - Profilis
-                                </Typography>
-                            </ListItem>
-                        </CardContent>
-                    </CardActionArea>
+                    <CardContent>
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <CardActionArea>
+                                        {this.state.dataLoaded ?
+                                            <React.Fragment>
+                                                {this.state.user.profilePicture ?
+                                                        <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.user.profilePicture} alt={this.state.user.username + ' profilio nuotrauka'} />
+                                                        :
+                                                        <img style={{maxWidth: '100%'}} src="/images/smile.png" alt={this.state.user.username + ' profilio nuotrauka'} />
+                                                }
+                                            </React.Fragment>
+                                            :
+                                            null
+                                        }
+                                    </CardActionArea>
+                                </Avatar>
+                            </ListItemAvatar>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {this.state.user.username} - Profilis
+                            </Typography>
+                        </ListItem>
+                    </CardContent>
 
                     <CardActionArea>
                         <CardContent>
