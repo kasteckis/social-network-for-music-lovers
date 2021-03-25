@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Service\UserService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,19 +35,7 @@ class UserController extends AbstractController
             $user->setIp($request->getClientIp());
             $this->getDoctrine()->getManager()->flush();
 
-            $tokenExpiresAt = $this->userService->getTokenExpirationDateTime();
-
-            return $this->json([
-                'id' => $user->getId(),
-                'username' => $user->getName(),
-                'email' => $user->getEmail(),
-                'tokenExpiresAt' => $tokenExpiresAt,
-                'roles' => $user->getRoles(),
-                'bio' => $user->getBio(),
-                'role' => $this->userService->getRoleText($user->getRoles()),
-                'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null,
-                'profilePicture' => $user->getProfilePicture()
-            ]);
+            return $this->json($this->userService->userEntityToArray($user));
         }
 
         return $this->json([
@@ -105,5 +94,26 @@ class UserController extends AbstractController
             'tokenExpiresAt' => $tokenExpiresAt,
             'roles' => $user->getRoles()
         ], 201);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/user/profile-picture", name="upload_profile_picture", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function uploadProfilePicture(Request $request): Response
+    {
+        $photo = $request->getContent();
+        /** @var User $user */
+        $user = $this->getUser();
+        $photoName = time() . $user->getName() . '.png';
+
+        file_put_contents('./images/profile/' . $photoName, $photo);
+
+        $user->setProfilePicture($photoName);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($this->userService->userEntityToArray($user));
     }
 }

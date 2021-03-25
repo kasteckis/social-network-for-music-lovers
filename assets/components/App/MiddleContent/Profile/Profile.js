@@ -54,15 +54,37 @@ class Profile extends Component {
         }
     }
 
+    uploadProfilePictureHandler(event) {
+        const file = event.target.files[0];
+
+        axios.post('/api/user/profile-picture', file, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        }).then(response => {
+            this.setState({user: response.data})
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     render() {
         return (
             <Card>
                 <List>
                     <CardContent>
+                        <input
+                            ref={input => this.fileInputElement = input}
+                            type="file"
+                            onChange={(event) => this.uploadProfilePictureHandler(event)}
+                            hidden
+                        />
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>
-                                    <CardActionArea>
+                                    <CardActionArea onClick={() => this.fileInputElement.click()}>
                                         {this.state.dataLoaded ?
                                             <React.Fragment>
                                                 {this.state.user.profilePicture ?

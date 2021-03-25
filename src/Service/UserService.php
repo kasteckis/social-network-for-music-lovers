@@ -71,4 +71,21 @@ class UserService
 
         return 'Naudotojas';
     }
+
+    public function userEntityToArray(User $user): array
+    {
+        $tokenExpiresAt = $this->getTokenExpirationDateTime();
+
+        return [
+            'id' => $user->getId(),
+            'username' => $user->getName(),
+            'email' => $user->getEmail(),
+            'tokenExpiresAt' => $tokenExpiresAt,
+            'roles' => $user->getRoles(),
+            'bio' => $user->getBio(),
+            'role' => $this->getRoleText($user->getRoles()),
+            'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null,
+            'profilePicture' => $user->getProfilePicture()
+        ];
+    }
 }
