@@ -160,7 +160,7 @@ class Survey extends React.Component {
                                             </ListItem>
                                         ))}
                                     </List>
-                                    <Button disabled={this.props.auth.token === null || this.state.survey.showResults} onClick={() => this.submitSurveyHandler()} variant="contained" color="primary">
+                                    <Button disabled={this.props.auth.token === null || this.state.survey.showResults} onClick={() => this.submitSurveyHandler()} variant="contained" style={{backgroundColor: 'orange'}}>
                                         Balsuoti
                                     </Button>
                                 </form>

@@ -110,7 +110,7 @@ class ChatBox extends React.Component {
                     {this.props.auth.token === null ?
                         null
                         :
-                        <Button variant="contained" color="primary" onClick={() => this.handleClickOpen()}>
+                        <Button variant="contained" style={{backgroundColor: 'orange'}} onClick={() => this.handleClickOpen()}>
                             Komentuoti
                         </Button>
                     }
