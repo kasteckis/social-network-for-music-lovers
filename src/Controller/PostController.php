@@ -44,7 +44,7 @@ class PostController extends AbstractController
             ->setText($postData->text)
             ->setTitle($postData->title)
             ->setSpotifyIframeUrl($postData->spotifyIframeUrl)
-            ->setImage($postData->image)
+            ->setImage($postData->image ? $postData->image : null)
         ;
 
         $entityManager->persist($post);
