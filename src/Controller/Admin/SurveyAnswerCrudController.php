@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\SurveyAnswer;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SurveyAnswerCrudController extends AbstractCrudController
@@ -19,6 +19,7 @@ class SurveyAnswerCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
+            IntegerField::new('position'),
             AssociationField::new('survey')
         ];
     }

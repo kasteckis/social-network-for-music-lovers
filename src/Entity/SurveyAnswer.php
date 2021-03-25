@@ -35,8 +35,14 @@ class SurveyAnswer
      */
     private $answeredUser;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
+        $this->position = 1;
         $this->answeredUser = new ArrayCollection();
     }
 
@@ -96,5 +102,17 @@ class SurveyAnswer
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
     }
 }
