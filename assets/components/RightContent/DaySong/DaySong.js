@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Badge, Card, CardActions, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
+import {Badge, Card, CardActions, CardContent, CardHeader, Divider, IconButton, Typography} from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
 import {Redirect} from "react-router-dom";
 
@@ -46,8 +46,9 @@ class DaySong extends Component {
                 {this.state.redirectToLoginPage ? <Redirect to="/prisijungti" /> : null}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
-                        Dienos daina
+                        <b>Dienos daina</b>
                     </Typography>
+                    <Divider />
                     <Typography variant="body2" component="p">
                         {this.state.daySong.title}
                     </Typography>

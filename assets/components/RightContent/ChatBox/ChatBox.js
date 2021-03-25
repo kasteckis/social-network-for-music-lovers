@@ -6,7 +6,7 @@ import {
     CardContent,
     Dialog, DialogActions,
     DialogContent, DialogContentText,
-    DialogTitle, TextField,
+    DialogTitle, Divider, TextField,
     Typography
 } from "@material-ui/core";
 import axios from "axios";
@@ -69,7 +69,7 @@ class ChatBox extends React.Component {
 
         const dialog = (
             <Dialog open={this.state.openDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Šaukykla</DialogTitle>
+                <DialogTitle id="form-dialog-title">Pokalbiai</DialogTitle>
                 <DialogContent>
                     <form onSubmit={(event) => this.handleSubmitMessage(event)}>
                         <TextField
@@ -94,8 +94,9 @@ class ChatBox extends React.Component {
                 {dialog}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
-                        Šaukykla
+                        <b>Pokalbiai</b>
                     </Typography>
+                    <Divider />
                     {this.state.messages.map((message) => (
                         <React.Fragment key={message.id}>
                             <Typography variant="body2" component="p">

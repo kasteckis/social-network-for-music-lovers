@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardContent, Typography} from "@material-ui/core";
+import {Card, CardContent, Divider, Typography} from "@material-ui/core";
 import axios from "axios";
 
 class InformationBox extends React.Component {
@@ -33,7 +33,7 @@ class InformationBox extends React.Component {
                     <Typography color="textPrimary" gutterBottom>
                         <b>Informacija</b>
                     </Typography>
-                    <hr />
+                    <Divider />
                     <Typography variant="body1" component="p">
                         Šiandien apsilankė: <b>{this.state.information.todayVisited}</b>
                     </Typography>

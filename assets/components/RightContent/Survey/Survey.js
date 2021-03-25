@@ -3,7 +3,7 @@ import {
     Button,
     Card,
     CardContent,
-    CssBaseline, Dialog, DialogContent, DialogTitle,
+    CssBaseline, Dialog, DialogContent, DialogTitle, Divider,
     FormControlLabel,
     List,
     ListItem, ListItemText,
@@ -132,8 +132,9 @@ class Survey extends React.Component {
 
                             <div>
                                 <Typography color="textPrimary" gutterBottom>
-                                    {this.state.survey.title}
+                                    <b>{this.state.survey.title}</b>
                                 </Typography>
+                                <Divider />
                                 <form noValidate>
                                     <List>
                                         {this.state.survey.answers.map((surveyAnswer) => (
