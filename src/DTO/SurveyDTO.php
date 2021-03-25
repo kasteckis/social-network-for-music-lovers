@@ -25,7 +25,7 @@ class SurveyDTO
         $this->title = $title;
     }
 
-    public function addSurveyAnswer(int $id, ?string $title, int $answered): void
+    public function addSurveyAnswer(int $id, ?string $title, int $answered, ?int $position): void
     {
         $this->answeredTotal += $answered;
 
@@ -33,8 +33,19 @@ class SurveyDTO
             'id' => $id,
             'title' => $title,
             'answered' => $answered,
-            'percentage' => 0
+            'percentage' => 0,
+            'position' => $position
         ];
+    }
+
+    public function sortAnswersByPosition(): void
+    {
+        usort($this->answers, function ($a, $b) {
+            if ($a['position'] == $b['position']) {
+                return 0;
+            }
+            return ($a['position'] < $b['position']) ? -1 : 1;
+        });
     }
 
     public function calculateSurveyAnswerPercentages(): void

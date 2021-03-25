@@ -22,10 +22,12 @@ class SurveyService
             $surveyDTO->addSurveyAnswer(
                 $surveyAnswer->getId(),
                 $surveyAnswer->getTitle(),
-                $surveyAnswer->getAnsweredUser()->count()
+                $surveyAnswer->getAnsweredUser()->count(),
+                $surveyAnswer->getPosition()
             );
         }
 
+        $surveyDTO->sortAnswersByPosition();
         $surveyDTO->calculateSurveyAnswerPercentages();
 
         return $surveyDTO->toArray();
