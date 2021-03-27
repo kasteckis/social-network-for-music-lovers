@@ -5,7 +5,7 @@ Quick startup:
 4. yarn install
 5. yarn build (or yarn watch)
 6. php bin/console lexik:jwt:generate-keypair
-7. bin/console app:create-user admin@admin.dev admin
+7. bin/console app:create-user admin@admin.dev admin admin
 
 
 Cronjobs:
