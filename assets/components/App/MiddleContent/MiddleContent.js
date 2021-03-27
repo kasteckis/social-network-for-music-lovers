@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import Feed from "./Feed/Feed";
 import ViewPost from "../FeedContent/ViewContent/ViewPost/ViewPost";
 import ChatBoxFull from "./ChatBoxFull/ChatBoxFull";
+import ViewOtherProfile from "./ViewOtherProfile/ViewOtherProfile";
 
 class MiddleContent extends Component {
     render() {
@@ -32,6 +33,10 @@ class MiddleContent extends Component {
 
                     <Route path="/profilis" exact render={(props) => (
                         <Profile {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/profilis/:name" exact render={(props) => (
+                        <ViewOtherProfile {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/irasai/naujas" exact render={(props) => (
