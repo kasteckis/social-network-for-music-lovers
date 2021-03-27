@@ -44,6 +44,29 @@ class UserController extends AbstractController
     }
 
     /**
+     *
+     * @Route("/api/user/{name}", name="api_other_user_data", methods={"GET"})
+     * @param string $name
+     * @return Response
+     */
+    public function getOtherUserData(string $name): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->findOneBy([
+            'name' => $name
+        ]);
+
+        if ($user instanceof User) {
+            return $this->json($this->userService->userEntityToSafeArray($user));
+        }
+
+        return $this->json([
+            'error' => 'Naudotojas nerastas'
+        ], 404);
+    }
+
+    /**
      * @Route("/api/register", name="api_register_user")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder

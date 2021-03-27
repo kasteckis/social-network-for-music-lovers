@@ -88,4 +88,16 @@ class UserService
             'profilePicture' => $user->getProfilePicture()
         ];
     }
+
+    public function userEntityToSafeArray(User $user): array
+    {
+        return [
+            'id' => $user->getId(),
+            'username' => $user->getName(),
+            'bio' => $user->getBio(),
+            'role' => $this->getRoleText($user->getRoles()),
+            'registered' => $user->getCreatedAt() instanceof \DateTimeInterface ? $user->getCreatedAt()->format('Y-m-d') : null,
+            'profilePicture' => $user->getProfilePicture()
+        ];
+    }
 }
