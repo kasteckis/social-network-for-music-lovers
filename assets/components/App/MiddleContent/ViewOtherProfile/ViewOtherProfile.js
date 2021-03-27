@@ -37,6 +37,19 @@ class ViewOtherProfile extends Component {
             })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.match.params.name !== prevProps.match.params.name) {
+            window.scrollTo(0, 0);
+            axios.get('/api/user/' + this.props.match.params.name)
+                .then(response => {
+                    this.setState({user: response.data, dataLoaded: true})
+                })
+                .catch(error => {
+                    this.setState({userDoesNotExist: true});
+                })
+        }
+    }
+
     render() {
         return (
             <Card>
