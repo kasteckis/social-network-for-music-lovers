@@ -90,7 +90,7 @@ class Profile extends Component {
                                                 {this.state.user.profilePicture ?
                                                         <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.user.profilePicture} alt={this.state.user.username + ' profilio nuotrauka'} />
                                                         :
-                                                        <img style={{maxWidth: '100%'}} src="/images/smile.png" alt={this.state.user.username + ' profilio nuotrauka'} />
+                                                        <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.user.username + ' profilio nuotrauka'} />
                                                 }
                                             </React.Fragment>
                                             :
