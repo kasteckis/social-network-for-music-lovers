@@ -1,6 +1,7 @@
 import React from "react";
 import {Card, CardContent, Divider, Typography} from "@material-ui/core";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 class InformationBox extends React.Component {
 
@@ -13,7 +14,8 @@ class InformationBox extends React.Component {
                 id: -1,
                 username: null
             }
-        }
+        },
+        redirectTo: null
     }
 
     componentDidMount() {
@@ -26,9 +28,29 @@ class InformationBox extends React.Component {
             })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.redirectTo) {
+            this.setState({redirectTo: null});
+        }
+    }
+
+    redirectToUserHandler(event, name) {
+        event.preventDefault();
+        this.setState({redirectTo: '/profilis/' + name});
+    }
+
     render() {
+        let redirect = null;
+
+        if (this.state.redirectTo) {
+            redirect = (
+                <Redirect to={this.state.redirectTo} />
+            );
+        }
+
         return (
             <Card className="mt-2" variant="outlined">
+                {redirect}
                 <CardContent>
                     <Typography color="textPrimary" gutterBottom>
                         <b>Informacija</b>
@@ -44,8 +66,13 @@ class InformationBox extends React.Component {
                         Registruotų naudotojų: <b>{this.state.information.registered}</b>
                     </Typography>
                     <Typography variant="body1" component="p">
-                        {/*TODO redirectintti i profilio page*/}
-                        Naujausias narys: <a href="#"><b>{this.state.information.lastRegisteredUser.username}</b></a>
+                        Naujausias narys:
+                        <a
+                            onClick={(event) => this.redirectToUserHandler(event, this.state.information.lastRegisteredUser.username)}
+                            href="#"
+                        >
+                            <b> {this.state.information.lastRegisteredUser.username}</b>
+                        </a>
                     </Typography>
                 </CardContent>
             </Card>

@@ -27,6 +27,7 @@ class ViewOtherProfile extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         axios.get('/api/user/' + this.props.match.params.name)
             .then(response => {
                 this.setState({user: response.data, dataLoaded: true})
