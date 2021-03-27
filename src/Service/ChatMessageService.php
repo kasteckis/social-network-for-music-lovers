@@ -33,7 +33,7 @@ class ChatMessageService
     public function getLast10ChatMessages(): array
     {
         $chatMessages = $this->entityManager->getRepository(ChatMessage::class)->findBy([], [
-            'createdAt' => 'ASC'
+            'createdAt' => 'DESC'
         ], 10);
 
         $chatMessagesArray = [];
@@ -43,6 +43,6 @@ class ChatMessageService
             $chatMessagesArray[] = $this->chatMessageEntityToArray($chatMessage);
         }
 
-        return array_reverse($chatMessagesArray);
+        return $chatMessagesArray;
     }
 }
