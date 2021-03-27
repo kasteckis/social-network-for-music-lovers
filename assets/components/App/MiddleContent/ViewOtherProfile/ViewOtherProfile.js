@@ -70,7 +70,7 @@ class ViewOtherProfile extends Component {
                                 <ListItem>
                                     <ListItemAvatar>
                                         <Avatar>
-                                            <CardActionArea onClick={() => this.fileInputElement.click()}>
+                                            <CardActionArea>
                                                 {this.state.dataLoaded ?
                                                     <React.Fragment>
                                                         {this.state.user.profilePicture ?
