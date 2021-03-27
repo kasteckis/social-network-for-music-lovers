@@ -63,6 +63,7 @@ class ViewPost extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         axios.get('/api/post/' + this.props.match.params.id)
             .then(response => {
                 this.setState({post: response.data});
