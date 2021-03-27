@@ -2,13 +2,13 @@ import React from "react";
 import {
     Button,
     Card,
-    CardActions,
     CardContent,
     Dialog, DialogActions,
-    DialogContent, DialogContentText,
-    DialogTitle, Divider, TextField,
+    DialogContent,
+    DialogTitle, Divider, IconButton, TextField,
     Typography
 } from "@material-ui/core";
+import AddCommentIcon from '@material-ui/icons/AddComment';
 import axios from "axios";
 import Linkify from 'react-linkify';
 
@@ -106,17 +106,24 @@ class ChatBox extends React.Component {
             <Card className="mt-2" variant="outlined">
                 {dialog}
                 <CardContent>
-                    <Typography color="textPrimary" gutterBottom>
+                    <Typography className="mb-3" color="textPrimary" gutterBottom>
                         <b>Pokalbiai</b>
+                        {this.props.auth.token === null ?
+                            null
+                            :
+                            <IconButton className="float-right" style={{color: 'orange'}} onClick={() => this.handleClickOpen()}>
+                                <AddCommentIcon />
+                            </IconButton>
+                        }
                     </Typography>
                     <Divider />
-                    {this.props.auth.token === null ?
-                        null
-                        :
-                        <Button className="mt-2 mb-2" variant="contained" style={{backgroundColor: 'orange'}} onClick={() => this.handleClickOpen()}>
-                            Komentuoti
-                        </Button>
-                    }
+                    {/*{this.props.auth.token === null ?*/}
+                    {/*    null*/}
+                    {/*    :*/}
+                    {/*    <Button className="mt-2 mb-2" variant="contained" style={{backgroundColor: 'orange'}} onClick={() => this.handleClickOpen()}>*/}
+                    {/*        Komentuoti*/}
+                    {/*    </Button>*/}
+                    {/*}*/}
                     {this.state.messages.map((message) => (
                         <React.Fragment key={message.id}>
                             <Typography variant="body2" component="p">
