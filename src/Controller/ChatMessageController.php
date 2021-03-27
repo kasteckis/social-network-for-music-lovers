@@ -29,7 +29,15 @@ class ChatMessageController extends AbstractController
      */
     public function getChatMessages(): Response
     {
-        return $this->json($this->chatMessageService->getLast10ChatMessages());
+        return $this->json($this->chatMessageService->getLastMessagesByCount(10));
+    }
+
+    /**
+     * @Route("/api/chat-messages-more", name="chat_message_more", methods={"GET"})
+     */
+    public function getMoreChatMessages(): Response
+    {
+        return $this->json($this->chatMessageService->getLastMessagesByCount(50));
     }
 
     /**
@@ -45,7 +53,6 @@ class ChatMessageController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-
         $message = new ChatMessage();
         $message
             ->setUser($user)
@@ -56,6 +63,10 @@ class ChatMessageController extends AbstractController
         $em->persist($message);
         $em->flush();
 
-        return $this->json($this->chatMessageService->getLast10ChatMessages());
+        if (property_exists($data, 'returnMoreMessages') && $data->returnMoreMessages) {
+            return $this->json($this->chatMessageService->getLastMessagesByCount(50));
+        }
+
+        return $this->json($this->chatMessageService->getLastMessagesByCount(10));
     }
 }

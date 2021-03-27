@@ -27,7 +27,7 @@ class ChatBoxFull extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
 
-        axios.get('/api/chat-messages')
+        axios.get('/api/chat-messages-more')
             .then(response => {
                 this.setState({messages: response.data});
             })
@@ -52,7 +52,8 @@ class ChatBoxFull extends Component {
         };
 
         const data = {
-            message: this.newMessageRef.current.value
+            message: this.newMessageRef.current.value,
+            returnMoreMessages: true
         }
 
         axios.post('/api/chat-messages', data, headers)

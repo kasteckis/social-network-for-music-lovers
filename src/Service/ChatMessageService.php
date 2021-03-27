@@ -30,11 +30,11 @@ class ChatMessageService
         ];
     }
 
-    public function getLast10ChatMessages(): array
+    public function getLastMessagesByCount(int $count): array
     {
         $chatMessages = $this->entityManager->getRepository(ChatMessage::class)->findBy([], [
             'createdAt' => 'DESC'
-        ], 10);
+        ], $count);
 
         $chatMessagesArray = [];
 
