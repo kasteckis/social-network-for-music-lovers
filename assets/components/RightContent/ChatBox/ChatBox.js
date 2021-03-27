@@ -11,6 +11,7 @@ import {
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import axios from "axios";
 import Linkify from 'react-linkify';
+import {Redirect} from "react-router-dom";
 
 class ChatBox extends React.Component {
 
@@ -22,7 +23,8 @@ class ChatBox extends React.Component {
     state = {
         messages: [],
         openDialog: false,
-        newMessageErrorText: ''
+        newMessageErrorText: '',
+        redirectToChatBoxFull: false
     }
 
     handleClickOpen = () => {
@@ -73,7 +75,25 @@ class ChatBox extends React.Component {
             });
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.redirectToChatBoxFull) {
+            this.setState({redirectToChatBoxFull: false});
+        }
+    }
+
+    redirectToFullMessagesHandler(event) {
+        event.preventDefault();
+        this.setState({redirectToChatBoxFull: true});
+    }
+
     render() {
+        let redirect = null;
+
+        if (this.state.redirectToChatBoxFull) {
+            redirect = (
+                <Redirect to="/pokalbiai" />
+            );
+        }
 
         const dialog = (
             <Dialog open={this.state.openDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
@@ -104,6 +124,7 @@ class ChatBox extends React.Component {
 
         return (
             <Card className="mt-2" variant="outlined">
+                {redirect}
                 {dialog}
                 <CardContent>
                     <Typography className="mb-3" color="textPrimary" gutterBottom>
@@ -134,6 +155,12 @@ class ChatBox extends React.Component {
                             </Typography>
                         </React.Fragment>
                     ))}
+                    <a href="#"
+                       onClick={(event) => this.redirectToFullMessagesHandler(event)}
+                       style={{textAlign: 'center', margin: '0 auto', display: 'block'}}
+                    >
+                        Daugiau žinučių
+                    </a>
                 </CardContent>
             </Card>
         );

@@ -12,6 +12,7 @@ import Logout from "./Auth/Logout/Logout";
 import {connect} from "react-redux";
 import Feed from "./Feed/Feed";
 import ViewPost from "../FeedContent/ViewContent/ViewPost/ViewPost";
+import ChatBoxFull from "./ChatBoxFull/ChatBoxFull";
 
 class MiddleContent extends Component {
     render() {
@@ -35,6 +36,10 @@ class MiddleContent extends Component {
 
                     <Route path="/irasai/naujas" exact render={(props) => (
                         <NewPost {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/pokalbiai" exact render={(props) => (
+                        <ChatBoxFull {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/irasai/:id" exact render={(props) => (
