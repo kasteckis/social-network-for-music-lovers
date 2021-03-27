@@ -31,6 +31,8 @@ function Navbar(props) {
         },
         title: {
             flexGrow: 1,
+            fontFamily: 'danube',
+            userSelect: 'none'
         },
         logo: {
             maxWidth: '200px',
