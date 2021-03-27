@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,6 +42,32 @@ class UserController extends AbstractController
         return $this->json([
             'error' => 'User is not connected!'
         ], 401);
+    }
+
+    /**
+     * @Route("/api/users/{page}", name="api_get_users")
+     * @param int $page
+     * @return Response
+     */
+    public function getAllUsers(int $page): Response
+    {
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        $users = $userRepo->findBy([
+            'active' => true
+        ], [], 10, ($page-1)*10);
+
+        $usersArray = [];
+
+        foreach ($users as $user) {
+            $usersArray[] = $this->userService->userEntityToSafeArray($user);
+        }
+
+        return $this->json([
+            'users' => $usersArray,
+            'usersCount' => count($userRepo->findBy(['active' => true]))
+        ]);
     }
 
     /**
