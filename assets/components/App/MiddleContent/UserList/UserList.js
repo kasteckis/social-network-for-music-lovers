@@ -7,9 +7,8 @@ import {
     CardActionArea,
     CardContent,
     Divider,
-    Grid, List, ListItem, ListItemAvatar, ListItemText,
-    TextField,
-    Typography
+    Grid, List, ListItem, ListItemText,
+    TextField
 } from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
 import {Redirect} from "react-router-dom";
@@ -31,9 +30,17 @@ class UserList extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
 
-        axios.get('/api/users/' + this.state.pageNumber)
+        this.updateUsers(this.state.pageNumber, this.filterTextRef.current.value);
+    }
+
+    updateUsers(page, filterText) {
+        const data = {
+            page: page,
+            filterText: filterText
+        }
+
+        axios.post('/api/users', data)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     users: response.data.users,
                     usersCount: response.data.usersCount
@@ -51,23 +58,15 @@ class UserList extends Component {
     }
 
     handleFilter(event) {
-        console.log("filtruot");
+        event.preventDefault();
+        this.setState({pageNumber: 1});
+        this.updateUsers(1, this.filterTextRef.current.value);
     }
 
     handlePaginationChange(event, value) {
         this.setState({pageNumber: value});
 
-        axios.get('/api/users/' + value)
-            .then(response => {
-                console.log(response.data);
-                this.setState({
-                    users: response.data.users,
-                    usersCount: response.data.usersCount
-                });
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        this.updateUsers(value, this.filterTextRef.current.value);
     }
 
     handleRedirectToProfile(name) {
@@ -87,7 +86,7 @@ class UserList extends Component {
             <Card className="mt-2" variant="outlined">
                 {redirect}
                 <CardContent>
-                    <form onSubmit={(event) => this.handleSubmitMessage(event)}>
+                    <form onSubmit={(event) => this.handleFilter(event)}>
                         <TextField
                             error={this.state.filterErrorText.length !== 0}
                             helperText={this.state.filterErrorText}
@@ -127,7 +126,7 @@ class UserList extends Component {
                         container
                         justify="center"
                     >
-                        <Pagination onChange={(event, value) => this.handlePaginationChange(event, value)} page={this.state.pageNumber} className="mt-3" count={10} color="primary" />
+                        <Pagination onChange={(event, value) => this.handlePaginationChange(event, value)} page={this.state.pageNumber} className="mt-3" count={Math.ceil(this.state.usersCount/10)} color="primary" />
                     </Grid>
                 </CardContent>
             </Card>

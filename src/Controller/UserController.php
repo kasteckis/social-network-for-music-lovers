@@ -45,18 +45,24 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{page}", name="api_get_users")
-     * @param int $page
+     * @Route("/api/users", name="api_get_users", methods={"POST"})
+     * @param Request $request
      * @return Response
      */
-    public function getAllUsers(int $page): Response
+    public function getAllUsers(Request $request): Response
     {
+        $data = json_decode($request->getContent());
+        $page = property_exists($data, 'page') ? $data->page : 1;
+        $filterText = property_exists($data, 'filterText') ? $data->filterText : null;
+        if (strlen($filterText) === 0) {
+            $filterText = null;
+        }
+
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
 
-        $users = $userRepo->findBy([
-            'active' => true
-        ], [], 10, ($page-1)*10);
+        $users = $userRepo->getUserListByFilterAndOffset($filterText, ($page-1)*10); // Jeigu 1 puslapis tai (1-1)*10=0 <- offset
+        $userCount = $userRepo->getUserListCountyByFilterText($filterText);
 
         $usersArray = [];
 
@@ -66,7 +72,7 @@ class UserController extends AbstractController
 
         return $this->json([
             'users' => $usersArray,
-            'usersCount' => count($userRepo->findBy(['active' => true]))
+            'usersCount' => $userCount
         ]);
     }
 
