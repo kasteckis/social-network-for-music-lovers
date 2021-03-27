@@ -12,11 +12,13 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import Linkify from "react-linkify";
+import {Redirect} from "react-router-dom";
 
 class ChatBoxFull extends Component {
     state = {
         messages: [],
-        newMessageErrorText: ''
+        newMessageErrorText: '',
+        redirectTo: null
     }
 
     constructor(props, context) {
@@ -34,6 +36,19 @@ class ChatBoxFull extends Component {
             .catch(error => {
                 console.log(error)
             });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.redirectTo) {
+            this.setState({
+                redirectTo: null
+            });
+        }
+    }
+
+    redirectToUserHandler(event, name) {
+        event.preventDefault();
+        this.setState({redirectTo: '/profilis/' + name});
     }
 
     handleSubmitMessage = (event) => {
@@ -69,8 +84,17 @@ class ChatBoxFull extends Component {
     }
 
     render() {
+        let redirect = null;
+
+        if (this.state.redirectTo) {
+            redirect = (
+                <Redirect to={this.state.redirectTo} />
+            );
+        }
+
         return (
             <Card className="mt-2" variant="outlined">
+                {redirect}
                 <CardContent>
                     <form onSubmit={(event) => this.handleSubmitMessage(event)}>
                         <TextField
@@ -97,7 +121,7 @@ class ChatBoxFull extends Component {
                                 {message.date}
                             </Typography>
                             <Typography variant="body1" component="p" className="mb-2">
-                                <a href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-word'}}>{message.message}</span></Linkify>
+                                <a onClick={(event) => this.redirectToUserHandler(event, message.username)} href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-word'}}>{message.message}</span></Linkify>
                             </Typography>
                             <Divider />
                         </React.Fragment>

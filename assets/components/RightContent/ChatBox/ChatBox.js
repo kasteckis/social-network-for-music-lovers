@@ -24,7 +24,8 @@ class ChatBox extends React.Component {
         messages: [],
         openDialog: false,
         newMessageErrorText: '',
-        redirectToChatBoxFull: false
+        redirectToChatBoxFull: false,
+        redirectTo: null
     }
 
     handleClickOpen = () => {
@@ -76,8 +77,11 @@ class ChatBox extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.redirectToChatBoxFull) {
-            this.setState({redirectToChatBoxFull: false});
+        if (this.state.redirectToChatBoxFull || this.state.redirectTo) {
+            this.setState({
+                redirectToChatBoxFull: false,
+                redirectTo: null
+            });
         }
     }
 
@@ -86,12 +90,23 @@ class ChatBox extends React.Component {
         this.setState({redirectToChatBoxFull: true});
     }
 
+    redirectToUserHandler(event, name) {
+        event.preventDefault();
+        this.setState({redirectTo: '/profilis/' + name});
+    }
+
     render() {
         let redirect = null;
 
         if (this.state.redirectToChatBoxFull) {
             redirect = (
                 <Redirect to="/pokalbiai" />
+            );
+        }
+
+        if (this.state.redirectTo) {
+            redirect = (
+                <Redirect to={this.state.redirectTo} />
             );
         }
 
@@ -151,7 +166,7 @@ class ChatBox extends React.Component {
                                 {message.date}
                             </Typography>
                             <Typography variant="body1" component="p" className="mb-2">
-                                <a href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-word'}}>{message.message}</span></Linkify>
+                                <a onClick={(event) => this.redirectToUserHandler(event, message.username)} href="#">{message.username}</a>: <Linkify><span style={{wordBreak: 'break-word'}}>{message.message}</span></Linkify>
                             </Typography>
                         </React.Fragment>
                     ))}
