@@ -11,15 +11,14 @@ import {
     TextField
 } from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
-import {Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class UserList extends Component {
     state = {
         users: [],
         filterErrorText: '',
         usersCount: 0,
-        pageNumber: 1,
-        redirectTo: null
+        pageNumber: 1
     }
 
     constructor(props, context) {
@@ -51,12 +50,6 @@ class UserList extends Component {
             });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.redirectTo) {
-            this.setState({redirectTo: null});
-        }
-    }
-
     handleFilter(event) {
         event.preventDefault();
         this.setState({pageNumber: 1});
@@ -70,21 +63,12 @@ class UserList extends Component {
     }
 
     handleRedirectToProfile(name) {
-        this.setState({redirectTo: '/profilis/' + name});
+        this.props.history.push('/profilis/' + name);
     }
 
     render() {
-        let redirect = null;
-
-        if (this.state.redirectTo) {
-            redirect = (
-                <Redirect to={this.state.redirectTo} />
-            );
-        }
-
         return (
             <Card className="mt-2" variant="outlined">
-                {redirect}
                 <CardContent>
                     <form onSubmit={(event) => this.handleFilter(event)}>
                         <TextField
@@ -134,4 +118,4 @@ class UserList extends Component {
     }
 }
 
-export default UserList;
+export default withRouter(UserList);
