@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ChatMessage;
 use App\Entity\DaySong;
+use App\Entity\Event;
 use App\Entity\Post;
 use App\Entity\Survey;
 use App\Entity\SurveyAnswer;
@@ -42,5 +43,6 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Posts', 'fas fa-list', Post::class);
         yield MenuItem::linkToCrud('Surveys', 'fas fa-list', Survey::class);
         yield MenuItem::linkToCrud('Survey Answers', 'fas fa-list', SurveyAnswer::class);
+        yield MenuItem::linkToCrud('Events', 'fas fa-list', Event::class);
     }
 }
