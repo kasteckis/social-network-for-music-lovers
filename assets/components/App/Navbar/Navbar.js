@@ -97,7 +97,7 @@ function Navbar(props) {
                         </IconButton>
                         {/*<img onClick={redirectToMainPageHandler} src="/logo.png" className={classes.logo}  alt="music.lt logo"/>*/}
                         <Typography onClick={redirectToMainPageHandler} className={classes.title} variant="h5" component="h2">
-                            MUSIC.LT
+                            MUSIC.<span style={{fontSize: '75%'}}>lt</span>
                         </Typography>
                         {props.auth.token === null ?
                                 null
