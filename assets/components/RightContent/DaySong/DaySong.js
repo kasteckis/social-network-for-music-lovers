@@ -3,6 +3,7 @@ import axios from "axios";
 import {Badge, Card, CardActions, CardContent, CardHeader, Divider, IconButton, Typography} from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
 import {Redirect} from "react-router-dom";
+import MusicBadge from "../../Utils/MusicBadge/MusicBadge";
 
 class DaySong extends Component {
     state = {
@@ -61,9 +62,9 @@ class DaySong extends Component {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton onClick={() => this.likeSongHandler()} >
-                        <Badge badgeContent={this.state.daySong.likes} color="primary">
+                        <MusicBadge badgeContent={this.state.daySong.likes}>
                             <Favorite />
-                        </Badge>
+                        </MusicBadge>
                     </IconButton>
                 </CardActions>
             </Card>

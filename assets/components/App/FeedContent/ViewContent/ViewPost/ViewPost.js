@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import {Chat, MoreVert, ThumbUp} from "@material-ui/icons";
 import {withRouter} from "react-router-dom";
+import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
 
 class ViewPost extends Component {
 
@@ -174,21 +175,20 @@ class ViewPost extends Component {
                             }
                             <CardActions>
                                 <IconButton style={{marginLeft: 'auto'}} onClick={() => this.likePostHandler(this.state.post.id)} >
-                                    <Badge
+                                    <MusicBadge
                                         anchorOrigin={{
                                             vertical: 'top',
                                             horizontal: 'left',
                                         }}
                                         badgeContent={this.state.post.likes}
-                                        color="primary"
                                     >
                                         <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
-                                    </Badge>
+                                    </MusicBadge>
                                 </IconButton>
                                 <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
-                                    <Badge badgeContent={this.state.post.comments} color="primary">
+                                    <MusicBadge badgeContent={this.state.post.comments}>
                                         <Chat style={{color: 'orange'}} />
-                                    </Badge>
+                                    </MusicBadge>
                                 </IconButton>
                             </CardActions>
                         </React.Fragment>

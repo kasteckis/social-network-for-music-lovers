@@ -15,6 +15,7 @@ import {
 import {Chat, MoreVert, ThumbUp} from "@material-ui/icons";
 import {useHistory} from "react-router";
 import axios from "axios";
+import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
 
 function Post(props) {
     const history = useHistory();
@@ -135,21 +136,20 @@ function Post(props) {
                     Skaityti daugiau
                 </Button>
                 <IconButton style={{marginLeft: 'auto'}} onClick={() => likePostHandler(props.post.id)} >
-                    <Badge
+                    <MusicBadge
                         anchorOrigin={{
                             vertical: 'top',
                             horizontal: 'left',
                         }}
                         badgeContent={likes}
-                        color="primary"
                     >
                         <ThumbUp style={liked ? {color: 'orange'} : null} />
-                    </Badge>
+                    </MusicBadge>
                 </IconButton>
                 <IconButton onClick={() => commentPostHandler(props.post.id)} >
-                    <Badge badgeContent={props.post.comments} color="primary">
+                    <MusicBadge badgeContent={props.post.comments}>
                         <Chat style={{color: 'orange'}} />
-                    </Badge>
+                    </MusicBadge>
                 </IconButton>
             </CardActions>
         </Card>
