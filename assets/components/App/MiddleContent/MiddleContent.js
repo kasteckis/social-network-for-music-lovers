@@ -15,6 +15,7 @@ import ViewPost from "../FeedContent/ViewContent/ViewPost/ViewPost";
 import ChatBoxFull from "./ChatBoxFull/ChatBoxFull";
 import ViewOtherProfile from "./ViewOtherProfile/ViewOtherProfile";
 import UserList from "./UserList/UserList";
+import Posts from "./Posts/Posts";
 
 class MiddleContent extends Component {
     render() {
@@ -34,6 +35,10 @@ class MiddleContent extends Component {
 
                     <Route path="/profilis" exact render={(props) => (
                         <Profile {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/irasai" exact render={(props) => (
+                        <Posts {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/nariai" exact render={(props) => (

@@ -102,6 +102,18 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/api/posts", name="get_all_posts")
+     */
+    public function getAllPosts(): Response
+    {
+        // todo veliau idet infinite scrolla
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        return $this->json($this->feedService->getPosts([], $user));
+    }
+
+    /**
      * @IsGranted("ROLE_USER")
      * @Route("/api/post/image", name="create_image_post", methods={"POST"})
      * @param Request $request
