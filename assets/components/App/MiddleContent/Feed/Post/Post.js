@@ -71,10 +71,6 @@ function Post(props) {
         // todo implementint commentavima
     }
 
-    const likedButtonStyle = {
-        color: 'orange'
-    };
-
     const redirectToUserPage = (name) => {
         history.push('/profilis/' + name);
     }
@@ -139,8 +135,15 @@ function Post(props) {
                     Skaityti daugiau
                 </Button>
                 <IconButton style={{marginLeft: 'auto'}} onClick={() => likePostHandler(props.post.id)} >
-                    <Badge badgeContent={likes} color="error">
-                        <ThumbUp style={liked ? likedButtonStyle : null} />
+                    <Badge
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        badgeContent={likes}
+                        color="error"
+                    >
+                        <ThumbUp style={liked ? {color: 'orange'} : null} />
                     </Badge>
                 </IconButton>
                 <IconButton onClick={() => commentPostHandler(props.post.id)} >
