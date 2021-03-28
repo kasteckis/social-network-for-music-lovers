@@ -180,13 +180,13 @@ class ViewPost extends Component {
                                             horizontal: 'left',
                                         }}
                                         badgeContent={this.state.post.likes}
-                                        color="error"
+                                        color="primary"
                                     >
                                         <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
                                     </Badge>
                                 </IconButton>
                                 <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
-                                    <Badge badgeContent={this.state.post.comments} color="error">
+                                    <Badge badgeContent={this.state.post.comments} color="primary">
                                         <Chat style={{color: 'orange'}} />
                                     </Badge>
                                 </IconButton>

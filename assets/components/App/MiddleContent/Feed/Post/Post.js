@@ -141,13 +141,13 @@ function Post(props) {
                             horizontal: 'left',
                         }}
                         badgeContent={likes}
-                        color="error"
+                        color="primary"
                     >
                         <ThumbUp style={liked ? {color: 'orange'} : null} />
                     </Badge>
                 </IconButton>
                 <IconButton onClick={() => commentPostHandler(props.post.id)} >
-                    <Badge badgeContent={props.post.comments} color="error">
+                    <Badge badgeContent={props.post.comments} color="primary">
                         <Chat style={{color: 'orange'}} />
                     </Badge>
                 </IconButton>

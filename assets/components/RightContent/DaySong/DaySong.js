@@ -61,7 +61,7 @@ class DaySong extends Component {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton onClick={() => this.likeSongHandler()} >
-                        <Badge badgeContent={this.state.daySong.likes} color="error">
+                        <Badge badgeContent={this.state.daySong.likes} color="primary">
                             <Favorite />
                         </Badge>
                     </IconButton>
