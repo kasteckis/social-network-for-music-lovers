@@ -54,7 +54,11 @@ class DaySongController extends AbstractController
         $daySong = $daySongRepository->getNewestDaySong();
 
         if ($daySong) {
-            $daySong->addLike($user);
+            if ($daySong->getLikes()->contains($user)) {
+                $daySong->removeLike($user);
+            } else {
+                $daySong->addLike($user);
+            }
             $entityManager->flush();
 
             return $this->json([
