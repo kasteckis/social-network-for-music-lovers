@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Card, CardContent, Divider, Grid, Paper, TextField, Typography} from "@material-ui/core";
-import Linkify from "react-linkify";
+import {
+    Button,
+    Card,
+    CardContent,
+    Divider, FormControl,
+    Grid, InputLabel, MenuItem, Select,
+    TextField
+} from "@material-ui/core";
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -8,13 +14,15 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import axios from "axios";
+import Event from "./Event/Event";
 
 class Events extends Component {
 
     state = {
         events: [],
         startDateTime: new Date(),
-        endDateTime: null
+        endDateTime: null,
+        type: 'all'
     }
 
     constructor(props, context) {
@@ -29,14 +37,15 @@ class Events extends Component {
             endDateTime: oneMonthLater
         })
 
-        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value);
+        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value, this.state.type);
     }
 
-    loadEvents(from, to, filter) {
+    loadEvents(from, to, filter, type) {
         const params = {
             from: from,
             to: to,
-            filter: filter
+            filter: filter,
+            type: type
         };
 
         axios.get('/api/events', { params })
@@ -49,6 +58,10 @@ class Events extends Component {
             })
     }
 
+    eventTypeHandler(event) {
+        this.setState({type: event.target.value});
+    }
+
     startDateTimeHandler(date) {
         this.setState({startDateTime: date});
     }
@@ -59,7 +72,7 @@ class Events extends Component {
 
     filterEvents(event) {
         event.preventDefault();
-        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value);
+        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value, this.state.type);
     }
 
     render() {
@@ -70,7 +83,7 @@ class Events extends Component {
                         <form onSubmit={(event) => this.filterEvents(event)}>
                             <Grid container spacing={2}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={6}>
                                         <TextField
                                             inputRef={this.filterTextRef}
                                             autoFocus
@@ -78,6 +91,20 @@ class Events extends Component {
                                             label="Pavadinimas"
                                             fullWidth
                                         />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="event-type">Renginio tipas</InputLabel>
+                                            <Select
+                                                labelId="event-type"
+                                                value={this.state.type}
+                                                onChange={(event) => this.eventTypeHandler(event)}
+                                            >
+                                                <MenuItem value={"all"}>Visi</MenuItem>
+                                                <MenuItem value={"online"}>Tik online</MenuItem>
+                                                <MenuItem value={"live"}>Tik gyvas</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={6} container justify="center">
                                         <KeyboardDatePicker
@@ -122,7 +149,7 @@ class Events extends Component {
                         <div className="mt-2">
                             {this.state.events.map((event) => (
                                 <React.Fragment key={event.id}>
-                                    hi
+                                    <Event event={event} />
                                 </React.Fragment>
                             ))}
                         </div>
