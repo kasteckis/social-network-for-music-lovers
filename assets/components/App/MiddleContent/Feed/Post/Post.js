@@ -135,7 +135,7 @@ function Post(props) {
                 null
             }
             <CardActions>
-                <Button size="small" color="primary" onClick={() => history.push('/irasai/' + props.post.id)}>
+                <Button style={{color: 'orange'}} size="small" color="primary" onClick={() => history.push('/irasai/' + props.post.id)}>
                     Skaityti daugiau
                 </Button>
                 <IconButton onClick={() => likePostHandler(props.post.id)} >
