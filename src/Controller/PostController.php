@@ -67,11 +67,16 @@ class PostController extends AbstractController
         if ($post instanceof Post) {
             /** @var User $user */
             $user = $this->getUser();
-            $post->addLike($user);
+
+            if ($post->getLikes()->contains($user)) {
+                $post->removeLike($user);
+            } else {
+                $post->addLike($user);
+            }
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->json($this->feedService->postEntityToArray($post));
+            return $this->json($this->feedService->postEntityToArray($post, $user));
         }
 
         return $this->json([
@@ -86,8 +91,11 @@ class PostController extends AbstractController
      */
     public function getPost(?Post $post): Response
     {
+        /** @var User|null $user */
+        $user = $this->getUser();
+
         if ($post instanceof Post) {
-            return $this->json($this->feedService->postEntityToArray($post));
+            return $this->json($this->feedService->postEntityToArray($post, $user));
         }
 
         return $this->json(['error' => 'Įrašas nerastas'], 404);

@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {
+    Avatar,
     Badge,
     Button,
     Card,
     CardActionArea,
     CardActions,
-    CardContent,
+    CardContent, CardHeader,
     CardMedia,
     IconButton,
     Typography
 } from "@material-ui/core";
-import {Favorite} from "@material-ui/icons";
+import {Chat, MoreVert, ThumbUp} from "@material-ui/icons";
 import {useHistory} from "react-router";
 import axios from "axios";
 
@@ -23,10 +24,11 @@ function Post(props) {
         },
         media: {
             height: 140,
-        },
+        }
     });
 
     const [likes, setLikes] = useState(props.post.likes);
+    const [liked, setLiked] = useState(props.post.liked);
 
     const classes = useStyles();
 
@@ -45,6 +47,7 @@ function Post(props) {
         axios.put('/api/post/' + id + '/like', {}, headers)
             .then(response => {
                 setLikes(response.data.likes);
+                setLiked(response.data.liked);
             })
             .catch(error => {
                 console.log(error);
@@ -60,8 +63,30 @@ function Post(props) {
         // todo implementint commentavima
     }
 
+    const likedButtonStyle = {
+        color: 'orange'
+    };
+
     return (
         <Card className={classes.root}>
+            <CardHeader
+                avatar={
+                    <Avatar>
+                        {props.post.createdByProfilePicture ?
+                            <img style={{maxWidth: '100%'}} src={"/images/profile/" + props.post.createdByProfilePicture} alt={props.post.createdBy + ' profilio nuotrauka'} />
+                            :
+                            <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={props.post.createdBy + ' profilio nuotrauka'} />
+                        }
+                    </Avatar>
+                }
+                action={
+                    <IconButton aria-label="settings">
+                        <MoreVert />
+                    </IconButton>
+                }
+                title={props.post.createdBy}
+                subheader={props.post.createdAt}
+            />
             <CardActionArea onClick={() => history.push('/irasai/' + props.post.id)}>
                 {props.post.image === null || props.post.image.length === 0 ?
                     null
@@ -92,14 +117,19 @@ function Post(props) {
                 null
             }
             <CardActions>
+                <Button size="small" color="primary" onClick={() => history.push('/irasai/' + props.post.id)}>
+                    Skaityti daugiau
+                </Button>
                 <IconButton onClick={() => likePostHandler(props.post.id)} >
                     <Badge badgeContent={likes} color="error">
-                        <Favorite />
+                        <ThumbUp style={liked ? likedButtonStyle : null} />
                     </Badge>
                 </IconButton>
-                <Button size="small" color="primary" onClick={() => commentPostHandler(props.post.id)}>
-                    Komentuoti ({props.post.comments})
-                </Button>
+                <IconButton onClick={() => commentPostHandler(props.post.id)} >
+                    <Badge badgeContent={props.post.comments} color="error">
+                        <Chat style={{color: 'orange'}} />
+                    </Badge>
+                </IconButton>
             </CardActions>
         </Card>
     );

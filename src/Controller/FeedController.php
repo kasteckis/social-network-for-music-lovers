@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Service\FeedService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,12 @@ class FeedController extends AbstractController
     public function getFeed(): Response
     {
         // todo kada atsiras daugiau feed'o is visu paimt po kelis su offset'u, susortint pagal data ir returnint
+        /** @var User|null $user */
+        $user = $this->getUser();
+
         $feedArray = [];
 
-        $feedArray = $this->feedService->getPosts($feedArray);
+        $feedArray = $this->feedService->getPosts($feedArray, $user);
 
         return $this->json($feedArray);
     }
