@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {
-    Badge, Button,
+    Avatar,
+    Badge,
     Card,
     CardActionArea,
     CardActions,
-    CardContent,
+    CardContent, CardHeader,
     CardMedia,
     IconButton,
     Typography
 } from "@material-ui/core";
-import {Favorite} from "@material-ui/icons";
-import {Redirect} from "react-router-dom";
+import {Chat, MoreVert, ThumbUp} from "@material-ui/icons";
+import {withRouter} from "react-router-dom";
 
 class ViewPost extends Component {
 
@@ -24,30 +25,34 @@ class ViewPost extends Component {
             spotifyIframeUrl: null,
             likes: 0,
             comments: 0,
-            type: 'post'
+            type: 'post',
+            createdBy: null,
+            createdByProfilePicture: null,
+            createdAt: null,
+            liked: false
         },
-        error: false,
-        redirectToLoginPage: false
+        error: false
     }
 
     likePostHandler = (id) => {
         if (this.props.auth.token === null) {
-            this.setState({redirectToLoginPage: true});
+            this.props.history.push('/prisijungti');
             return;
         }
 
-        const headers = {
-            headers: {
-                Authorization: 'Bearer ' + this.props.auth.token
-            }
-        };
+        let headers = {};
+
+        if (this.props.auth.token) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                }
+            };
+        }
 
         axios.put('/api/post/' + id + '/like', {}, headers)
             .then(response => {
-                let postClone = {...this.state.post};
-                postClone.likes = response.data.likes;
-
-                this.setState({post: postClone});
+                this.setState({post: response.data});
             })
             .catch(error => {
                 console.log(error);
@@ -56,7 +61,8 @@ class ViewPost extends Component {
 
     commentPostHandler = (id) => {
         if (this.props.auth.token === null) {
-            this.setState({redirectToLoginPage: true});
+            this.props.history.push('/prisijungti');
+            return;
         }
 
         // todo implementint commentavima
@@ -64,7 +70,28 @@ class ViewPost extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        axios.get('/api/post/' + this.props.match.params.id)
+
+        this.updatePost();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.auth.token === null && this.props.auth.token) {
+            this.updatePost();
+        }
+    }
+
+    updatePost() {
+        let headers = {};
+
+        if (this.props.auth.token) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                }
+            };
+        }
+
+        axios.get('/api/post/' + this.props.match.params.id, headers)
             .then(response => {
                 this.setState({post: response.data});
             })
@@ -73,10 +100,13 @@ class ViewPost extends Component {
             })
     }
 
+    redirectToUserPage(name) {
+        this.props.history.push('/profilis/' + name);
+    }
+
     render() {
         return (
             <Card>
-                {this.state.redirectToLoginPage ? <Redirect to="/prisijungti" /> : null}
                 {this.state.error ?
                         <CardActionArea>
                             <CardContent>
@@ -87,6 +117,30 @@ class ViewPost extends Component {
                         </CardActionArea>
                     :
                         <React.Fragment>
+                            <CardHeader
+                                avatar={
+                                    <Avatar>
+                                        <CardActionArea onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
+                                            {this.state.post.createdByProfilePicture ?
+                                                <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.post.createdByProfilePicture} alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                                :
+                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                            }
+                                        </CardActionArea>
+                                    </Avatar>
+                                }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVert />
+                                    </IconButton>
+                                }
+                                title={
+                                    <span onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
+                                            {this.state.post.createdBy}
+                                        </span>
+                                }
+                                subheader={this.state.post.createdAt}
+                            />
                             <CardActionArea>
                                 {this.state.post.image === null || this.state.post.image.length === 0 ?
                                         null
@@ -119,14 +173,16 @@ class ViewPost extends Component {
                                     null
                             }
                             <CardActions>
-                                <IconButton onClick={() => this.likePostHandler(this.state.post.id)}>
+                                <IconButton onClick={() => this.likePostHandler(this.state.post.id)} >
                                     <Badge badgeContent={this.state.post.likes} color="error">
-                                        <Favorite />
+                                        <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
                                     </Badge>
                                 </IconButton>
-                                <Button size="small" color="primary" onClick={() => this.commentPostHandler(this.state.post.id)}>
-                                    Komentuoti ({this.state.post.comments})
-                                </Button>
+                                <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
+                                    <Badge badgeContent={this.state.post.comments} color="error">
+                                        <Chat style={{color: 'orange'}} />
+                                    </Badge>
+                                </IconButton>
                             </CardActions>
                         </React.Fragment>
                 }
@@ -135,4 +191,4 @@ class ViewPost extends Component {
     }
 }
 
-export default ViewPost;
+export default withRouter(ViewPost);
