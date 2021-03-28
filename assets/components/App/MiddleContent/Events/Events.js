@@ -7,18 +7,46 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import axios from "axios";
 
 class Events extends Component {
 
     state = {
         events: [],
         startDateTime: new Date(),
-        endDateTime: new Date()
+        endDateTime: null
     }
 
     constructor(props, context) {
         super(props, context);
         this.filterTextRef = React.createRef();
+    }
+
+    componentDidMount() {
+        const oneMonthLater = new Date(this.state.startDateTime.getFullYear(), this.state.startDateTime.getMonth(), this.state.startDateTime.getDate()+30);
+
+        this.setState({
+            endDateTime: oneMonthLater
+        })
+
+        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value);
+    }
+
+    loadEvents(from, to, filter) {
+        const params = {
+            from: from,
+            to: to,
+            filter: filter
+        };
+
+        axios.get('/api/events', { params })
+            .then(response => {
+                console.log(response.data);
+                this.setState({events: response.data});
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     startDateTimeHandler(date) {
@@ -31,9 +59,7 @@ class Events extends Component {
 
     filterEvents(event) {
         event.preventDefault();
-        console.log(this.state.startDateTime);
-        console.log(this.state.endDateTime);
-        console.log(this.filterTextRef.current.value);
+        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value);
     }
 
     render() {
@@ -53,13 +79,13 @@ class Events extends Component {
                                             fullWidth
                                         />
                                     </Grid>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={6} container justify="center">
                                         <KeyboardDatePicker
                                             disableToolbar
                                             variant="inline"
                                             format="MM/dd/yyyy"
                                             margin="normal"
-                                            label="Date picker inline"
+                                            label="Renginio data nuo"
                                             value={this.state.startDateTime}
                                             onChange={(date) => this.startDateTimeHandler(date)}
                                             KeyboardButtonProps={{
@@ -67,13 +93,13 @@ class Events extends Component {
                                             }}
                                         />
                                     </Grid>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={6} container justify="center">
                                         <KeyboardDatePicker
                                             disableToolbar
                                             variant="inline"
                                             format="MM/dd/yyyy"
                                             margin="normal"
-                                            label="Date picker inline"
+                                            label="Renginio data iki"
                                             value={this.state.endDateTime}
                                             onChange={(date) => this.endDateTimeHandler(date)}
                                             KeyboardButtonProps={{
@@ -95,7 +121,9 @@ class Events extends Component {
                         <Divider className="mt-2" />
                         <div className="mt-2">
                             {this.state.events.map((event) => (
-                                <div>hello</div>
+                                <React.Fragment key={event.id}>
+                                    hi
+                                </React.Fragment>
                             ))}
                         </div>
                     </CardContent>

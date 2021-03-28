@@ -19,22 +19,32 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param string|null $filter
+     * @return Event[] Returns an array of Event objects
+     */
+    public function getEventsByDateRangeAndFilter(\DateTime $from, \DateTime $to, ?string $filter): array
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+        $qb = $this->createQueryBuilder('event');
+
+        return $qb
+            ->andWhere('event.active = true')
+            ->andWhere('event.startDateTime >= :from')
+            ->andWhere('event.endDateTime <= :to')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->like('event.title', ':filter'),
+                $qb->expr()->like('event.text', ':filter')
+            ))
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->setParameter('filter', '%' . $filter . '%')
+            ->orderBy('event.startDateTime', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Event
