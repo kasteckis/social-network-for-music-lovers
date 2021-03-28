@@ -173,7 +173,7 @@ class ViewPost extends Component {
                                     null
                             }
                             <CardActions>
-                                <IconButton onClick={() => this.likePostHandler(this.state.post.id)} >
+                                <IconButton style={{marginLeft: 'auto'}} onClick={() => this.likePostHandler(this.state.post.id)} >
                                     <Badge badgeContent={this.state.post.likes} color="error">
                                         <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
                                     </Badge>

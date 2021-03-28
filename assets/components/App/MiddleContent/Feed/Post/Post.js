@@ -138,7 +138,7 @@ function Post(props) {
                 <Button style={{color: 'orange'}} size="small" color="primary" onClick={() => history.push('/irasai/' + props.post.id)}>
                     Skaityti daugiau
                 </Button>
-                <IconButton onClick={() => likePostHandler(props.post.id)} >
+                <IconButton style={{marginLeft: 'auto'}} onClick={() => likePostHandler(props.post.id)} >
                     <Badge badgeContent={likes} color="error">
                         <ThumbUp style={liked ? likedButtonStyle : null} />
                     </Badge>
