@@ -12,13 +12,12 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import Linkify from "react-linkify";
-import {Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class ChatBoxFull extends Component {
     state = {
         messages: [],
-        newMessageErrorText: '',
-        redirectTo: null
+        newMessageErrorText: ''
     }
 
     constructor(props, context) {
@@ -38,17 +37,9 @@ class ChatBoxFull extends Component {
             });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.redirectTo) {
-            this.setState({
-                redirectTo: null
-            });
-        }
-    }
-
     redirectToUserHandler(event, name) {
         event.preventDefault();
-        this.setState({redirectTo: '/profilis/' + name});
+        this.props.history.push('/profilis/' + name);
     }
 
     handleSubmitMessage = (event) => {
@@ -84,17 +75,8 @@ class ChatBoxFull extends Component {
     }
 
     render() {
-        let redirect = null;
-
-        if (this.state.redirectTo) {
-            redirect = (
-                <Redirect to={this.state.redirectTo} />
-            );
-        }
-
         return (
             <Card className="mt-2" variant="outlined">
-                {redirect}
                 <CardContent>
                     <form onSubmit={(event) => this.handleSubmitMessage(event)}>
                         <TextField
@@ -133,4 +115,4 @@ class ChatBoxFull extends Component {
     }
 }
 
-export default ChatBoxFull;
+export default withRouter(ChatBoxFull);

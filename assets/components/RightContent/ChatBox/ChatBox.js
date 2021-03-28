@@ -11,7 +11,7 @@ import {
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import axios from "axios";
 import Linkify from 'react-linkify';
-import {Redirect} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class ChatBox extends React.Component {
 
@@ -23,9 +23,7 @@ class ChatBox extends React.Component {
     state = {
         messages: [],
         openDialog: false,
-        newMessageErrorText: '',
-        redirectToChatBoxFull: false,
-        redirectTo: null
+        newMessageErrorText: ''
     }
 
     handleClickOpen = () => {
@@ -76,40 +74,17 @@ class ChatBox extends React.Component {
             });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.redirectToChatBoxFull || this.state.redirectTo) {
-            this.setState({
-                redirectToChatBoxFull: false,
-                redirectTo: null
-            });
-        }
-    }
-
     redirectToFullMessagesHandler(event) {
         event.preventDefault();
-        this.setState({redirectToChatBoxFull: true});
+        this.props.history.push('/pokalbiai');
     }
 
     redirectToUserHandler(event, name) {
         event.preventDefault();
-        this.setState({redirectTo: '/profilis/' + name});
+        this.props.history.push('/profilis/' + name);
     }
 
     render() {
-        let redirect = null;
-
-        if (this.state.redirectToChatBoxFull) {
-            redirect = (
-                <Redirect to="/pokalbiai" />
-            );
-        }
-
-        if (this.state.redirectTo) {
-            redirect = (
-                <Redirect to={this.state.redirectTo} />
-            );
-        }
-
         const dialog = (
             <Dialog open={this.state.openDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Pokalbiai</DialogTitle>
@@ -139,7 +114,6 @@ class ChatBox extends React.Component {
 
         return (
             <Card className="mt-2" variant="outlined">
-                {redirect}
                 {dialog}
                 <CardContent>
                     <Typography className="mb-3" color="textPrimary" gutterBottom>
@@ -182,4 +156,4 @@ class ChatBox extends React.Component {
     }
 }
 
-export default ChatBox;
+export default withRouter(ChatBox);
