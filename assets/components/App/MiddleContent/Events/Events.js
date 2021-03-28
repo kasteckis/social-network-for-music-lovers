@@ -83,7 +83,7 @@ class Events extends Component {
                                         <KeyboardDatePicker
                                             disableToolbar
                                             variant="inline"
-                                            format="MM/dd/yyyy"
+                                            format="yyyy-MM-dd"
                                             margin="normal"
                                             label="Renginio data nuo"
                                             value={this.state.startDateTime}
@@ -97,7 +97,7 @@ class Events extends Component {
                                         <KeyboardDatePicker
                                             disableToolbar
                                             variant="inline"
-                                            format="MM/dd/yyyy"
+                                            format="yyyy-MM-dd"
                                             margin="normal"
                                             label="Renginio data iki"
                                             value={this.state.endDateTime}
