@@ -75,16 +75,22 @@ function Post(props) {
         color: 'orange'
     };
 
+    const redirectToUserPage = (name) => {
+        history.push('/profilis/' + name);
+    }
+
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar>
+                        <CardActionArea onClick={() => redirectToUserPage(props.post.createdBy)}>
                         {props.post.createdByProfilePicture ?
                             <img style={{maxWidth: '100%'}} src={"/images/profile/" + props.post.createdByProfilePicture} alt={props.post.createdBy + ' profilio nuotrauka'} />
                             :
                             <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={props.post.createdBy + ' profilio nuotrauka'} />
                         }
+                        </CardActionArea>
                     </Avatar>
                 }
                 action={
@@ -92,7 +98,11 @@ function Post(props) {
                         <MoreVert />
                     </IconButton>
                 }
-                title={props.post.createdBy}
+                title={
+                    <span onClick={() => redirectToUserPage(props.post.createdBy)}>
+                        {props.post.createdBy}
+                    </span>
+                }
                 subheader={props.post.createdAt}
             />
             <CardActionArea onClick={() => history.push('/irasai/' + props.post.id)}>
