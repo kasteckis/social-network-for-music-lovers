@@ -29,6 +29,7 @@ class EventCrudController extends AbstractCrudController
             ImageField::new('image')
                 ->setBasePath('images/events')
                 ->setUploadDir('public/images/events'),
+            DateTimeField::new('createdAt')
         ];
     }
 }
