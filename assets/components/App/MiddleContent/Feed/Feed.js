@@ -12,8 +12,24 @@ class Feed extends React.Component {
         this.getFeedDataHandler();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.auth.token === null && this.props.auth.token) {
+            this.getFeedDataHandler();
+        }
+    }
+
     getFeedDataHandler() {
-        axios.get('/api/feed')
+        let headers = {};
+
+        if (this.props.auth.token) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                }
+            }
+        }
+
+        axios.get('/api/feed', headers)
             .then(response => {
                 this.setState({feedArray: response.data})
             })

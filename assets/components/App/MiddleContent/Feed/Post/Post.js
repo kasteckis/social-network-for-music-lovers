@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {
     Avatar,
@@ -29,6 +29,13 @@ function Post(props) {
 
     const [likes, setLikes] = useState(props.post.likes);
     const [liked, setLiked] = useState(props.post.liked);
+    const [canUpdateLiked, setCanUpdateLiked] = useState(true);
+
+    useEffect(() => {
+        if (canUpdateLiked) {
+            setLiked(props.post.liked);
+        }
+    });
 
     const classes = useStyles();
 
@@ -46,6 +53,7 @@ function Post(props) {
 
         axios.put('/api/post/' + id + '/like', {}, headers)
             .then(response => {
+                setCanUpdateLiked(false);
                 setLikes(response.data.likes);
                 setLiked(response.data.liked);
             })
