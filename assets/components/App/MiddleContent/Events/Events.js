@@ -15,6 +15,7 @@ import {
 } from '@material-ui/pickers';
 import axios from "axios";
 import Event from "./Event/Event";
+import {Pagination} from "@material-ui/lab";
 
 class Events extends Component {
 
@@ -22,7 +23,9 @@ class Events extends Component {
         events: [],
         startDateTime: new Date(),
         endDateTime: null,
-        type: 'all'
+        type: 'all',
+        pageNumber: 1,
+        eventsCount: 0
     }
 
     constructor(props, context) {
@@ -37,21 +40,24 @@ class Events extends Component {
             endDateTime: oneMonthLater
         })
 
-        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value, this.state.type);
+        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value, this.state.type, this.state.pageNumber);
     }
 
-    loadEvents(from, to, filter, type) {
+    loadEvents(from, to, filter, type, pageNumber) {
         const params = {
             from: from,
             to: to,
             filter: filter,
-            type: type
+            type: type,
+            pageNumber: pageNumber
         };
 
         axios.get('/api/events', { params })
             .then(response => {
-                console.log(response.data);
-                this.setState({events: response.data});
+                this.setState({
+                    events: response.data.events,
+                    eventsCount: response.data.eventsCount
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -72,7 +78,14 @@ class Events extends Component {
 
     filterEvents(event) {
         event.preventDefault();
-        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value, this.state.type);
+        this.setState({pageNumber: 1});
+        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value, this.state.type, 1);
+    }
+
+    handlePaginationChange(event, value) {
+        window.scrollTo(0, 0);
+        this.setState({pageNumber: value});
+        this.loadEvents(this.state.startDateTime, this.state.endDateTime, this.filterTextRef.current.value, this.state.type, value);
     }
 
     render() {
@@ -153,6 +166,18 @@ class Events extends Component {
                                 </React.Fragment>
                             ))}
                         </div>
+                        <Grid
+                            container
+                            justify="center"
+                        >
+                            <Pagination
+                                onChange={(event, value) => this.handlePaginationChange(event, value)}
+                                page={this.state.pageNumber}
+                                className="mt-3"
+                                count={Math.ceil(this.state.eventsCount/10) ? Math.ceil(this.state.eventsCount/10) : 1}
+                                color="primary"
+                            />
+                        </Grid>
                     </CardContent>
                 </Card>
             </React.Fragment>

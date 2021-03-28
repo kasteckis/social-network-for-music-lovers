@@ -34,6 +34,7 @@ class EventController extends AbstractController
         $to = $request->get('to');
         $filter = $request->get('filter');
         $type = $request->get('type');
+        $pageNumber = $request->get('pageNumber');
 
         try {
             $from = new \DateTime($from);
@@ -45,9 +46,12 @@ class EventController extends AbstractController
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
-        $events = $eventRepo->getEventsByDateRangeAndFilter($from, $to, $filter, $type);
+        $events = $eventRepo->getEventsByDateRangeAndFilter($from, $to, $filter, $type, ($pageNumber-1)*10);
         $events = $this->eventService->convertEventArrayToJsonArray($events);
 
-        return $this->json($events);
+        return $this->json([
+            'events' => $events,
+            'eventsCount' => $eventRepo->getEventsByDateRangeAndFilterCount($from, $to, $filter, $type)
+        ]);
     }
 }
