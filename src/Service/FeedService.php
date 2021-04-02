@@ -34,6 +34,18 @@ class FeedService
         return $feedArray;
     }
 
+    public function sortFeeds(array $feedArray): array
+    {
+        usort($feedArray, function ($a, $b) {
+            if ($a['sortBy'] == $b['sortBy']) {
+                return 0;
+            }
+            return ($a['sortBy'] > $b['sortBy']) ? -1 : 1;
+        });
+
+        return $feedArray;
+    }
+
     public function postEntityToArray(Post $post, ?User $user): array
     {
         return [
