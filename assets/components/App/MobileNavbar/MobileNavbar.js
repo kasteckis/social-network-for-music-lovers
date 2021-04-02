@@ -63,7 +63,7 @@ function MobileNavbar(props) {
                     </BottomNavigation>
                     :
                     <BottomNavigation value={value} onChange={handleChange} classes={{root: classes.root}} className="mobile-navbar" showLabels>
-                        {dialogOpen ? <CreateContentPopup open={dialogOpen} close={closeCreateContentDialogHandler} /> : null}
+                        {dialogOpen ? <CreateContentPopup auth={props.auth} open={dialogOpen} close={closeCreateContentDialogHandler} /> : null}
                         <BottomNavigationAction classes={{label: classes.label}} label="Srautas" value="" icon={<RssFeed style={white} />} />
                         <BottomNavigationAction classes={{label: classes.label}} label="Paieška" value="paieska" icon={<Search style={white} />} />
                         <BottomNavigationAction classes={{label: classes.label}} label="Įkelti" value="ikelti" icon={<AddCircle style={white} />} />

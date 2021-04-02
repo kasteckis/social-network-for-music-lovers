@@ -102,7 +102,7 @@ function Navbar(props) {
                         {props.auth.token === null ?
                                 null
                             :
-                                <NavbarTopIcons/>
+                                <NavbarTopIcons auth={props.auth} />
                         }
                     </Toolbar>
                 </AppBar>

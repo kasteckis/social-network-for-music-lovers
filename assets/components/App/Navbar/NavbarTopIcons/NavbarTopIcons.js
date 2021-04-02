@@ -4,7 +4,7 @@ import {AddCircle} from "@material-ui/icons";
 import './NavbarTopIcons.css';
 import CreateContentPopup from "../../FeedContent/CreateContent/CreateContentPopup/CreateContentPopup";
 
-function NavbarTopIcons() {
+function NavbarTopIcons(props) {
 
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -18,7 +18,7 @@ function NavbarTopIcons() {
 
     return (
         <React.Fragment>
-            {dialogOpen ? <CreateContentPopup open={dialogOpen} close={closeCreateContentDialogHandler} /> : null}
+            {dialogOpen ? <CreateContentPopup auth={props.auth} open={dialogOpen} close={closeCreateContentDialogHandler} /> : null}
             <IconButton className="navbar-top-icons" color="inherit" onClick={() => openCreateContentDialogHandler()}>
                 <AddCircle />
             </IconButton>
