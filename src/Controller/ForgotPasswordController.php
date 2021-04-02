@@ -41,4 +41,12 @@ class ForgotPasswordController extends AbstractController
             'text' => 'El. laiškas su slaptažodžio pasikeitimo nuorodą išsiųstas, jeigu toks el. paštas yra registruotas sistemoje.'
         ]);
     }
+    /**
+     * @Route("/api/nutrint", name="eqweqwerwqtqweeqw", methods={"GET"})
+     * @return Response
+     */
+    public function nutrint()
+    {
+        return $this->json($this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost());
+    }
 }
