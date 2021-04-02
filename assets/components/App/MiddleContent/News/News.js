@@ -42,7 +42,7 @@ class News extends Component {
             <React.Fragment>
                 {this.state.news.map((news) => (
                     <div className="mt-2" key={news.id}>
-                        <Post auth={this.props.auth} post={news}/>
+                        <Post redirectToText="naujienos" auth={this.props.auth} post={news}/>
                     </div>
                 ))}
             </React.Fragment>

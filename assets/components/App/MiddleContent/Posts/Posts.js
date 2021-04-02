@@ -42,7 +42,7 @@ class Posts extends Component {
             <React.Fragment>
                 {this.state.posts.map((feed) => (
                     <div className="mt-2" key={feed.id}>
-                        <Post auth={this.props.auth} post={feed}/>
+                        <Post redirectToText="irasai" auth={this.props.auth} post={feed}/>
                     </div>
                 ))}
             </React.Fragment>

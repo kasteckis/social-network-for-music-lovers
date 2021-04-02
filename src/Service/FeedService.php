@@ -69,7 +69,7 @@ class FeedService
     {
         return [
             'id' => $post->getId(),
-            'type' => FeedContentType::POST,
+            'type' => $post->getIsThisPostNews() ? FeedContentType::NEW : FeedContentType::POST,
             'image' => $post->getImage(),
             'title' => $post->getTitle(),
             'text' => $post->getText(),

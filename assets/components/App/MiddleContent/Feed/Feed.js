@@ -46,7 +46,9 @@ class Feed extends React.Component {
                 {this.state.feedArray.map((feed, index) => (
                     <div className="mt-2" key={index}>
                         {feed.type === 'post' ?
-                            <Post auth={this.props.auth} post={feed}/> : null}
+                            <Post redirectToText="irasai" auth={this.props.auth} post={feed}/> : null}
+                        {feed.type === 'new' ?
+                            <Post redirectToText="naujienos" auth={this.props.auth} post={feed}/> : null}
                         {feed.type === 'event' ?
                             <Event event={feed} /> : null
                         }

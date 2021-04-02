@@ -102,7 +102,7 @@ function Post(props) {
                 }
                 subheader={props.post.createdAt}
             />
-            <CardActionArea onClick={() => history.push('/irasai/' + props.post.id)}>
+            <CardActionArea onClick={() => history.push('/' + props.redirectToText + '/' + props.post.id)}>
                 {props.post.image === null || props.post.image.length === 0 ?
                     null
                     :
@@ -132,7 +132,7 @@ function Post(props) {
                 null
             }
             <CardActions>
-                <Button style={{color: 'orange'}} size="small" color="primary" onClick={() => history.push('/irasai/' + props.post.id)}>
+                <Button style={{color: 'orange'}} size="small" color="primary" onClick={() => history.push('/' + props.redirectToText + '/' + props.post.id)}>
                     Skaityti daugiau
                 </Button>
                 <IconButton style={{marginLeft: 'auto'}} onClick={() => likePostHandler(props.post.id)} >
