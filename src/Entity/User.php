@@ -108,6 +108,11 @@ class User implements UserInterface
     private $profilePicture;
 
     /**
+     * @ORM\OneToMany(targetEntity=ForgotPassword::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $forgotPasswords;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -119,6 +124,7 @@ class User implements UserInterface
         $this->postComments = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->surveyAnswers = new ArrayCollection();
+        $this->forgotPasswords = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -470,6 +476,36 @@ class User implements UserInterface
     public function setProfilePicture(?string $profilePicture): self
     {
         $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ForgotPassword[]
+     */
+    public function getForgotPasswords(): Collection
+    {
+        return $this->forgotPasswords;
+    }
+
+    public function addForgotPassword(ForgotPassword $forgotPassword): self
+    {
+        if (!$this->forgotPasswords->contains($forgotPassword)) {
+            $this->forgotPasswords[] = $forgotPassword;
+            $forgotPassword->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForgotPassword(ForgotPassword $forgotPassword): self
+    {
+        if ($this->forgotPasswords->removeElement($forgotPassword)) {
+            // set the owning side to null (unless already changed)
+            if ($forgotPassword->getUser() === $this) {
+                $forgotPassword->setUser(null);
+            }
+        }
 
         return $this;
     }

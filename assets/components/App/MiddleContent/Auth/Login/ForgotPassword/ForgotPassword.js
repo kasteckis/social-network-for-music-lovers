@@ -7,7 +7,8 @@ class ForgotPassword extends Component {
 
     state = {
         emailErrorText: '',
-        emailSuccessText: ''
+        emailSuccessText: '',
+        loading: false
     }
 
     constructor(props) {
@@ -36,9 +37,14 @@ class ForgotPassword extends Component {
             email: this.emailRef.current.value
         };
 
+        this.setState({loading: true});
+
         axios.post('/api/forgot-password', postData)
             .then(response => {
-                this.setState({emailSuccessText: response.data.text})
+                this.setState({
+                    emailSuccessText: response.data.text,
+                    loading: false
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -79,6 +85,14 @@ class ForgotPassword extends Component {
                                 label="El. paštas"
                                 variant="outlined"
                             /><br/>
+
+                            <Grid
+                                hidden={!this.state.loading}
+                                container
+                                justify="center"
+                            >
+                                <CircularProgress className="mb-2" />
+                            </Grid>
 
                             <Grid
                                 container
