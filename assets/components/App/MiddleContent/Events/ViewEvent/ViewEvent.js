@@ -29,10 +29,9 @@ class ViewEvent extends Component {
     }
 
     render() {
-        console.log(this.props.match.params.id);
         return (
             <Card>
-                <CardActionArea onClick={() => console.log('redirectint i eventa')}>
+                <CardActionArea>
                     <CardContent>
                         {this.state.event.image ?
                             <CardMedia
