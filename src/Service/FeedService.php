@@ -40,7 +40,7 @@ class FeedService
 
     public function getNews(array $newsArray, ?User $user): array
     {
-        /** @var Post[] $posts */
+        /** @var Post[] $news */
         $news = $this->entityManager->getRepository(Post::class)->findBy([
             'isThisPostNews' => true
         ], [
