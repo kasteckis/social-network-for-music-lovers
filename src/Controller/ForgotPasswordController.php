@@ -30,23 +30,17 @@ class ForgotPasswordController extends AbstractController
      */
     public function forgotPassword(Request $request, MailerInterface $mailer): Response
     {
+        $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
+        $clientIp = $request->getClientIp();
         $data = json_decode($request->getContent());
         $email = property_exists($data, 'email') ? $data->email : null;
 
         if ($email) {
-            $this->forgotPasswordService->sendForgotPasswordEmailIfNeeded($email, $mailer);
+            $this->forgotPasswordService->sendForgotPasswordEmailIfNeeded($email, $mailer, $hostUrl, $clientIp);
         }
 
         return $this->json([
             'text' => 'El. laiškas su slaptažodžio pasikeitimo nuorodą išsiųstas, jeigu toks el. paštas yra registruotas sistemoje.'
         ]);
-    }
-    /**
-     * @Route("/api/nutrint", name="eqweqwerwqtqweeqw", methods={"GET"})
-     * @return Response
-     */
-    public function nutrint()
-    {
-        return $this->json($this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost());
     }
 }
