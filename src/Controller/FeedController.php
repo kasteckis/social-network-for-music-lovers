@@ -32,6 +32,7 @@ class FeedController extends AbstractController
 
         $feedArray = [];
 
+        $feedArray = $this->feedService->getNews($feedArray, $user);
         $feedArray = $this->feedService->getPosts($feedArray, $user);
         $feedArray = $this->eventService->getEventsForFeed($feedArray, 0);
 

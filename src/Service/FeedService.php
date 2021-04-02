@@ -38,6 +38,21 @@ class FeedService
         return $feedArray;
     }
 
+    public function getNews(array $newsArray, ?User $user): array
+    {
+        /** @var Post[] $posts */
+        $news = $this->entityManager->getRepository(Post::class)->findBy([
+            'isThisPostNews' => true
+        ], [
+            'modifiedAt' => 'DESC'
+        ]);
+        foreach ($news as $new) {
+            $newsArray[] = $this->postEntityToArray($new, $user);
+        }
+
+        return $newsArray;
+    }
+
     public function sortFeeds(array $feedArray): array
     {
         usort($feedArray, function ($a, $b) {

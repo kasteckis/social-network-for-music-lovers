@@ -18,6 +18,7 @@ import UserList from "./UserList/UserList";
 import Posts from "./Posts/Posts";
 import Events from "./Events/Events";
 import ViewEvent from "./Events/ViewEvent/ViewEvent";
+import News from "./News/News";
 
 class MiddleContent extends Component {
     render() {
@@ -41,6 +42,10 @@ class MiddleContent extends Component {
 
                     <Route path="/irasai" exact render={(props) => (
                         <Posts {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/naujienos" exact render={(props) => (
+                        <News {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/renginiai" exact render={(props) => (

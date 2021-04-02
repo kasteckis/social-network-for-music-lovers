@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import Post from "../Feed/Post/Post";
 import axios from "axios";
 
-class Posts extends Component {
+class News extends Component {
     state = {
-        posts: []
+        news: []
     }
 
     componentDidMount() {
@@ -28,9 +28,9 @@ class Posts extends Component {
             }
         }
 
-        axios.get('/api/posts', headers)
+        axios.get('/api/news', headers)
             .then(response => {
-                this.setState({posts: response.data})
+                this.setState({news: response.data})
             })
             .catch(error => {
                 console.log(error);
@@ -40,9 +40,9 @@ class Posts extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.posts.map((feed) => (
-                    <div className="mt-2" key={feed.id}>
-                        <Post auth={this.props.auth} post={feed}/>
+                {this.state.news.map((news) => (
+                    <div className="mt-2" key={news.id}>
+                        <Post auth={this.props.auth} post={news}/>
                     </div>
                 ))}
             </React.Fragment>
@@ -50,4 +50,4 @@ class Posts extends Component {
     }
 }
 
-export default Posts;
+export default News;
