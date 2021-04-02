@@ -90,11 +90,11 @@ function Post(props) {
                         </CardActionArea>
                     </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVert />
-                    </IconButton>
-                }
+                // action={
+                //     <IconButton aria-label="settings">
+                //         <MoreVert />
+                //     </IconButton>
+                // }
                 title={
                     <span onClick={() => redirectToUserPage(props.post.createdBy)}>
                         {props.post.createdBy}

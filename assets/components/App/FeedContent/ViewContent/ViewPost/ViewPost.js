@@ -130,11 +130,11 @@ class ViewPost extends Component {
                                         </CardActionArea>
                                     </Avatar>
                                 }
-                                action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVert />
-                                    </IconButton>
-                                }
+                                // action={
+                                //     <IconButton aria-label="settings">
+                                //         <MoreVert />
+                                //     </IconButton>
+                                // }
                                 title={
                                     <span onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
                                             {this.state.post.createdBy}
