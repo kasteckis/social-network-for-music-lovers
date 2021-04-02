@@ -99,7 +99,7 @@ class Login extends Component {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    color="primary"
+                                    style={{backgroundColor: 'orange'}}
                                     onClick={(event) => this.loginHandler(event)}
                                 >
                                     Prisijungti

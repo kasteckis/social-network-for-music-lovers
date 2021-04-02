@@ -164,7 +164,7 @@ class Register extends Component {
                             >
                                 <Button
                                     variant="contained"
-                                    color="primary"
+                                    style={{backgroundColor: 'orange'}}
                                     onClick={() => this.registerHandler()}
                                 >
                                     Registruotis
