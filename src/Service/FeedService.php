@@ -26,7 +26,11 @@ class FeedService
     public function getPosts(array $feedArray, ?User $user): array
     {
         /** @var Post[] $posts */
-        $posts = $this->entityManager->getRepository(Post::class)->findBy([], ['modifiedAt' => 'DESC']);
+        $posts = $this->entityManager->getRepository(Post::class)->findBy([
+            'isThisPostNews' => false
+        ], [
+            'modifiedAt' => 'DESC'
+        ]);
         foreach ($posts as $post) {
             $feedArray[] = $this->postEntityToArray($post, $user);
         }

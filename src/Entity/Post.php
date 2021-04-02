@@ -64,6 +64,11 @@ class Post
      */
     private $modifiedAt;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isThisPostNews = false;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
@@ -211,6 +216,18 @@ class Post
     public function setModifiedAt(\DateTimeInterface $modifiedAt): self
     {
         $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    public function getIsThisPostNews(): ?bool
+    {
+        return $this->isThisPostNews;
+    }
+
+    public function setIsThisPostNews(bool $isThisPostNews): self
+    {
+        $this->isThisPostNews = $isThisPostNews;
 
         return $this;
     }

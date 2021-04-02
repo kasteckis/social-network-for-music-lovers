@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -28,7 +29,8 @@ class PostCrudController extends AbstractCrudController
             UrlField::new('spotifyIframeUrl'),
             DateTimeField::new('createdAt'),
             DateTimeField::new('modifiedAt'),
-            AssociationField::new('createdBy')
+            AssociationField::new('createdBy'),
+            BooleanField::new('isThisPostNews')
         ];
     }
 }
