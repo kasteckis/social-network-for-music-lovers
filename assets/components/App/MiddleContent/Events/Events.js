@@ -36,11 +36,22 @@ class Events extends Component {
     componentDidMount() {
         const oneMonthLater = new Date(this.state.startDateTime.getFullYear(), this.state.startDateTime.getMonth(), this.state.startDateTime.getDate()+30);
 
+        const from = sessionStorage.getItem('events_filter_from') ? new Date(sessionStorage.getItem('events_filter_from')) : new Date();
+        const to = sessionStorage.getItem('events_filter_to') ? new Date(sessionStorage.getItem('events_filter_to')) : oneMonthLater;
+        const filter = sessionStorage.getItem('events_filter_filter') ? sessionStorage.getItem('events_filter_filter') : '';
+        const type = sessionStorage.getItem('events_filter_type') ? sessionStorage.getItem('events_filter_type') : 'all';
+        const pageNumber = sessionStorage.getItem('events_filter_pageNumber') ? sessionStorage.getItem('events_filter_pageNumber') : 1;
+
+        this.filterTextRef.current.value = filter
+
         this.setState({
-            endDateTime: oneMonthLater
+            startDateTime: from,
+            endDateTime: to,
+            type: type,
+            pageNumber: pageNumber
         })
 
-        this.loadEvents(this.state.startDateTime, oneMonthLater, this.filterTextRef.current.value, this.state.type, this.state.pageNumber);
+        this.loadEvents(from, to, filter, type, pageNumber);
     }
 
     loadEvents(from, to, filter, type, pageNumber) {
@@ -51,6 +62,12 @@ class Events extends Component {
             type: type,
             pageNumber: pageNumber
         };
+
+        sessionStorage.setItem('events_filter_from', from);
+        sessionStorage.setItem('events_filter_to', to);
+        sessionStorage.setItem('events_filter_filter', filter);
+        sessionStorage.setItem('events_filter_type', type);
+        sessionStorage.setItem('events_filter_pageNumber', pageNumber);
 
         axios.get('/api/events', { params })
             .then(response => {
@@ -172,7 +189,7 @@ class Events extends Component {
                         >
                             <Pagination
                                 onChange={(event, value) => this.handlePaginationChange(event, value)}
-                                page={this.state.pageNumber}
+                                page={parseInt(this.state.pageNumber)}
                                 className="mt-3"
                                 count={Math.ceil(this.state.eventsCount/10) ? Math.ceil(this.state.eventsCount/10) : 1}
                                 color="primary"
