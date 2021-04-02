@@ -69,6 +69,10 @@ class UserService
             return 'Administratorius';
         }
 
+        if (in_array('ROLE_MOD', $roles)) {
+            return 'Moderatorius';
+        }
+
         return 'Naudotojas';
     }
 
