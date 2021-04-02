@@ -3,7 +3,16 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
-import {ChatBubble, Description, MusicNote, Poll, PostAdd, QueueMusic, RecordVoiceOver} from "@material-ui/icons";
+import {
+    Announcement,
+    ChatBubble,
+    Description,
+    MusicNote,
+    Poll,
+    PostAdd,
+    QueueMusic,
+    RecordVoiceOver
+} from "@material-ui/icons";
 import {useHistory} from "react-router";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -37,6 +46,21 @@ function CreateContentPopup(props) {
                         </ListItemAvatar>
                         <ListItemText primary="Kurti įrašą" />
                     </ListItem>
+                    {props.auth.roles.includes("ROLE_MOD") ?
+                        <ListItem button onClick={() => {
+                            history.push('/naujienos/naujas');
+                            props.close();
+                        }}>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <Announcement />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary="Kurti naujieną" />
+                        </ListItem>
+                        :
+                        null
+                    }
                     <ListItem button onClick={() => console.log("aagfasdfas")}>
                         <ListItemAvatar>
                             <Avatar>
