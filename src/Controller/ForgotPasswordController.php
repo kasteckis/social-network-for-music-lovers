@@ -31,8 +31,6 @@ class ForgotPasswordController extends AbstractController
         $data = json_decode($request->getContent());
         $email = property_exists($data, 'email') ? $data->email : null;
 
-        set_time_limit(2);
-
         if ($email) {
             $this->forgotPasswordService->sendForgotPasswordEmailIfNeeded($email);
         }
