@@ -20,6 +20,7 @@ import Events from "./Events/Events";
 import ViewEvent from "./Events/ViewEvent/ViewEvent";
 import News from "./News/News";
 import NewNews from "../FeedContent/CreateContent/NewNews/NewNews";
+import ForgotPassword from "./Auth/Login/ForgotPassword/ForgotPassword";
 
 class MiddleContent extends Component {
     render() {
@@ -39,6 +40,10 @@ class MiddleContent extends Component {
 
                     <Route path="/profilis" exact render={(props) => (
                         <Profile {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/pamirsau-slaptazodi" exact render={(props) => (
+                        <ForgotPassword {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/irasai" exact render={(props) => (

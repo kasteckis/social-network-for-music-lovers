@@ -1,9 +1,20 @@
 import React, {Component, createRef} from 'react';
 import { connect } from 'react-redux';
-import {Button, Card, CardContent, CircularProgress, FormControl, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    CircularProgress,
+    FormControl,
+    Grid,
+    Link,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import * as actions from '../../../../../actions/index';
 import { Redirect } from "react-router-dom";
+import ForgotPasswordLink from "./ForgotPasswordLink/ForgotPasswordLink";
 
 class Login extends Component {
 
@@ -90,6 +101,13 @@ class Login extends Component {
                                 justify="center"
                             >
                                 <CircularProgress className="mb-2" />
+                            </Grid>
+
+                            <Grid
+                                container
+                                justify="center"
+                            >
+                                <ForgotPasswordLink />
                             </Grid>
 
                             <Grid
