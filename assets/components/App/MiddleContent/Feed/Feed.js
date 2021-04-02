@@ -1,6 +1,7 @@
 import React from "react";
 import Post from "./Post/Post";
 import axios from "axios";
+import Event from "../Events/Event/Event";
 
 class Feed extends React.Component {
 
@@ -42,10 +43,13 @@ class Feed extends React.Component {
         return (
             <React.Fragment>
                 {this.props.rightContentMobile}
-                {this.state.feedArray.map((feed) => (
-                    <div className="mt-2" key={feed.id}>
+                {this.state.feedArray.map((feed, index) => (
+                    <div className="mt-2" key={index}>
                         {feed.type === 'post' ?
                             <Post auth={this.props.auth} post={feed}/> : null}
+                        {feed.type === 'event' ?
+                            <Event event={feed} /> : null
+                        }
                     </div>
                 ))}
             </React.Fragment>

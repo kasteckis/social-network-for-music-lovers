@@ -38,17 +38,19 @@ class FeedService
     {
         return [
             'id' => $post->getId(),
+            'type' => FeedContentType::POST,
             'image' => $post->getImage(),
             'title' => $post->getTitle(),
             'text' => $post->getText(),
             'spotifyIframeUrl' => $post->getSpotifyIframeUrl(),
             'likes' => $post->getLikes()->count(),
             'comments' => $post->getComments()->count(),
-            'type' => FeedContentType::POST,
             'createdBy' => $post->getCreatedBy() ? $post->getCreatedBy()->getName() : null,
             'createdByProfilePicture' => $post->getCreatedBy() ? $post->getCreatedBy()->getProfilePicture() : null,
             'createdAt' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
-            'liked' => $post->getLikes()->contains($user)
+            'liked' => $post->getLikes()->contains($user),
+            'modifiedAt' => $post->getModifiedAt(),
+            'sortBy' => $post->getModifiedAt()
         ];
     }
 }

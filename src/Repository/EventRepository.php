@@ -22,6 +22,35 @@ class EventRepository extends ServiceEntityRepository
     /**
      * @param \DateTime $from
      * @param \DateTime $to
+     * @param int $offset
+     * @return Event[]
+     */
+    public function getEventsByDateRange(\DateTime $from, \DateTime $to, int $offset): array
+    {
+        $qb = $this->createQueryBuilder('event');
+
+        $qb = $qb
+            ->andWhere('event.active = true')
+            ->andWhere('event.startDateTime >= :from')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->lte('event.endDateTime', ':to'),
+                $qb->expr()->isNull('event.endDateTime')
+            ));
+
+        return $qb
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->orderBy('event.startDateTime', 'ASC')
+            ->setFirstResult($offset)
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
      * @param string|null $filter
      * @param string|null $type
      * @param int $offset

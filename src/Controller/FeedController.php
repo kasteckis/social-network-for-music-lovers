@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Service\EventService;
 use App\Service\FeedService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class FeedController extends AbstractController
 {
     private FeedService $feedService;
+    private EventService $eventService;
 
-    public function __construct(FeedService $feedService)
+    public function __construct(FeedService $feedService, EventService $eventService)
     {
         $this->feedService = $feedService;
+        $this->eventService = $eventService;
     }
 
     /**
@@ -30,6 +33,7 @@ class FeedController extends AbstractController
         $feedArray = [];
 
         $feedArray = $this->feedService->getPosts($feedArray, $user);
+        $feedArray = $this->eventService->getEventsForFeed($feedArray, 0);
 
         return $this->json($feedArray);
     }
