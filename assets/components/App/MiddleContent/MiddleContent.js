@@ -17,6 +17,7 @@ import ViewOtherProfile from "./ViewOtherProfile/ViewOtherProfile";
 import UserList from "./UserList/UserList";
 import Posts from "./Posts/Posts";
 import Events from "./Events/Events";
+import ViewEvent from "./Events/ViewEvent/ViewEvent";
 
 class MiddleContent extends Component {
     render() {
@@ -44,6 +45,10 @@ class MiddleContent extends Component {
 
                     <Route path="/renginiai" exact render={(props) => (
                         <Events {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/renginiai/:id" exact render={(props) => (
+                        <ViewEvent {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/nariai" exact render={(props) => (

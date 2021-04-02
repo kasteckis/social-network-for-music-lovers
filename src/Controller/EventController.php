@@ -54,4 +54,14 @@ class EventController extends AbstractController
             'eventsCount' => $eventRepo->getEventsByDateRangeAndFilterCount($from, $to, $filter, $type)
         ]);
     }
+
+    /**
+     * @Route("/api/events/{id}", name="get_one_event", methods={"GET"})
+     * @param Event $event
+     * @return Response
+     */
+    public function getOneEvent(Event $event): Response
+    {
+        return $this->json($this->eventService->convertEventEntityToArray($event));
+    }
 }

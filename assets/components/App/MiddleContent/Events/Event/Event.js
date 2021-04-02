@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import {Card, CardActionArea, CardContent, CardMedia, Divider, Typography} from "@material-ui/core";
 import Linkify from "react-linkify";
+import {withRouter} from "react-router-dom";
 
 class Event extends Component {
+    redirectToEventHandler(id) {
+        this.props.history.push('/renginiai/' + id);
+    }
+
     render() {
         return (
-            <Card>
-                <CardActionArea onClick={() => console.log('redirectint i eventa')}>
+            <Card className="mt-2">
+                <CardActionArea onClick={() => this.redirectToEventHandler(this.props.event.id)}>
                     <CardContent>
                         {this.props.event.image ?
                             <CardMedia
@@ -45,4 +50,4 @@ class Event extends Component {
     }
 }
 
-export default Event;
+export default withRouter(Event);
