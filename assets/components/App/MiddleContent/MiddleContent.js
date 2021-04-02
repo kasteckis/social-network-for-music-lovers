@@ -19,6 +19,7 @@ import Posts from "./Posts/Posts";
 import Events from "./Events/Events";
 import ViewEvent from "./Events/ViewEvent/ViewEvent";
 import News from "./News/News";
+import NewNews from "../FeedContent/CreateContent/NewNews/NewNews";
 
 class MiddleContent extends Component {
     render() {
@@ -68,11 +69,19 @@ class MiddleContent extends Component {
                         <NewPost {...props} auth={this.props.auth} />
                     )} />
 
+                    <Route path="/naujienos/naujas" exact render={(props) => (
+                        <NewNews {...props} auth={this.props.auth} />
+                    )} />
+
                     <Route path="/pokalbiai" exact render={(props) => (
                         <ChatBoxFull {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/irasai/:id" exact render={(props) => (
+                        <ViewPost {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/naujienos/:id" exact render={(props) => (
                         <ViewPost {...props} auth={this.props.auth} />
                     )} />
 

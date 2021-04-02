@@ -19,7 +19,7 @@ class Profile extends Component {
             id: null,
             username: null,
             email: null,
-            roles: null,
+            roles: [],
             bio: null,
             role: null,
             registered: null,
