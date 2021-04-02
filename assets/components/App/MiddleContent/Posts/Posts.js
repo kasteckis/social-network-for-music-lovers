@@ -28,7 +28,7 @@ class Posts extends Component {
             }
         }
 
-        axios.get('/api/feed', headers)
+        axios.get('/api/posts', headers)
             .then(response => {
                 this.setState({posts: response.data})
             })
