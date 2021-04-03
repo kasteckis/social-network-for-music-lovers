@@ -21,6 +21,7 @@ import ViewEvent from "./Events/ViewEvent/ViewEvent";
 import News from "./News/News";
 import NewNews from "../FeedContent/CreateContent/NewNews/NewNews";
 import ForgotPassword from "./Auth/Login/ForgotPassword/ForgotPassword";
+import ForgotPasswordResetForm from "./Auth/Login/ForgotPasswordResetForm/ForgotPasswordResetForm";
 
 class MiddleContent extends Component {
     render() {
@@ -44,6 +45,10 @@ class MiddleContent extends Component {
 
                     <Route path="/pamirsau-slaptazodi" exact render={(props) => (
                         <ForgotPassword {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/pamirsau-slaptazodi/:hash" exact render={(props) => (
+                        <ForgotPasswordResetForm {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/irasai" exact render={(props) => (

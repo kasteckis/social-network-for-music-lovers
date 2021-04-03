@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ForgotPassword;
 use App\Service\ForgotPasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,37 @@ class ForgotPasswordController extends AbstractController
 
         return $this->json([
             'text' => 'El. laiškas su slaptažodžio pasikeitimo nuorodą išsiųstas, jeigu toks el. paštas yra registruotas sistemoje.'
+        ]);
+    }
+
+    /**
+     * @Route("/api/forgot-password/{hash}", name="forgot_password_hash_check", methods={"GET"})
+     * @param Request $request
+     * @param string $hash
+     * @return Response
+     */
+    public function forgotPasswordHashCheck(Request $request, string $hash): Response
+    {
+        /** @var ForgotPassword|null $forgotPassword */
+        $forgotPassword = $this->getDoctrine()->getRepository(ForgotPassword::class)->findOneBy([
+            'hash' => $hash,
+            'used' => false
+        ]);
+
+        if (!$forgotPassword) {
+            return $this->json([
+                'valid' => false
+            ]);
+        }
+
+        if ($forgotPassword->getExpiresAt() < new \DateTime()) {
+            return $this->json([
+                'valid' => false
+            ]);
+        }
+
+        return $this->json([
+            'valid' => true
         ]);
     }
 }
