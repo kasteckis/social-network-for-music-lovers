@@ -54,7 +54,6 @@ class PasswordChangeDialog extends Component {
                 } else {
                     this.setState({dialogErrorText: response.data.error})
                 }
-                console.log(response.data);
             })
             .catch(error => {
                 console.log(error);
