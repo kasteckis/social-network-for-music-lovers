@@ -176,6 +176,7 @@ class PostController extends AbstractController
     {
         unlink('./images/posts/' . $post->getImage());
         $post->setImage(null);
+        $post->setModifiedAt(new \DateTime());
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json([
