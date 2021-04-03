@@ -11,7 +11,7 @@ import {
     IconButton,
     Typography
 } from "@material-ui/core";
-import {Chat, MoreVert, ThumbUp} from "@material-ui/icons";
+import {Chat, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
 import {withRouter} from "react-router-dom";
 import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
 
@@ -30,7 +30,8 @@ class ViewPost extends Component {
             createdBy: null,
             createdByProfilePicture: null,
             createdAt: null,
-            liked: false
+            liked: false,
+            canEdit: false
         },
         error: false
     }
@@ -190,6 +191,13 @@ class ViewPost extends Component {
                                         <Chat style={{color: 'orange'}} />
                                     </MusicBadge>
                                 </IconButton>
+                                {this.state.post.canEdit ?
+                                    <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
+                                        <Edit style={{color: 'orange'}} />
+                                    </IconButton>
+                                    :
+                                    null
+                                }
                             </CardActions>
                         </React.Fragment>
                 }

@@ -22,6 +22,7 @@ import News from "./News/News";
 import NewNews from "../FeedContent/CreateContent/NewNews/NewNews";
 import ForgotPassword from "./Auth/Login/ForgotPassword/ForgotPassword";
 import ForgotPasswordResetForm from "./Auth/Login/ForgotPasswordResetForm/ForgotPasswordResetForm";
+import EditPost from "../FeedContent/CreateContent/EditPost/EditPost";
 
 class MiddleContent extends Component {
     render() {
@@ -89,6 +90,10 @@ class MiddleContent extends Component {
 
                     <Route path="/irasai/:id" exact render={(props) => (
                         <ViewPost {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/redaguoti/:id" exact render={(props) => (
+                        <EditPost {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/naujienos/:id" exact render={(props) => (

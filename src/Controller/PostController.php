@@ -58,6 +58,38 @@ class PostController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     * @Route("/api/post/{post}", name="modify_post_put", methods={"PUT"})
+     * @param Request $request
+     * @param Post $post
+     * @return Response
+     */
+    public function modifyPostPut(Request $request, Post $post): Response
+    {
+        $postData = json_decode($request->getContent());
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $post
+            ->setText($postData->text)
+            ->setTitle($postData->title)
+            ->setSpotifyIframeUrl($postData->spotifyIframeUrl)
+            ->setModifiedAt(new \DateTime())
+        ;
+
+        if (strlen($postData->image) > 0) {
+            $post->setImage($postData->image);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'success' => 'ok',
+            'postId' => $post->getId()
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
      * @Route("/api/post/{post}/like", name="like_post", methods={"PUT"})
      * @param Post|null $post
      * @return Response

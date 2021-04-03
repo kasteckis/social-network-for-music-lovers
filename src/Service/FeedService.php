@@ -81,7 +81,8 @@ class FeedService
             'createdAt' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
             'liked' => $post->getLikes()->contains($user),
             'modifiedAt' => $post->getModifiedAt(),
-            'sortBy' => $post->getModifiedAt()
+            'sortBy' => $post->getModifiedAt(),
+            'canEdit' => $post->getCreatedBy() === $user
         ];
     }
 }
