@@ -11,6 +11,7 @@ import {
 import {Face} from "@material-ui/icons";
 import axios from "axios";
 import {shallowEqual} from "recompose";
+import ChangeBioDialog from "./ChangeBioDialog/ChangeBioDialog";
 
 class Profile extends Component {
     state = {
@@ -115,30 +116,13 @@ class Profile extends Component {
 
     render() {
         const bioDialog = (
-            <Dialog open={this.state.bioDialog} onClose={this.closeBioDialogHandler} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Bio</DialogTitle>
-                <DialogContent>
-                    <form onSubmit={(event) => this.handleSubmitBioHandler(event)}>
-                        <TextField
-                            error={this.state.dialogErrorText.length !== 0}
-                            helperText={this.state.dialogErrorText}
-                            autoFocus
-                            inputRef={this.bioRef}
-                            margin="dense"
-                            label="Jūsų biografinė žinutė"
-                            fullWidth
-                            multiline
-                            rows={10}
-                            rowsMax={Infinity}
-                        />
-                    </form>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={(event) => this.handleSubmitBioHandler(event)} color="primary">
-                        Išsaugoti
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ChangeBioDialog
+                bioDialog={this.state.bioDialog}
+                closeBioDialogHandler={this.closeBioDialogHandler}
+                handleSubmitBioHandler={(event) => this.handleSubmitBioHandler(event)}
+                dialogErrorText={this.state.dialogErrorText}
+                bioRef={this.bioRef}
+            />
         );
 
         return (
