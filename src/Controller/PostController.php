@@ -165,4 +165,21 @@ class PostController extends AbstractController
             'fileName' => $photoName
         ], 201);
     }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/post/{post}/image", name="delete_post_image", methods={"DELETE"})
+     * @param Post $post
+     * @return Response
+     */
+    public function deletePostImage(Post $post): Response
+    {
+        unlink('./images/posts/' . $post->getImage());
+        $post->setImage(null);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json([
+            'success' => true
+        ]);
+    }
 }

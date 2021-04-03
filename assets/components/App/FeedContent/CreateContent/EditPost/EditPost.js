@@ -59,14 +59,33 @@ class EditPost extends Component {
 
                 this.setState({
                     dataLoaded: true,
-                    oldUploadedImage: response.data.image
+                    oldUploadedImage: response.data.image ? response.data.image : ''
                 });
-
-                console.log(response.data);
 
                 this.titleRef.current.value = response.data.title;
                 this.spotifyIframeUrlRef.current.value = response.data.spotifyIframeUrl;
                 this.textRef.current.value = response.data.text;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    deletePostImageHandler(event) {
+        event.preventDefault();
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        const endpoint = '/api/post/' + this.props.match.params.id + '/image';
+        axios.delete(endpoint, headers)
+            .then(response => {
+                if (response.data.success) {
+                    this.setState({oldUploadedImage: ''});
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -185,27 +204,42 @@ class EditPost extends Component {
                                 label="Pavadinimas"
                                 variant="outlined"
                             /><br/>
-                            <Button
-                                variant="contained"
-                                component="label"
-                                className="mt-2"
-                                disabled={this.state.uploadedFileName.length > 0}
-                            >
-                                {this.state.uploadedFileName.length > 0 ?
-                                    <React.Fragment>
-                                        Nuotrauka įkelta ir išsaugota
-                                    </React.Fragment>
-                                    :
-                                    <React.Fragment>
-                                        Įkelti nuotrauką
-                                    </React.Fragment>
-                                }
-                                <input
-                                    type="file"
-                                    onChange={(event) => this.imageUploadHandler(event)}
-                                    hidden
-                                />
-                            </Button><br/>
+                            {this.state.oldUploadedImage.length === 0 ?
+                                <React.Fragment>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                        className="mt-2"
+                                        disabled={this.state.uploadedFileName.length > 0}
+                                    >
+                                        {this.state.uploadedFileName.length > 0 ?
+                                            <React.Fragment>
+                                                Nuotrauka įkelta ir išsaugota
+                                            </React.Fragment>
+                                            :
+                                            <React.Fragment>
+                                                Įkelti nuotrauką
+                                            </React.Fragment>
+                                        }
+                                        <input
+                                            type="file"
+                                            onChange={(event) => this.imageUploadHandler(event)}
+                                            hidden
+                                        />
+                                    </Button><br/>
+                                </React.Fragment>
+                                :
+                                <React.Fragment>
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                        className="mt-2"
+                                        onClick={(event) => this.deletePostImageHandler(event)}
+                                    >
+                                        Ištrinti jau įkeltą nuotrauką
+                                    </Button><br/>
+                                </React.Fragment>
+                            }
                             <span style={{color: 'red'}}>{this.state.uploadedFileError}</span>
                             <TextField
                                 InputLabelProps={{
