@@ -9,6 +9,9 @@ class ChangeBioDialog extends Component {
                 <DialogContent>
                     <form onSubmit={(event) => this.props.handleSubmitBioHandler(event)}>
                         <TextField
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                             error={this.props.dialogErrorText.length !== 0}
                             helperText={this.props.dialogErrorText}
                             autoFocus
