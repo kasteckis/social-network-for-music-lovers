@@ -13,18 +13,18 @@ jobs:
         run: docker-compose up -d --build
       - name: Install back dependencies via composer
         run: docker exec music_web composer install
+      - name: Run PHPSTAN
+        run: docker exec music_web chmod +x ./tools/phpstan.sh && ./tools/phpstan.sh
       - name: Install front dependencies via yarn
         run: docker exec music_web yarn install
       - name: Build project via yarn
         run: yarn build
-      - name: Update database scheme
-        run: docker exec music_web bin/console d:s:u --force
+#      - name: Update database scheme
+#        run: docker exec music_web bin/console d:s:u --force
 #      - name: Add fixtures
 #        run: docker exec music_web bin/console doctrine:fixtures:load --append
 #      - name: Run PHPUNIT
 #        run: docker exec music_web ./vendor/bin/phpunit
-      - name: Run PHPSTAN
-        run: docker exec music_web chmod +x ./tools/phpstan.sh && ./tools/phpstan.sh
 #       - name: Deploy to live
 #         if: ${{ github.ref == 'refs/heads/master' }}
 #         run: wget ${{ secrets.DEPLOY_WEBHOOK }}
