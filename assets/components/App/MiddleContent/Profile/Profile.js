@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {
     Avatar, Button,
     Card,
-    CardActionArea,
+    CardActionArea, CardActions,
     CardContent, Dialog, DialogActions, DialogContent, DialogTitle,
-    Divider, List,
+    Divider, IconButton, List,
     ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField,
     Typography
 } from "@material-ui/core";
-import {Face} from "@material-ui/icons";
+import {Face, Favorite, Save} from "@material-ui/icons";
 import axios from "axios";
 import {shallowEqual} from "recompose";
 import ChangeBioDialog from "./ChangeBioDialog/ChangeBioDialog";
@@ -29,11 +29,15 @@ class Profile extends Component {
         dataLoaded: false,
         dialogErrorText: '',
         bioDialog: false,
+        editEmail: false,
+        editUsername: false
     }
 
     constructor(props, context) {
         super(props, context);
         this.bioRef = React.createRef();
+        this.usernameRef = React.createRef();
+        this.emailRef = React.createRef();
     }
 
     componentDidMount() {
@@ -114,6 +118,18 @@ class Profile extends Component {
             })
     }
 
+    saveEmailHandler() {
+        this.setState({editEmail: false});
+
+        console.log("saved em");
+    }
+
+    saveUsernameHandler() {
+        this.setState({editUsername: false});
+
+        console.log("saved user");
+    }
+
     render() {
         const bioDialog = (
             <ChangeBioDialog
@@ -185,23 +201,68 @@ class Profile extends Component {
                         </CardContent>
                     </CardActionArea>
                     <Divider/>
-                    <CardActionArea>
+                    {this.state.editEmail ?
                         <CardContent>
                             <ListItem>
-                                <ListItemText primary="El. paštas" secondary={this.state.user.email} />
-                                {/*<ListItemSecondaryAction>*/}
-                                {/*    aa*/}
-                                {/*</ListItemSecondaryAction>*/}
+                                <TextField
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    inputRef={this.emailRef}
+                                    margin="dense"
+                                    label="Jūsų el. paštas"
+                                    fullWidth
+                                />
+                                <IconButton onClick={() => this.saveEmailHandler()} >
+                                    <Save />
+                                </IconButton>
                             </ListItem>
                         </CardContent>
-                    </CardActionArea>
-                    <CardActionArea>
+                        :
+                        <CardActionArea onClick={() => {
+                            this.setState({editEmail: true});
+                            setTimeout(() => {
+                                this.emailRef.current.value = this.state.user.email;
+                            }, 100);
+                        }}>
+                            <CardContent>
+                                <ListItem>
+                                    <ListItemText primary="El. paštas" secondary={this.state.user.email} />
+                                </ListItem>
+                            </CardContent>
+                        </CardActionArea>
+                    }
+                    {this.state.editUsername ?
                         <CardContent>
                             <ListItem>
-                                <ListItemText primary="Slapyvardis" secondary={this.state.user.username} />
+                                <TextField
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    inputRef={this.usernameRef}
+                                    margin="dense"
+                                    label="Slapyvardis"
+                                    fullWidth
+                                />
+                                <IconButton onClick={() => this.saveUsernameHandler()} >
+                                    <Save />
+                                </IconButton>
                             </ListItem>
                         </CardContent>
-                    </CardActionArea>
+                        :
+                        <CardActionArea onClick={() => {
+                            this.setState({editUsername: true});
+                            setTimeout(() => {
+                                this.usernameRef.current.value = this.state.user.username;
+                            }, 100);
+                        }}>
+                            <CardContent>
+                                <ListItem>
+                                    <ListItemText primary="Slapyvardis" secondary={this.state.user.username} />
+                                </ListItem>
+                            </CardContent>
+                        </CardActionArea>
+                    }
                 </List>
             </Card>
         );
