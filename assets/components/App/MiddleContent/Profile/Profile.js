@@ -13,6 +13,7 @@ import axios from "axios";
 import {shallowEqual} from "recompose";
 import ChangeBioDialog from "./ChangeBioDialog/ChangeBioDialog";
 import {withRouter} from "react-router-dom";
+import PasswordChangeDialog from "./PasswordChangeDialog/PasswordChangeDialog";
 
 class Profile extends Component {
     state = {
@@ -30,6 +31,7 @@ class Profile extends Component {
         dataLoaded: false,
         dialogErrorText: '',
         bioDialog: false,
+        passwordChangeDialog: false,
         editEmail: false,
         editEmailErrorText: '',
         editUsername: false,
@@ -96,6 +98,10 @@ class Profile extends Component {
 
     closeBioDialogHandler = () => {
         this.setState({bioDialog: false});
+    };
+
+    closePasswordChangeDialogHandler = () => {
+        this.setState({passwordChangeDialog: false});
     };
 
     handleSubmitBioHandler(event) {
@@ -201,11 +207,20 @@ class Profile extends Component {
             />
         );
 
+        const passwordChangeDialog = (
+            <PasswordChangeDialog
+                passwordChangeDialog={this.state.passwordChangeDialog}
+                closePasswordChangeDialogHandler={this.closePasswordChangeDialogHandler}
+                auth={this.props.auth}
+            />
+        );
+
         return (
             <Card>
                 <List>
                     <CardContent>
                         {bioDialog}
+                        {passwordChangeDialog}
                         <input
                             ref={input => this.fileInputElement = input}
                             type="file"
@@ -328,6 +343,13 @@ class Profile extends Component {
                             </CardContent>
                         </CardActionArea>
                     }
+                    <CardActionArea onClick={() => this.setState({passwordChangeDialog: true})}>
+                        <CardContent>
+                            <ListItem>
+                                <ListItemText primary="Slaptažodis" secondary="*********" />
+                            </ListItem>
+                        </CardContent>
+                    </CardActionArea>
                 </List>
             </Card>
         );
