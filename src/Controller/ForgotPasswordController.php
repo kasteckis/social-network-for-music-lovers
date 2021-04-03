@@ -75,4 +75,43 @@ class ForgotPasswordController extends AbstractController
             'valid' => true
         ]);
     }
+
+    /**
+     * @Route("/api/forgot-password/change", name="forgot_password_change_password", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function forgotPasswordChangePassword(Request $request): Response
+    {
+        $data = json_decode($request->getContent());
+        $hash = $data->hash;
+        $newPassword = $data->newPassword;
+
+        /** @var ForgotPassword|null $forgotPassword */
+        $forgotPassword = $this->getDoctrine()->getRepository(ForgotPassword::class)->findOneBy([
+            'hash' => $hash,
+            'used' => false
+        ]);
+
+        if (!$forgotPassword) {
+            return $this->json([
+                'changed' => false
+            ]);
+        }
+
+        if ($forgotPassword->getExpiresAt() < new \DateTime()) {
+            return $this->json([
+                'changed' => false
+            ]);
+        }
+
+        $forgotPassword->setUsed(true);
+        $forgotPassword->getUser()->setPassword(password_hash($newPassword, PASSWORD_ARGON2ID));
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json([
+            'changed' => true
+        ]);
+    }
 }

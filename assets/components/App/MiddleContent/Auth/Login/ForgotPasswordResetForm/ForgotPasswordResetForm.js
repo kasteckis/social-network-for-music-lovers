@@ -47,10 +47,26 @@ class ForgotPasswordResetForm extends Component {
             return;
         }
 
-        this.setState({successText: 'Slaptažodis pakeistas.'});
-        setTimeout(() => {
-            this.props.history.push('/prisijungti');
-        }, 1000);
+        const data = {
+            hash: this.props.match.params.hash,
+            newPassword: this.newPassword.current.value
+        };
+
+        axios.post('/api/forgot-password/change', data)
+            .then(response => {
+                if (response.data.changed) {
+                    this.setState({successText: 'Slaptažodis pakeistas.'});
+                    setTimeout(() => {
+                        this.props.history.push('/prisijungti');
+                    }, 1000);
+                } else {
+                    this.setState({errorText: 'Kodas neegzistuojantis arba negaliojantis'});
+                }
+            })
+            .catch(error => {
+                this.setState({errorText: 'Nenumatyta klaida'});
+                console.log(error);
+            })
     }
 
     render() {
