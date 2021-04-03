@@ -12,6 +12,7 @@ import {Face, Favorite, Save} from "@material-ui/icons";
 import axios from "axios";
 import {shallowEqual} from "recompose";
 import ChangeBioDialog from "./ChangeBioDialog/ChangeBioDialog";
+import {withRouter} from "react-router-dom";
 
 class Profile extends Component {
     state = {
@@ -121,9 +122,38 @@ class Profile extends Component {
     }
 
     saveEmailHandler() {
-        this.setState({editEmail: false});
+        if (this.state.user.email === this.emailRef.current.value) {
+            this.setState({
+                editEmail: false
+            });
+            return;
+        }
 
-        console.log("saved em");
+        const data = {
+            email: this.emailRef.current.value
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.post('/api/user/email', data, headers)
+            .then(response => {
+                if (response.data.error) {
+                    this.setState({editEmailErrorText: response.data.error});
+                } else {
+                    this.setState({
+                        editEmail: false,
+                        user: response.data
+                    });
+                    this.props.history.push('/atsijungti');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     saveUsernameHandler() {
@@ -233,6 +263,7 @@ class Profile extends Component {
                     <Divider/>
                     {this.state.editEmail ?
                         <CardContent>
+                            <span style={{width: '100%', color: 'red'}}>Pasikeitus el. paštą, reikės prisijungti iš naujo</span>
                             <ListItem>
                                 <TextField
                                     error={this.state.editEmailErrorText.length > 0}
@@ -303,4 +334,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default withRouter(Profile);

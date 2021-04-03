@@ -207,4 +207,39 @@ class UserController extends AbstractController
 
         return $this->json($this->userService->userEntityToArray($user));
     }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/user/email", name="change_user_email_post", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function changeUserEmail(Request $request): Response
+    {
+        $data = json_decode($request->getContent());
+        $newEmail = $data->email;
+
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        if ($user instanceof User) {
+            $em = $this->getDoctrine()->getManager();
+
+            $userWithTakenNewEmail = $em->getRepository(User::class)->findOneBy([
+                'email' => $newEmail
+            ]);
+
+            if ($userWithTakenNewEmail instanceof User) {
+                return $this->json([
+                    'error' => 'El. paštas užimtas'
+                ]);
+            }
+
+            $user->setEmail($newEmail);
+
+            $em->flush();
+        }
+
+        return $this->json($this->userService->userEntityToArray($user));
+    }
 }
