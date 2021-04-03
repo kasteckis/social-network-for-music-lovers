@@ -242,4 +242,44 @@ class UserController extends AbstractController
 
         return $this->json($this->userService->userEntityToArray($user));
     }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/user/change-password", name="change_user_password_post", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function changeUserPassword(Request $request): Response
+    {
+        $data = json_decode($request->getContent());
+        $oldPassword = $data->oldPassword;
+        $newPassword = $data->newPassword;
+
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        if ($user instanceof User) {
+            $em = $this->getDoctrine()->getManager();
+
+            if (!password_verify($oldPassword, $user->getPassword())) {
+                return $this->json([
+                    'error' => 'Nurodytas blogas senas slaptažodis',
+                    'success' => false
+                ]);
+            }
+
+            $user->setPassword(password_hash($newPassword, PASSWORD_ARGON2ID));
+
+            $em->flush();
+
+            return $this->json([
+                'success' => true
+            ]);
+        }
+
+        return $this->json([
+            'error' => 'Nenumatyta klaida',
+            'success' => false
+        ]);
+    }
 }

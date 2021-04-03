@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField} from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
+import {withRouter} from "react-router-dom";
 
 class PasswordChangeDialog extends Component {
     state = {
@@ -34,7 +36,29 @@ class PasswordChangeDialog extends Component {
             return;
         }
 
-        console.log("keiciam pswq");
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        const data = {
+            oldPassword: this.oldPasswordRef.current.value,
+            newPassword: this.newPasswordRef.current.value
+        }
+
+        axios.post('/api/user/change-password', data, headers)
+            .then(response => {
+                if (response.data.success) {
+                    this.props.history.push('/atsijungti');
+                } else {
+                    this.setState({dialogErrorText: response.data.error})
+                }
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
@@ -87,4 +111,4 @@ class PasswordChangeDialog extends Component {
     }
 }
 
-export default PasswordChangeDialog;
+export default withRouter(PasswordChangeDialog);
