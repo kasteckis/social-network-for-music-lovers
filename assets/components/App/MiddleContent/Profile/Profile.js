@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {
-    Avatar,
+    Avatar, Button,
     Card,
     CardActionArea,
-    CardContent,
+    CardContent, Dialog, DialogActions, DialogContent, DialogTitle,
     Divider, List,
-    ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText,
+    ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField,
     Typography
 } from "@material-ui/core";
 import {Face} from "@material-ui/icons";
@@ -20,12 +20,19 @@ class Profile extends Component {
             username: null,
             email: null,
             roles: [],
-            bio: null,
+            bio: '',
             role: null,
             registered: null,
             profilePicture: null
         },
-        dataLoaded: false
+        dataLoaded: false,
+        dialogErrorText: '',
+        bioDialog: false,
+    }
+
+    constructor(props, context) {
+        super(props, context);
+        this.bioRef = React.createRef();
     }
 
     componentDidMount() {
@@ -70,11 +77,75 @@ class Profile extends Component {
         })
     }
 
+    openBioDialogHandler(event) {
+        event.preventDefault();
+
+        this.setState({bioDialog: true, dialogErrorText: ''});
+        setTimeout(() => {
+            this.bioRef.current.value = this.state.user.bio;
+        }, 100);
+    }
+
+    closeBioDialogHandler = () => {
+        this.setState({bioDialog: false});
+    };
+
+    handleSubmitBioHandler(event) {
+        event.preventDefault();
+
+        const data = {
+            bio: this.bioRef.current.value
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.post('/api/profile/bio', data, headers)
+            .then(response => {
+                this.setState({user: response.data});
+                this.closeBioDialogHandler();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     render() {
+        const bioDialog = (
+            <Dialog open={this.state.bioDialog} onClose={this.closeBioDialogHandler} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Bio</DialogTitle>
+                <DialogContent>
+                    <form onSubmit={(event) => this.handleSubmitBioHandler(event)}>
+                        <TextField
+                            error={this.state.dialogErrorText.length !== 0}
+                            helperText={this.state.dialogErrorText}
+                            autoFocus
+                            inputRef={this.bioRef}
+                            margin="dense"
+                            label="Jūsų biografinė žinutė"
+                            fullWidth
+                            multiline
+                            rows={10}
+                            rowsMax={Infinity}
+                        />
+                    </form>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={(event) => this.handleSubmitBioHandler(event)} color="primary">
+                        Išsaugoti
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+
         return (
             <Card>
                 <List>
                     <CardContent>
+                        {bioDialog}
                         <input
                             ref={input => this.fileInputElement = input}
                             type="file"
@@ -105,7 +176,7 @@ class Profile extends Component {
                         </ListItem>
                     </CardContent>
 
-                    <CardActionArea>
+                    <CardActionArea onClick={(event) => this.openBioDialogHandler(event)}>
                         <CardContent>
                             <ListItem>
                                 <Typography align="center" variant="body2" color="textSecondary" component="p">
