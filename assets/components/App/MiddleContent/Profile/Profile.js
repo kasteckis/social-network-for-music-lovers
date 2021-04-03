@@ -30,7 +30,9 @@ class Profile extends Component {
         dialogErrorText: '',
         bioDialog: false,
         editEmail: false,
-        editUsername: false
+        editEmailErrorText: '',
+        editUsername: false,
+        editUsernameErrorText: ''
     }
 
     constructor(props, context) {
@@ -125,9 +127,37 @@ class Profile extends Component {
     }
 
     saveUsernameHandler() {
-        this.setState({editUsername: false});
+        if (this.state.user.username === this.usernameRef.current.value) {
+            this.setState({
+                editUsername: false
+            });
+            return;
+        }
 
-        console.log("saved user");
+        const data = {
+            username: this.usernameRef.current.value
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.post('/api/user/username', data, headers)
+            .then(response => {
+                if (response.data.error) {
+                    this.setState({editUsernameErrorText: response.data.error});
+                } else {
+                    this.setState({
+                        editUsername: false,
+                        user: response.data
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
@@ -205,6 +235,8 @@ class Profile extends Component {
                         <CardContent>
                             <ListItem>
                                 <TextField
+                                    error={this.state.editEmailErrorText.length > 0}
+                                    helperText={this.state.editEmailErrorText}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -236,6 +268,8 @@ class Profile extends Component {
                         <CardContent>
                             <ListItem>
                                 <TextField
+                                    error={this.state.editUsernameErrorText.length > 0}
+                                    helperText={this.state.editUsernameErrorText}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
