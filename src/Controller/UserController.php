@@ -244,8 +244,13 @@ class UserController extends AbstractController
             }
 
             $user->setEmail($newEmail);
+            $user->setEmailConfirmed(false);
 
             $em->flush();
+
+            $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
+
+            $this->emailService->sendEmailConfirmationEmail($user, $newEmail, $hostUrl);
         }
 
         return $this->json($this->userService->userEntityToArray($user));
