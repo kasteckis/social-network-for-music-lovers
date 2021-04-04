@@ -143,7 +143,7 @@ class PostController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->json($this->feedService->postEntityToArray($post, $user));
+            return $this->json($this->feedService->postEntityToArrayWithComments($post, $user));
         }
 
         return $this->json([
