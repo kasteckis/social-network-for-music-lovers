@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {
     Avatar,
-    Badge,
+    Badge, Button,
     Card,
     CardActionArea,
     CardActions,
     CardContent, CardHeader,
     CardMedia, Divider, Grid,
-    IconButton, Paper,
+    IconButton, Paper, TextField,
     Typography
 } from "@material-ui/core";
 import {Chat, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
@@ -34,7 +34,13 @@ class ViewPost extends Component {
             canEdit: false,
             commentsArray: []
         },
-        error: false
+        error: false,
+        newCommentErrorText: ''
+    }
+
+    constructor(props, context) {
+        super(props, context);
+        this.newCommentRef = React.createRef();
     }
 
     likePostHandler = (id) => {
@@ -105,6 +111,36 @@ class ViewPost extends Component {
 
     redirectToUserPage(name) {
         this.props.history.push('/profilis/' + name);
+    }
+
+    handleSubmitPostComment(event) {
+        event.preventDefault();
+
+        this.setState({newCommentErrorText: ''});
+        if (this.newCommentRef.current.value.length === 0) {
+            this.setState({newCommentErrorText: 'Komentaras negali būti tusčias'});
+            return;
+        }
+
+        const postCommentData = {
+            postId: this.state.post.id,
+            comment: this.newCommentRef.current.value
+        }
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.post('/api/post-comment', postCommentData, headers)
+            .then(response => {
+                this.setState({post: response.data});
+                this.newCommentRef.current.value = '';
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
@@ -207,8 +243,25 @@ class ViewPost extends Component {
                 <div style={{ padding: 14 }} className="App">
                     <h1>Komentarai</h1>
                     <Paper style={{ padding: "40px 20px" }}>
+                        <form onSubmit={(event) => this.handleSubmitPostComment(event)}>
+                            <TextField
+                                error={this.state.newCommentErrorText.length !== 0}
+                                helperText={this.state.newCommentErrorText}
+                                autoFocus
+                                inputRef={this.newCommentRef}
+                                margin="dense"
+                                label="Jūsų komentaras"
+                                fullWidth
+                                multiline
+                                rows={6}
+                                rowsMax={Infinity}
+                            />
+                            <Button className="mb-2" onClick={(event) => this.handleSubmitPostComment(event)} color="primary">
+                                Rašyti
+                            </Button>
+                        </form>
                         {this.state.post.commentsArray.map((comment) => (
-                            <React.Fragment>
+                            <React.Fragment key={comment.id}>
                                 <Grid container wrap="nowrap" spacing={2}>
                                     <Grid item>
                                         <Avatar>

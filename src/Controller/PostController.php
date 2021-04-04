@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\PostComment;
 use App\Entity\User;
 use App\Service\FeedService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -54,6 +55,40 @@ class PostController extends AbstractController
             'success' => 'ok',
             'postId' => $post->getId()
         ], 201);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/post-comment", name="create_post_comment", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function createPostComment(Request $request): Response
+    {
+        $postCommentData = json_decode($request->getContent());
+        $postId = $postCommentData->postId;
+        $comment = $postCommentData->comment;
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $post = $entityManager->getRepository(Post::class)->find($postId);
+
+        if ($post instanceof Post) {
+            $postComment = new PostComment();
+
+            $postComment
+                ->setUser($user)
+                ->setText($comment)
+                ->setPost($post)
+            ;
+
+            $entityManager->persist($postComment);
+            $entityManager->flush();
+        }
+
+        return $this->json($this->feedService->postEntityToArrayWithComments($post, $user), 201);
     }
 
     /**

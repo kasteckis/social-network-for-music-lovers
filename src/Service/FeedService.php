@@ -108,6 +108,7 @@ class FeedService
     public function postCommentEntityToArray(PostComment $postComment): array
     {
         return [
+            'id' => $postComment->getId(),
             'createdBy' => $postComment->getUser() ? $postComment->getUser()->getName() : null,
             'createdByProfilePicture' => $postComment->getUser() ? $postComment->getUser()->getProfilePicture() : null,
             'text' => $postComment->getText(),
