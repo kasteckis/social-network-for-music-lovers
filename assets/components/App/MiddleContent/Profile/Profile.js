@@ -4,7 +4,7 @@ import {
     Card,
     CardActionArea, CardActions,
     CardContent, Dialog, DialogActions, DialogContent, DialogTitle,
-    Divider, IconButton, List,
+    Divider, Grid, IconButton, List,
     ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField,
     Typography
 } from "@material-ui/core";
@@ -26,7 +26,8 @@ class Profile extends Component {
             bio: '',
             role: null,
             registered: null,
-            profilePicture: null
+            profilePicture: null,
+            emailConfirmed: true
         },
         dataLoaded: false,
         dialogErrorText: '',
@@ -35,7 +36,8 @@ class Profile extends Component {
         editEmail: false,
         editEmailErrorText: '',
         editUsername: false,
-        editUsernameErrorText: ''
+        editUsernameErrorText: '',
+        emailConfirmationEmailSent: false
     }
 
     constructor(props, context) {
@@ -103,6 +105,14 @@ class Profile extends Component {
     closePasswordChangeDialogHandler = () => {
         this.setState({passwordChangeDialog: false});
     };
+
+    resentEmailConfirmationHandler(event) {
+        event.preventDefault();
+
+        this.setState({emailConfirmationEmailSent: true});
+
+        console.log("resend");
+    }
 
     handleSubmitBioHandler(event) {
         event.preventDefault();
@@ -297,18 +307,41 @@ class Profile extends Component {
                             </ListItem>
                         </CardContent>
                         :
-                        <CardActionArea onClick={() => {
-                            this.setState({editEmail: true});
-                            setTimeout(() => {
-                                this.emailRef.current.value = this.state.user.email;
-                            }, 100);
-                        }}>
-                            <CardContent>
-                                <ListItem>
-                                    <ListItemText primary="El. paštas" secondary={this.state.user.email} />
-                                </ListItem>
-                            </CardContent>
-                        </CardActionArea>
+                        <React.Fragment>
+                            {this.state.user.emailConfirmed ?
+                                null
+                                :
+                                <div style={{textAlign: 'center'}}>
+                                    <Grid
+                                        container
+                                        justify="center"
+                                    >
+                                        <span style={{width: '100%', color: 'red'}}>El. paštas yra nepatvirtintas. Patvirtinkite jį savo el. pašte.</span>
+                                        {this.state.emailConfirmationEmailSent ?
+                                            <Button variant="contained" color="secondary" disabled={true}>
+                                                Laiškas išsiųstas
+                                            </Button>
+                                            :
+                                            <Button variant="contained" color="secondary" onClick={(event) => this.resentEmailConfirmationHandler(event)}>
+                                                Persiųsti laišką
+                                            </Button>
+                                        }
+                                    </Grid>
+                                </div>
+                            }
+                            <CardActionArea onClick={() => {
+                                this.setState({editEmail: true});
+                                setTimeout(() => {
+                                    this.emailRef.current.value = this.state.user.email;
+                                }, 100);
+                            }}>
+                                <CardContent>
+                                    <ListItem>
+                                        <ListItemText primary="El. paštas" secondary={this.state.user.email} />
+                                    </ListItem>
+                                </CardContent>
+                            </CardActionArea>
+                        </React.Fragment>
                     }
                     {this.state.editUsername ?
                         <CardContent>

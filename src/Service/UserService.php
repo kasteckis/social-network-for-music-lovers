@@ -84,6 +84,7 @@ class UserService
             'id' => $user->getId(),
             'username' => $user->getName(),
             'email' => $user->getEmail(),
+            'emailConfirmed' => $user->getEmailConfirmed(),
             'tokenExpiresAt' => $tokenExpiresAt,
             'roles' => $user->getRoles(),
             'bio' => $user->getBio(),

@@ -113,6 +113,11 @@ class User implements UserInterface
     private $forgotPasswords;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emailConfirmed = false;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -506,6 +511,18 @@ class User implements UserInterface
                 $forgotPassword->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmailConfirmed(): ?bool
+    {
+        return $this->emailConfirmed;
+    }
+
+    public function setEmailConfirmed(bool $emailConfirmed): self
+    {
+        $this->emailConfirmed = $emailConfirmed;
 
         return $this;
     }
