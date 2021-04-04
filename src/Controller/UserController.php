@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\EmailConfirmation;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\EmailService;
@@ -304,10 +305,39 @@ class UserController extends AbstractController
             ]);
         }
 
-        $this->emailService->sendEmailConfirmationEmail($user, $user->getEmail());
+        $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
+
+        $this->emailService->sendEmailConfirmationEmail($user, $user->getEmail(), $hostUrl);
 
         return $this->json([
             'success' => true
         ]);
+    }
+
+    /**
+     * @Route("/aktyvuoti/{hash}", name="activate_email_endpoint")
+     * @param string $hash
+     * @return Response
+     */
+    public function activateEmail(string $hash): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $emailConfirmation = $em->getRepository(EmailConfirmation::class)->findOneBy([
+            'hash' => $hash,
+            'confirmed' => false
+        ]);
+
+        if ($emailConfirmation instanceof EmailConfirmation) {
+            $emailConfirmation->setConfirmed(true);
+
+            $emailConfirmation->getUser()->setEmailConfirmed(true);
+
+            $em->flush();
+        }
+
+        $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
+
+        return $this->redirect($hostUrl . '/profilis');
     }
 }
