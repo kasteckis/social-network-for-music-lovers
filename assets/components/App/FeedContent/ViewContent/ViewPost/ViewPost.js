@@ -68,15 +68,6 @@ class ViewPost extends Component {
             })
     }
 
-    commentPostHandler = (id) => {
-        if (this.props.auth.token === null) {
-            this.props.history.push('/prisijungti');
-            return;
-        }
-
-        // todo implementint commentavima
-    }
-
     componentDidMount() {
         window.scrollTo(0, 0);
 
@@ -224,11 +215,11 @@ class ViewPost extends Component {
                                             <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
                                         </MusicBadge>
                                     </IconButton>
-                                    <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
-                                        <MusicBadge badgeContent={this.state.post.comments}>
-                                            <Chat style={{color: 'orange'}} />
-                                        </MusicBadge>
-                                    </IconButton>
+                                    {/*<IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >*/}
+                                    {/*    <MusicBadge badgeContent={this.state.post.comments}>*/}
+                                    {/*        <Chat style={{color: 'orange'}} />*/}
+                                    {/*    </MusicBadge>*/}
+                                    {/*</IconButton>*/}
                                     {this.state.post.canEdit ?
                                         <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
                                             <Edit style={{color: 'orange'}} />
@@ -241,7 +232,7 @@ class ViewPost extends Component {
                     }
                 </Card>
                 <div style={{ padding: 14 }} className="App">
-                    <h1>Komentarai</h1>
+                    <h1>Komentarai ({this.state.post.comments})</h1>
                     <Paper style={{ padding: "40px 20px" }}>
                         <form onSubmit={(event) => this.handleSubmitPostComment(event)}>
                             <TextField

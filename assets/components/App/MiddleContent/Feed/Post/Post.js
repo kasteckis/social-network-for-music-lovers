@@ -69,7 +69,7 @@ function Post(props) {
             return;
         }
 
-        // todo implementint commentavima
+        history.push('/' + props.redirectToText + '/' + props.post.id);
     }
 
     const redirectToUserPage = (name) => {
