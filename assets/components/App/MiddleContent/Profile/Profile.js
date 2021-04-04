@@ -106,12 +106,24 @@ class Profile extends Component {
         this.setState({passwordChangeDialog: false});
     };
 
-    resentEmailConfirmationHandler(event) {
+    resendEmailConfirmationHandler(event) {
         event.preventDefault();
 
-        this.setState({emailConfirmationEmailSent: true});
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
 
-        console.log("resend");
+        axios.post('/api/user/resend-email-confirmation', {}, headers)
+            .then(response => {
+                if (response.data.success) {
+                    this.setState({emailConfirmationEmailSent: true});
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     handleSubmitBioHandler(event) {
@@ -322,7 +334,7 @@ class Profile extends Component {
                                                 Laiškas išsiųstas
                                             </Button>
                                             :
-                                            <Button variant="contained" color="secondary" onClick={(event) => this.resentEmailConfirmationHandler(event)}>
+                                            <Button variant="contained" color="secondary" onClick={(event) => this.resendEmailConfirmationHandler(event)}>
                                                 Persiųsti laišką
                                             </Button>
                                         }

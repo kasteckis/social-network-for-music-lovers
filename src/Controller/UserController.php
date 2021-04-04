@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\EmailService;
 use App\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     private UserService $userService;
+    private EmailService $emailService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, EmailService $emailService)
     {
         $this->userService = $userService;
+        $this->emailService = $emailService;
     }
 
     /**
@@ -280,6 +283,31 @@ class UserController extends AbstractController
         return $this->json([
             'error' => 'Nenumatyta klaida',
             'success' => false
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/api/user/resend-email-confirmation", name="resent_email_confirmation_post", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function resendEmailConfirmation(Request $request): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->getEmailConfirmed()) {
+            return $this->json([
+                'success' => false,
+                'error' => 'El. pastas jau patvirtintas'
+            ]);
+        }
+
+        $this->emailService->sendEmailConfirmationEmail($user, $user->getEmail());
+
+        return $this->json([
+            'success' => true
         ]);
     }
 }

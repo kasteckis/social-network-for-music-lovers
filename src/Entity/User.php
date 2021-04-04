@@ -118,6 +118,11 @@ class User implements UserInterface
     private $emailConfirmed = false;
 
     /**
+     * @ORM\OneToMany(targetEntity=EmailConfirmation::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $emailConfirmations;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -130,6 +135,7 @@ class User implements UserInterface
         $this->posts = new ArrayCollection();
         $this->surveyAnswers = new ArrayCollection();
         $this->forgotPasswords = new ArrayCollection();
+        $this->emailConfirmations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -523,6 +529,36 @@ class User implements UserInterface
     public function setEmailConfirmed(bool $emailConfirmed): self
     {
         $this->emailConfirmed = $emailConfirmed;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmailConfirmation[]
+     */
+    public function getEmailConfirmations(): Collection
+    {
+        return $this->emailConfirmations;
+    }
+
+    public function addEmailConfirmation(EmailConfirmation $emailConfirmation): self
+    {
+        if (!$this->emailConfirmations->contains($emailConfirmation)) {
+            $this->emailConfirmations[] = $emailConfirmation;
+            $emailConfirmation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmailConfirmation(EmailConfirmation $emailConfirmation): self
+    {
+        if ($this->emailConfirmations->removeElement($emailConfirmation)) {
+            // set the owning side to null (unless already changed)
+            if ($emailConfirmation->getUser() === $this) {
+                $emailConfirmation->setUser(null);
+            }
+        }
 
         return $this;
     }
