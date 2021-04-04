@@ -93,7 +93,15 @@ class FeedService
         $postEntityArray = $this->postEntityToArray($post, $user);
 
         /** @var PostComment[] $postComments */
-        $postComments = $post->getComments();
+        $postComments = $post->getComments()->toArray();
+
+        usort($postComments, function ($a, $b) {
+            if ($a->getCreatedAt() == $b->getCreatedAt()) {
+                return 0;
+            }
+            return ($a->getCreatedAt() > $b->getCreatedAt()) ? -1 : 1;
+        });
+
         $postCommentsArray = [];
 
         foreach ($postComments as $postComment) {
