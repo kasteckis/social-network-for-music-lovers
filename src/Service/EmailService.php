@@ -54,4 +54,22 @@ class EmailService
 
         $this->mailer->send($email);
     }
+
+    public function sendYourEmailWasChanged(User $user, string $oldEmail, string $ip): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($_ENV['MAILER_EMAIL'])
+            ->to($oldEmail)
+            ->priority(Email::PRIORITY_HIGH)
+            ->subject('Music.lt - Jūsų el. paštas pakeistas')
+            ->htmlTemplate('emails/your-email-was-changed.html.twig')
+            ->context([
+                'username' => $user->getName(),
+                'newEmail' => $user->getEmail(),
+                'ip' => $ip
+            ])
+        ;
+
+        $this->mailer->send($email);
+    }
 }

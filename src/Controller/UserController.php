@@ -231,6 +231,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         if ($user instanceof User) {
+            $oldEmail = $user->getEmail();
             $em = $this->getDoctrine()->getManager();
 
             $userWithTakenNewEmail = $em->getRepository(User::class)->findOneBy([
@@ -251,6 +252,7 @@ class UserController extends AbstractController
             $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
 
             $this->emailService->sendEmailConfirmationEmail($user, $newEmail, $hostUrl);
+            $this->emailService->sendYourEmailWasChanged($user, $oldEmail, $request->getClientIp());
         }
 
         return $this->json($this->userService->userEntityToArray($user));
