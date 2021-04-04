@@ -7,8 +7,8 @@ import {
     CardActionArea,
     CardActions,
     CardContent, CardHeader,
-    CardMedia,
-    IconButton,
+    CardMedia, Divider, Grid,
+    IconButton, Paper,
     Typography
 } from "@material-ui/core";
 import {Chat, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
@@ -31,7 +31,8 @@ class ViewPost extends Component {
             createdByProfilePicture: null,
             createdAt: null,
             liked: false,
-            canEdit: false
+            canEdit: false,
+            commentsArray: []
         },
         error: false
     }
@@ -108,100 +109,132 @@ class ViewPost extends Component {
 
     render() {
         return (
-            <Card>
-                {this.state.error ?
-                        <CardActionArea>
-                            <CardContent>
-                                <Typography align="center" gutterBottom variant="h5" component="h2">
-                                    Įrašas nerastas
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    :
-                        <React.Fragment>
-                            <CardHeader
-                                avatar={
-                                    <Avatar>
-                                        <CardActionArea onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
-                                            {this.state.post.createdByProfilePicture ?
-                                                <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.post.createdByProfilePicture} alt={this.state.post.createdBy + ' profilio nuotrauka'} />
-                                                :
-                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
-                                            }
-                                        </CardActionArea>
-                                    </Avatar>
-                                }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVert />
-                                //     </IconButton>
-                                // }
-                                title={
-                                    <span onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
-                                            {this.state.post.createdBy}
-                                        </span>
-                                }
-                                subheader={this.state.post.createdAt}
-                            />
+            <React.Fragment>
+                <Card>
+                    {this.state.error ?
                             <CardActionArea>
-                                {this.state.post.image === null || this.state.post.image.length === 0 ?
-                                        null
-                                    :
-                                        <CardMedia
-                                            style={{height: 140}}
-                                            image={window.location.origin + '/images/posts/' + this.state.post.image}
-                                            title={this.state.post.title}
-                                        />
-                                }
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {this.state.post.title}
+                                    <Typography align="center" gutterBottom variant="h5" component="h2">
+                                        Įrašas nerastas
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
-                            <CardContent>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {this.state.post.text}
-                                </Typography>
-                            </CardContent>
-                            {this.state.post.spotifyIframeUrl ?
-                                    <div className="m-2">
-                                        <iframe src={this.state.post.spotifyIframeUrl}
-                                                width="100%" height={this.state.post.spotifyIframeUrl.indexOf('track') === -1 ? 380 : 80} frameBorder="0"
-                                                allow="encrypted-media"
-                                        />
-                                    </div>
-                                :
-                                    null
-                            }
-                            <CardActions>
-                                <IconButton style={{marginLeft: 'auto'}} onClick={() => this.likePostHandler(this.state.post.id)} >
-                                    <MusicBadge
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                        badgeContent={this.state.post.likes}
-                                    >
-                                        <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
-                                    </MusicBadge>
-                                </IconButton>
-                                <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
-                                    <MusicBadge badgeContent={this.state.post.comments}>
-                                        <Chat style={{color: 'orange'}} />
-                                    </MusicBadge>
-                                </IconButton>
-                                {this.state.post.canEdit ?
-                                    <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
-                                        <Edit style={{color: 'orange'}} />
-                                    </IconButton>
+                        :
+                            <React.Fragment>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar>
+                                            <CardActionArea onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
+                                                {this.state.post.createdByProfilePicture ?
+                                                    <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.post.createdByProfilePicture} alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                                    :
+                                                    <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                                }
+                                            </CardActionArea>
+                                        </Avatar>
+                                    }
+                                    // action={
+                                    //     <IconButton aria-label="settings">
+                                    //         <MoreVert />
+                                    //     </IconButton>
+                                    // }
+                                    title={
+                                        <span onClick={() => this.redirectToUserPage(this.state.post.createdBy)}>
+                                                {this.state.post.createdBy}
+                                            </span>
+                                    }
+                                    subheader={this.state.post.createdAt}
+                                />
+                                <CardActionArea>
+                                    {this.state.post.image === null || this.state.post.image.length === 0 ?
+                                            null
+                                        :
+                                            <CardMedia
+                                                style={{height: 140}}
+                                                image={window.location.origin + '/images/posts/' + this.state.post.image}
+                                                title={this.state.post.title}
+                                            />
+                                    }
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {this.state.post.title}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {this.state.post.text}
+                                    </Typography>
+                                </CardContent>
+                                {this.state.post.spotifyIframeUrl ?
+                                        <div className="m-2">
+                                            <iframe src={this.state.post.spotifyIframeUrl}
+                                                    width="100%" height={this.state.post.spotifyIframeUrl.indexOf('track') === -1 ? 380 : 80} frameBorder="0"
+                                                    allow="encrypted-media"
+                                            />
+                                        </div>
                                     :
-                                    null
+                                        null
                                 }
-                            </CardActions>
-                        </React.Fragment>
-                }
-            </Card>
+                                <CardActions>
+                                    <IconButton style={{marginLeft: 'auto'}} onClick={() => this.likePostHandler(this.state.post.id)} >
+                                        <MusicBadge
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                            badgeContent={this.state.post.likes}
+                                        >
+                                            <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
+                                        </MusicBadge>
+                                    </IconButton>
+                                    <IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >
+                                        <MusicBadge badgeContent={this.state.post.comments}>
+                                            <Chat style={{color: 'orange'}} />
+                                        </MusicBadge>
+                                    </IconButton>
+                                    {this.state.post.canEdit ?
+                                        <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
+                                            <Edit style={{color: 'orange'}} />
+                                        </IconButton>
+                                        :
+                                        null
+                                    }
+                                </CardActions>
+                            </React.Fragment>
+                    }
+                </Card>
+                <div style={{ padding: 14 }} className="App">
+                    <h1>Komentarai</h1>
+                    <Paper style={{ padding: "40px 20px" }}>
+                        {this.state.post.commentsArray.map((comment) => (
+                            <React.Fragment>
+                                <Grid container wrap="nowrap" spacing={2}>
+                                    <Grid item>
+                                        <Avatar>
+                                            {comment.createdByProfilePicture ?
+                                                <img style={{maxWidth: '100%'}} src={"/images/profile/" + comment.createdByProfilePicture} alt={comment.createdBy + ' profilio nuotrauka'} />
+                                                :
+                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                            }
+                                        </Avatar>
+                                    </Grid>
+                                    <Grid item xs zeroMinWidth>
+                                        <h4 style={{ margin: 0, textAlign: "left" }}>{comment.createdBy}</h4>
+                                        <p style={{ textAlign: "left" }}>
+                                            {comment.text}
+                                        </p>
+                                        <p style={{ textAlign: "left", color: "gray" }}>
+                                            {comment.createdAt}
+                                        </p>
+                                    </Grid>
+                                </Grid>
+                                <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+                            </React.Fragment>
+                        ))}
+                    </Paper>
+                </div>
+            </React.Fragment>
         );
     }
 }

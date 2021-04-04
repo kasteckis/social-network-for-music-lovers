@@ -127,7 +127,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         if ($post instanceof Post) {
-            return $this->json($this->feedService->postEntityToArray($post, $user));
+            return $this->json($this->feedService->postEntityToArrayWithComments($post, $user));
         }
 
         return $this->json(['error' => 'Įrašas nerastas'], 404);

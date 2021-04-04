@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Post;
+use App\Entity\PostComment;
 use App\Entity\User;
 use App\Repository\FeedContentType;
 use Doctrine\ORM\EntityManager;
@@ -82,7 +83,35 @@ class FeedService
             'liked' => $post->getLikes()->contains($user),
             'modifiedAt' => $post->getModifiedAt(),
             'sortBy' => $post->getModifiedAt(),
-            'canEdit' => $post->getCreatedBy() === $user
+            'canEdit' => $post->getCreatedBy() === $user,
+            'commentsArray' => []
+        ];
+    }
+
+    public function postEntityToArrayWithComments(Post $post, ?User $user): array
+    {
+        $postEntityArray = $this->postEntityToArray($post, $user);
+
+        /** @var PostComment[] $postComments */
+        $postComments = $post->getComments();
+        $postCommentsArray = [];
+
+        foreach ($postComments as $postComment) {
+            $postCommentsArray[] = $this->postCommentEntityToArray($postComment);
+        }
+
+        $postEntityArray['commentsArray'] = $postCommentsArray;
+
+        return $postEntityArray;
+    }
+
+    public function postCommentEntityToArray(PostComment $postComment): array
+    {
+        return [
+            'createdBy' => $postComment->getUser() ? $postComment->getUser()->getName() : null,
+            'createdByProfilePicture' => $postComment->getUser() ? $postComment->getUser()->getProfilePicture() : null,
+            'text' => $postComment->getText(),
+            'createdAt' => $postComment->getCreatedAt() ? $postComment->getCreatedAt()->format('Y-m-d H:i:s') : null
         ];
     }
 }
