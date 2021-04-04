@@ -145,6 +145,10 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $hostUrl = $this->get('router')->getContext()->getScheme() . '://' . $this->get('router')->getContext()->getHost();
+
+        $this->emailService->sendEmailConfirmationEmail($user, $user->getEmail(), $hostUrl);
+
         $tokenExpiresAt = $this->userService->getTokenExpirationDateTime();
 
         return $this->json([
