@@ -95,6 +95,31 @@ class PostController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     * @Route("/api/post-comment/{postComment}", name="delete_post_comment", methods={"DELETE"})
+     * @param PostComment $postComment
+     * @return Response
+     */
+    public function deletePostComment(PostComment $postComment): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        if ($user !== $postComment->getUser()) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Negalite ištrinti šio komentaro'
+            ]);
+        }
+
+        $em->remove($postComment);
+        $em->flush();
+
+        return $this->json($this->feedService->postEntityToArrayWithComments($postComment->getPost(), $user));
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
      * @Route("/api/post/{post}", name="modify_post_put", methods={"PUT"})
      * @param Request $request
      * @param Post $post

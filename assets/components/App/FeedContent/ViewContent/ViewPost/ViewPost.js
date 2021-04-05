@@ -15,6 +15,7 @@ import {Chat, Delete, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
 import {withRouter} from "react-router-dom";
 import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
 import DeletePostDialog from "./DeletePostDialog/DeletePostDialog";
+import DeletePostCommentDialog from "./DeletePostCommentDialog/DeletePostCommentDialog";
 
 class ViewPost extends Component {
 
@@ -37,7 +38,9 @@ class ViewPost extends Component {
         },
         error: false,
         newCommentErrorText: '',
-        postDeleteDialog: false
+        postDeleteDialog: false,
+        postCommentDeleteDialog: false,
+        selectedPostCommentToDelete: -1
     }
 
     constructor(props, context) {
@@ -162,6 +165,36 @@ class ViewPost extends Component {
             })
     }
 
+    openPostCommentDeleteDialog(postCommentId) {
+        this.setState({
+            postCommentDeleteDialog: true,
+            selectedPostCommentToDelete: postCommentId
+        });
+    }
+
+    closePostCommentDeleteDialog() {
+        this.setState({postCommentDeleteDialog: false});
+    }
+
+    deletePostCommentHandler() {
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.delete('/api/post-comment/' + this.state.selectedPostCommentToDelete, headers)
+            .then(response => {
+                this.setState({
+                    post: response.data,
+                    postCommentDeleteDialog: false
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     render() {
         const postDeleteDialog = (
             <DeletePostDialog
@@ -171,10 +204,19 @@ class ViewPost extends Component {
             />
         );
 
+        const postCommentDeleteDialog = (
+            <DeletePostCommentDialog
+                postCommentDeleteDialog={this.state.postCommentDeleteDialog}
+                closePostCommentDeleteDialog={() => this.closePostCommentDeleteDialog()}
+                deletePostCommentHandler={() => this.deletePostCommentHandler()}
+            />
+        );
+
         return (
             <React.Fragment>
                 <Card>
                     {postDeleteDialog}
+                    {postCommentDeleteDialog}
                     {this.state.error ?
                             <CardActionArea>
                                 <CardContent>
@@ -311,14 +353,18 @@ class ViewPost extends Component {
                                     </Grid>
                                 </Grid>
 
-                                <Grid container wrap="nowrap" spacing={2}>
-                                    <IconButton style={{marginLeft: 'auto'}} onClick={() => console.log("edit")} >
-                                        <Edit style={{color: 'orange'}} />
-                                    </IconButton>
-                                    <IconButton onClick={() => console.log("delete")} >
-                                        <Delete style={{color: 'orange'}} />
-                                    </IconButton>
-                                </Grid>
+                                {comment.canEdit ?
+                                    <Grid container wrap="nowrap" spacing={2}>
+                                        <IconButton style={{marginLeft: 'auto'}} onClick={() => console.log("edit")} >
+                                            <Edit style={{color: 'orange'}} />
+                                        </IconButton>
+                                        <IconButton onClick={() => this.openPostCommentDeleteDialog(comment.id)} >
+                                            <Delete style={{color: 'orange'}} />
+                                        </IconButton>
+                                    </Grid>
+                                    :
+                                    null
+                                }
 
                                 <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
                             </React.Fragment>
