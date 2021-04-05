@@ -6,6 +6,7 @@ use App\Entity\ChatMessage;
 use App\Entity\DaySong;
 use App\Entity\Event;
 use App\Entity\Post;
+use App\Entity\PostComment;
 use App\Entity\Survey;
 use App\Entity\SurveyAnswer;
 use App\Entity\User;
@@ -41,6 +42,7 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Chat messages', 'fas fa-list', ChatMessage::class);
         yield MenuItem::linkToCrud('Day Songs', 'fas fa-list', DaySong::class);
         yield MenuItem::linkToCrud('Posts / News', 'fas fa-list', Post::class);
+        yield MenuItem::linkToCrud('Comments', 'fas fa-list', PostComment::class);
         yield MenuItem::linkToCrud('Surveys', 'fas fa-list', Survey::class);
         yield MenuItem::linkToCrud('Survey Answers', 'fas fa-list', SurveyAnswer::class);
         yield MenuItem::linkToCrud('Events', 'fas fa-list', Event::class);
