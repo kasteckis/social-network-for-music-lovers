@@ -41,12 +41,15 @@ class ViewPost extends Component {
         newCommentErrorText: '',
         postDeleteDialog: false,
         postCommentDeleteDialog: false,
-        selectedPostCommentToDelete: -1
+        selectedPostCommentToDelete: -1,
+        currentlyEditingPostCommentId: -1,
+        editPostCommentErrorText: ''
     }
 
     constructor(props, context) {
         super(props, context);
         this.newCommentRef = React.createRef();
+        this.editPostCommentRef = React.createRef();
     }
 
     likePostHandler = (id) => {
@@ -196,6 +199,43 @@ class ViewPost extends Component {
             })
     }
 
+    togglePostCommentEditHandler(postCommentId) {
+        this.setState({
+            currentlyEditingPostCommentId: postCommentId
+        });
+
+        const text = this.state.post.commentsArray.find(comment => comment.id === postCommentId).text;
+
+        setTimeout(() => {
+            this.editPostCommentRef.current.value = text;
+        }, 100);
+    }
+
+    handleEditPostComment(event) {
+        event.preventDefault();
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        const data = {
+            text: this.editPostCommentRef.current.value
+        }
+
+        axios.put('/api/post-comment/' + this.state.currentlyEditingPostCommentId, data, headers)
+            .then(response => {
+                this.setState({
+                    currentlyEditingPostCommentId: -1,
+                    post: response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     render() {
         const postDeleteDialog = (
             <DeletePostDialog
@@ -333,47 +373,72 @@ class ViewPost extends Component {
                         </form>
                         {this.state.post.commentsArray.map((comment) => (
                             <React.Fragment key={comment.id}>
-                                <Grid container wrap="nowrap" spacing={2}>
-                                    <Grid item>
-                                        <Avatar>
-                                            {comment.createdByProfilePicture ?
-                                                <img style={{maxWidth: '100%'}} src={"/images/profile/" + comment.createdByProfilePicture} alt={comment.createdBy + ' profilio nuotrauka'} />
-                                                :
-                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
-                                            }
-                                        </Avatar>
-                                    </Grid>
-                                    <Grid item xs zeroMinWidth>
-                                        <h4 style={{ margin: 0, textAlign: "left" }}>{comment.createdBy}</h4>
-                                        <p style={{ textAlign: "left" }}>
-                                            <Linkify>{comment.text}</Linkify>
-                                        </p>
-                                        <p style={{ textAlign: "left", color: "gray" }}>
-                                            {comment.createdAt + ' '}
-                                            {comment.modifiedAt ?
-                                                <Tooltip title={comment.modifiedAt}>
-                                                    <IconButton size="small">
-                                                        <Edit style={{width: '18px'}} />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                :
-                                                null
-                                            }
-                                        </p>
-                                    </Grid>
-                                </Grid>
+                                {this.state.currentlyEditingPostCommentId === comment.id ?
+                                    <form onSubmit={(event) => this.handleEditPostComment(event)}>
+                                        <TextField
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            error={this.state.editPostCommentErrorText.length !== 0}
+                                            helperText={this.state.editPostCommentErrorText}
+                                            autoFocus
+                                            inputRef={this.editPostCommentRef}
+                                            margin="dense"
+                                            label="Komentaras"
+                                            fullWidth
+                                            multiline
+                                            rows={6}
+                                            rowsMax={Infinity}
+                                        />
+                                        <Button onClick={(event) => this.handleEditPostComment(event)} color="primary">
+                                            Išsaugoti
+                                        </Button>
+                                    </form>
+                                :
+                                    <React.Fragment>
+                                        <Grid container wrap="nowrap" spacing={2}>
+                                            <Grid item>
+                                                <Avatar>
+                                                    {comment.createdByProfilePicture ?
+                                                        <img style={{maxWidth: '100%'}} src={"/images/profile/" + comment.createdByProfilePicture} alt={comment.createdBy + ' profilio nuotrauka'} />
+                                                        :
+                                                        <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.post.createdBy + ' profilio nuotrauka'} />
+                                                    }
+                                                </Avatar>
+                                            </Grid>
+                                            <Grid item xs zeroMinWidth>
+                                                <h4 style={{ margin: 0, textAlign: "left" }}>{comment.createdBy}</h4>
+                                                <p style={{ textAlign: "left" }}>
+                                                    <Linkify>{comment.text}</Linkify>
+                                                </p>
+                                                <p style={{ textAlign: "left", color: "gray" }}>
+                                                    {comment.createdAt + ' '}
+                                                    {comment.modifiedAt ?
+                                                        <Tooltip title={comment.modifiedAt}>
+                                                            <IconButton size="small">
+                                                                <Edit style={{width: '18px'}} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        :
+                                                        null
+                                                    }
+                                                </p>
+                                            </Grid>
+                                        </Grid>
 
-                                {comment.canEdit ?
-                                    <Grid container wrap="nowrap" spacing={2}>
-                                        <IconButton style={{marginLeft: 'auto'}} onClick={() => console.log("edit")} >
-                                            <Edit style={{color: 'orange'}} />
-                                        </IconButton>
-                                        <IconButton onClick={() => this.openPostCommentDeleteDialog(comment.id)} >
-                                            <Delete style={{color: 'orange'}} />
-                                        </IconButton>
-                                    </Grid>
-                                    :
-                                    null
+                                        {comment.canEdit ?
+                                            <Grid container wrap="nowrap" spacing={2}>
+                                                <IconButton style={{marginLeft: 'auto'}} onClick={() => this.togglePostCommentEditHandler(comment.id)} >
+                                                    <Edit style={{color: 'orange'}} />
+                                                </IconButton>
+                                                <IconButton onClick={() => this.openPostCommentDeleteDialog(comment.id)} >
+                                                    <Delete style={{color: 'orange'}} />
+                                                </IconButton>
+                                            </Grid>
+                                            :
+                                            null
+                                        }
+                                    </React.Fragment>
                                 }
 
                                 <Divider variant="fullWidth" style={{ margin: "30px 0" }} />

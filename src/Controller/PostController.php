@@ -120,6 +120,37 @@ class PostController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     * @Route("/api/post-comment/{postComment}", name="update_post_comment", methods={"PUT"})
+     * @param Request $request
+     * @param PostComment $postComment
+     * @return Response
+     */
+    public function updatePostComment(Request $request, PostComment $postComment): Response
+    {
+        $postCommentData = json_decode($request->getContent());
+        /** @var User $user */
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        if ($user !== $postComment->getUser()) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Negalite redaguoti šio komentaro'
+            ]);
+        }
+
+        $postComment
+            ->setModifiedAt(new \DateTime())
+            ->setText($postCommentData->text)
+        ;
+
+        $em->flush();
+
+        return $this->json($this->feedService->postEntityToArrayWithComments($postComment->getPost(), $user));
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
      * @Route("/api/post/{post}", name="modify_post_put", methods={"PUT"})
      * @param Request $request
      * @param Post $post
