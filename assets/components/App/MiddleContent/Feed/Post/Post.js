@@ -69,7 +69,10 @@ function Post(props) {
             return;
         }
 
-        history.push('/' + props.redirectToText + '/' + props.post.id);
+        history.push({
+            pathname: '/' + props.redirectToText + '/' + props.post.id,
+            state: { autofocusComments: true }
+        });
     }
 
     const redirectToUserPage = (name) => {

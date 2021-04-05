@@ -238,7 +238,7 @@ class ViewPost extends Component {
                             <TextField
                                 error={this.state.newCommentErrorText.length !== 0}
                                 helperText={this.state.newCommentErrorText}
-                                autoFocus
+                                autoFocus={this.props.location.state ? this.props.location.state.autofocusComments : false}
                                 inputRef={this.newCommentRef}
                                 margin="dense"
                                 label="Jūsų komentaras"
