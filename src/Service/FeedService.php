@@ -57,6 +57,24 @@ class FeedService
         return $feedArray;
     }
 
+    public function fetchNews(?User $user, int $offset): array
+    {
+        /** @var Post[] $news */
+        $news = $this->entityManager->getRepository(Post::class)->findBy([
+            'isThisPostNews' => true
+        ], [
+            'modifiedAt' => 'DESC'
+        ], 5, $offset);
+
+        $newsArray = [];
+
+        foreach ($news as $new) {
+            $newsArray[] = $this->postEntityToArray($new, $user);
+        }
+
+        return $newsArray;
+    }
+
     public function getNews(array $newsArray, ?User $user): array
     {
         /** @var Post[] $news */

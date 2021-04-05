@@ -25,16 +25,24 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/api/news", name="get_all_news", methods={"GET"})
+     * @Route("/api/news", name="get_some_news", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function getAllNews(): Response
+    public function fetchSomeNews(Request $request): Response
     {
-        // todo veliau idet infinite scrolla
+        $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
         /** @var User|null $user */
         $user = $this->getUser();
 
-        return $this->json($this->feedService->getNews([], $user));
+        return $this->json($this->feedService->fetchNews($user, $offset));
     }
+
+//$offset = $request->get('offset') ? (int)$request->get('offset') : 0;
+//    /** @var User|null $user */
+//$user = $this->getUser();
+//
+//return $this->json($this->feedService->fetchPosts($user, $offset));
 
     /**
      * @IsGranted("ROLE_MOD")
