@@ -40,6 +40,7 @@ class UserCrudController extends AbstractCrudController
             DateTimeField::new('createdAt'),
             DateTimeField::new('lastLogin'),
             TextField::new('bio'),
+            BooleanField::new('emailConfirmed')
         ];
     }
 }
