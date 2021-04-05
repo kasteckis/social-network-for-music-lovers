@@ -11,9 +11,10 @@ import {
     IconButton, Paper, TextField,
     Typography
 } from "@material-ui/core";
-import {Chat, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
+import {Chat, Delete, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
 import {withRouter} from "react-router-dom";
 import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
+import DeletePostDialog from "./DeletePostDialog/DeletePostDialog";
 
 class ViewPost extends Component {
 
@@ -35,7 +36,8 @@ class ViewPost extends Component {
             commentsArray: []
         },
         error: false,
-        newCommentErrorText: ''
+        newCommentErrorText: '',
+        postDeleteDialog: false
     }
 
     constructor(props, context) {
@@ -96,6 +98,7 @@ class ViewPost extends Component {
                 this.setState({post: response.data});
             })
             .catch(error => {
+                console.log(error);
                 this.setState({error: true});
             })
     }
@@ -134,10 +137,45 @@ class ViewPost extends Component {
             })
     }
 
+    openPostDeleteDialog() {
+        this.setState({postDeleteDialog: true});
+    }
+
+    closePostDeleteDialog() {
+        this.setState({postDeleteDialog: false});
+    }
+
+    deletePostHandler() {
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        };
+
+        axios.delete('/api/post/' + this.state.post.id, headers)
+            .then(response => {
+                console.log(response.data);
+                this.setState({postDeleteDialog: false});
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     render() {
+        const postDeleteDialog = (
+            <DeletePostDialog
+                postDeleteDialog={this.state.postDeleteDialog}
+                closePostDeleteDialog={() => this.closePostDeleteDialog()}
+                deletePostHandler={() => this.deletePostHandler()}
+            />
+        );
+
         return (
             <React.Fragment>
                 <Card>
+                    {postDeleteDialog}
                     {this.state.error ?
                             <CardActionArea>
                                 <CardContent>
@@ -215,15 +253,15 @@ class ViewPost extends Component {
                                             <ThumbUp style={this.state.post.liked ? {color: 'orange'} : null} />
                                         </MusicBadge>
                                     </IconButton>
-                                    {/*<IconButton onClick={() => this.commentPostHandler(this.state.post.id)} >*/}
-                                    {/*    <MusicBadge badgeContent={this.state.post.comments}>*/}
-                                    {/*        <Chat style={{color: 'orange'}} />*/}
-                                    {/*    </MusicBadge>*/}
-                                    {/*</IconButton>*/}
                                     {this.state.post.canEdit ?
-                                        <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
-                                            <Edit style={{color: 'orange'}} />
-                                        </IconButton>
+                                        <React.Fragment>
+                                            <IconButton onClick={() => this.props.history.push('/redaguoti/' + this.state.post.id)} >
+                                                <Edit style={{color: 'orange'}} />
+                                            </IconButton>
+                                            <IconButton onClick={() => this.openPostDeleteDialog()} >
+                                                <Delete style={{color: 'orange'}} />
+                                            </IconButton>
+                                        </React.Fragment>
                                         :
                                         null
                                     }

@@ -127,6 +127,35 @@ class PostController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
+     * @Route("/api/post/{post}", name="delete_specific_post", methods={"DELETE"})
+     * @param Post $post
+     * @return Response
+     */
+    public function deleteSpecificPost(Post $post): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user !== $post->getCreatedBy()) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Neturite teisių ištrinti šio įrašo'
+            ]);
+        }
+
+        $entityManager->remove($post);
+
+        $entityManager->flush();
+
+        return $this->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
      * @Route("/api/post/{post}/like", name="like_post", methods={"PUT"})
      * @param Post|null $post
      * @return Response
