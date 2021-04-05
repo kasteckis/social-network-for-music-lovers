@@ -16,6 +16,7 @@ import {withRouter} from "react-router-dom";
 import MusicBadge from "../../../../Utils/MusicBadge/MusicBadge";
 import DeletePostDialog from "./DeletePostDialog/DeletePostDialog";
 import DeletePostCommentDialog from "./DeletePostCommentDialog/DeletePostCommentDialog";
+import Linkify from "react-linkify";
 
 class ViewPost extends Component {
 
@@ -269,7 +270,7 @@ class ViewPost extends Component {
                                 </CardActionArea>
                                 <CardContent>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        {this.state.post.text}
+                                        <Linkify>{this.state.post.text}</Linkify>
                                     </Typography>
                                 </CardContent>
                                 {this.state.post.spotifyIframeUrl ?
@@ -345,7 +346,7 @@ class ViewPost extends Component {
                                     <Grid item xs zeroMinWidth>
                                         <h4 style={{ margin: 0, textAlign: "left" }}>{comment.createdBy}</h4>
                                         <p style={{ textAlign: "left" }}>
-                                            {comment.text}
+                                            <Linkify>{comment.text}</Linkify>
                                         </p>
                                         <p style={{ textAlign: "left", color: "gray" }}>
                                             {comment.createdAt}
