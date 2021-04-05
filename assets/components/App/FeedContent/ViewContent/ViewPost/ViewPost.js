@@ -154,7 +154,6 @@ class ViewPost extends Component {
 
         axios.delete('/api/post/' + this.state.post.id, headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({postDeleteDialog: false});
                 this.props.history.push('/');
             })
@@ -311,6 +310,16 @@ class ViewPost extends Component {
                                         </p>
                                     </Grid>
                                 </Grid>
+
+                                <Grid container wrap="nowrap" spacing={2}>
+                                    <IconButton style={{marginLeft: 'auto'}} onClick={() => console.log("edit")} >
+                                        <Edit style={{color: 'orange'}} />
+                                    </IconButton>
+                                    <IconButton onClick={() => console.log("delete")} >
+                                        <Delete style={{color: 'orange'}} />
+                                    </IconButton>
+                                </Grid>
+
                                 <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
                             </React.Fragment>
                         ))}

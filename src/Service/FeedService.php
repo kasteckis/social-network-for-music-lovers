@@ -105,7 +105,7 @@ class FeedService
         $postCommentsArray = [];
 
         foreach ($postComments as $postComment) {
-            $postCommentsArray[] = $this->postCommentEntityToArray($postComment);
+            $postCommentsArray[] = $this->postCommentEntityToArray($postComment, $user);
         }
 
         $postEntityArray['commentsArray'] = $postCommentsArray;
@@ -113,14 +113,15 @@ class FeedService
         return $postEntityArray;
     }
 
-    public function postCommentEntityToArray(PostComment $postComment): array
+    private function postCommentEntityToArray(PostComment $postComment, ?User $user): array
     {
         return [
             'id' => $postComment->getId(),
             'createdBy' => $postComment->getUser() ? $postComment->getUser()->getName() : null,
             'createdByProfilePicture' => $postComment->getUser() ? $postComment->getUser()->getProfilePicture() : null,
             'text' => $postComment->getText(),
-            'createdAt' => $postComment->getCreatedAt() ? $postComment->getCreatedAt()->format('Y-m-d H:i:s') : null
+            'createdAt' => $postComment->getCreatedAt() ? $postComment->getCreatedAt()->format('Y-m-d H:i:s') : null,
+            'canEdit' => $user === $postComment->getUser()
         ];
     }
 }
