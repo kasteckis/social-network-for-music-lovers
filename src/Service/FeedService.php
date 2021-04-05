@@ -121,6 +121,7 @@ class FeedService
             'createdByProfilePicture' => $postComment->getUser() ? $postComment->getUser()->getProfilePicture() : null,
             'text' => $postComment->getText(),
             'createdAt' => $postComment->getCreatedAt() ? $postComment->getCreatedAt()->format('Y-m-d H:i:s') : null,
+            'modifiedAt' => $postComment->getModifiedAt() ? $postComment->getModifiedAt()->format('Y-m-d H:i:s') : null,
             'canEdit' => $user === $postComment->getUser()
         ];
     }

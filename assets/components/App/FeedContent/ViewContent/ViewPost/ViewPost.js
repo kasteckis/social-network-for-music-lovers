@@ -8,7 +8,7 @@ import {
     CardActions,
     CardContent, CardHeader,
     CardMedia, Divider, Grid,
-    IconButton, Paper, TextField,
+    IconButton, Paper, TextField, Tooltip,
     Typography
 } from "@material-ui/core";
 import {Chat, Delete, Edit, MoreVert, ThumbUp} from "@material-ui/icons";
@@ -349,7 +349,16 @@ class ViewPost extends Component {
                                             <Linkify>{comment.text}</Linkify>
                                         </p>
                                         <p style={{ textAlign: "left", color: "gray" }}>
-                                            {comment.createdAt}
+                                            {comment.createdAt + ' '}
+                                            {comment.modifiedAt ?
+                                                <Tooltip title={comment.modifiedAt}>
+                                                    <IconButton size="small">
+                                                        <Edit style={{width: '18px'}} />
+                                                    </IconButton>
+                                                </Tooltip>
+                                                :
+                                                null
+                                            }
                                         </p>
                                     </Grid>
                                 </Grid>
