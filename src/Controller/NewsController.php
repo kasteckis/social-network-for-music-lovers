@@ -38,12 +38,6 @@ class NewsController extends AbstractController
         return $this->json($this->feedService->fetchNews($user, $offset));
     }
 
-//$offset = $request->get('offset') ? (int)$request->get('offset') : 0;
-//    /** @var User|null $user */
-//$user = $this->getUser();
-//
-//return $this->json($this->feedService->fetchPosts($user, $offset));
-
     /**
      * @IsGranted("ROLE_MOD")
      * @Route("/api/news", name="create_news", methods={"POST"})
