@@ -256,15 +256,17 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/api/posts", name="get_all_posts")
+     * @Route("/api/posts", name="get_some_posts")
+     * @param Request $request
+     * @return Response
      */
-    public function getAllPosts(): Response
+    public function fetchPosts(Request $request): Response
     {
-        // todo veliau idet infinite scrolla
+        $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
         /** @var User|null $user */
         $user = $this->getUser();
 
-        return $this->json($this->feedService->getPosts([], $user));
+        return $this->json($this->feedService->fetchPosts($user, $offset));
     }
 
     /**

@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import Post from "../Feed/Post/Post";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Posts extends Component {
     state = {
-        posts: []
+        posts: [],
+        offset: 0,
+        hasMorePosts: true
     }
 
     componentDidMount() {
@@ -30,7 +33,41 @@ class Posts extends Component {
 
         axios.get('/api/posts', headers)
             .then(response => {
-                this.setState({posts: response.data})
+                this.setState({
+                    posts: response.data,
+                    offset: response.data.length
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    fetchMorePosts() {
+        let headers = {
+            params: {
+                offset: this.state.offset
+            }
+        };
+
+        if (this.props.auth.token) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                },
+                params: {
+                    offset: this.state.offset
+                }
+            }
+        }
+
+        axios.get('/api/posts', headers)
+            .then(response => {
+                this.setState({
+                    posts: this.state.posts.concat(response.data),
+                    offset: this.state.offset + response.data.length,
+                    hasMorePosts: response.data.length !== 0
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -40,11 +77,18 @@ class Posts extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.posts.map((feed) => (
-                    <div className="mt-2" key={feed.id}>
-                        <Post redirectToText="irasai" auth={this.props.auth} post={feed}/>
-                    </div>
-                ))}
+                <InfiniteScroll
+                    dataLength={this.state.posts.length}
+                    next={() => this.fetchMorePosts()}
+                    hasMore={this.state.hasMorePosts}
+                    loader={<h4>Kraunasi..</h4>}
+                >
+                    {this.state.posts.map((post, index) => (
+                        <div className="mt-2" key={index}>
+                            <Post redirectToText="irasai" auth={this.props.auth} post={post}/>
+                        </div>
+                    ))}
+                </InfiniteScroll>
             </React.Fragment>
         );
     }
