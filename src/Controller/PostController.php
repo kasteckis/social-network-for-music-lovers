@@ -84,6 +84,8 @@ class PostController extends AbstractController
                 ->setPost($post)
             ;
 
+            $post->setModifiedAt(new \DateTime());
+
             $entityManager->persist($postComment);
             $entityManager->flush();
         }
