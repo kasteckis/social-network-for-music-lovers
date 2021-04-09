@@ -37,11 +37,10 @@ class Feed extends React.Component {
 
         axios.get('/api/feed', headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     feedArray: response.data.feedArray,
-                    offsetPosts: response.data.offsetPosts,
                     offsetNews: response.data.offsetNews,
+                    offsetPosts: response.data.offsetPosts,
                     offsetEvents: response.data.offsetEvents
                 })
             })
@@ -51,7 +50,41 @@ class Feed extends React.Component {
     }
 
     fetchMoreFeed() {
-        console.log("fetch");
+        let headers = {
+            params: {
+                offsetNews: this.state.offsetNews,
+                offsetPosts: this.state.offsetPosts,
+                offsetEvents: this.state.offsetEvents
+            }
+        };
+
+        if (this.props.auth.token) {
+            headers = {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.auth.token
+                },
+                params: {
+                    offsetNews: this.state.offsetNews,
+                    offsetPosts: this.state.offsetPosts,
+                    offsetEvents: this.state.offsetEvents
+                }
+            }
+        }
+
+        axios.get('/api/feed', headers)
+            .then(response => {
+                console.log(response.data);
+                this.setState({
+                    feedArray: this.state.feedArray.concat(response.data.feedArray),
+                    offsetNews: this.state.offsetNews + response.data.offsetNews,
+                    offsetPosts: this.state.offsetPosts + response.data.offsetPosts,
+                    offsetEvents: this.state.offsetEvents + response.data.offsetEvents,
+                    hasMoreFeed: response.data.feedArray.length !== 0
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
