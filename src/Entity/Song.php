@@ -34,6 +34,11 @@ class Song
      */
     private $albums;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $spotifyLink;
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -98,5 +103,17 @@ class Song
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getSpotifyLink(): ?string
+    {
+        return $this->spotifyLink;
+    }
+
+    public function setSpotifyLink(?string $spotifyLink): self
+    {
+        $this->spotifyLink = $spotifyLink;
+
+        return $this;
     }
 }

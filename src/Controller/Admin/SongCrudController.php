@@ -6,6 +6,7 @@ use App\Entity\Song;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class SongCrudController extends AbstractCrudController
 {
@@ -18,6 +19,7 @@ class SongCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title'),
+            UrlField::new('spotifyLink'),
             AssociationField::new('performer'),
             AssociationField::new('albums'),
         ];
