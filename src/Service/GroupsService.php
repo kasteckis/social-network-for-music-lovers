@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Performer;
+use App\Repository\PerformerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GroupsService
@@ -22,8 +23,11 @@ class GroupsService
 
     public function fetchGroups(int $offset, int $limit, ?string $filter): array
     {
+        /** @var PerformerRepository $performerRepo */
+        $performerRepo = $this->entityManager->getRepository(Performer::class);
+
         /** @var Performer[] $groups */
-        $groups = $this->entityManager->getRepository(Performer::class)->getPerformersByFilter($offset, $limit, $filter);
+        $groups = $performerRepo->getPerformersByFilter($offset, $limit, $filter);
 
         $groupsArray = [];
 
