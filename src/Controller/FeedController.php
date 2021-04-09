@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Service\EventService;
 use App\Service\FeedService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,9 +25,12 @@ class FeedController extends AbstractController
     /**
      * @Route("/api/feed", name="content")
      */
-    public function getFeed(): Response
+    public function getFeed(Request $request): Response
     {
-        // todo kada atsiras daugiau feed'o is visu paimt po kelis su offset'u, susortint pagal data ir returnint
+        $offsetPosts = $request->get('offsetPosts') ? (int)$request->get('offsetPosts') : 0;
+        $offsetNews = $request->get('offsetNews') ? (int)$request->get('offsetNews') : 0;
+        $offsetEvents = $request->get('offsetEvents') ? (int)$request->get('offsetEvents') : 0;
+
         /** @var User|null $user */
         $user = $this->getUser();
 

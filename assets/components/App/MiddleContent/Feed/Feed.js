@@ -2,11 +2,16 @@ import React from "react";
 import Post from "./Post/Post";
 import axios from "axios";
 import Event from "../Events/Event/Event";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Feed extends React.Component {
 
     state = {
-        feedArray: []
+        feedArray: [],
+        hasMoreFeed: true,
+        offsetPosts: 0,
+        offsetNews: 0,
+        offsetEvents: 0
     }
 
     componentDidMount() {
@@ -39,10 +44,20 @@ class Feed extends React.Component {
             })
     }
 
+    fetchMoreFeed() {
+        console.log("fetch");
+    }
+
     render() {
         return (
             <React.Fragment>
                 {this.props.rightContentMobile}
+                <InfiniteScroll
+                    dataLength={this.state.feedArray.length}
+                    next={() => this.fetchMoreFeed()}
+                    hasMore={this.state.hasMoreFeed}
+                    loader={<h4>Kraunasi..</h4>}
+                >
                 {this.state.feedArray.map((feed, index) => (
                     <div className="mt-2" key={index}>
                         {feed.type === 'post' ?
@@ -54,6 +69,7 @@ class Feed extends React.Component {
                         }
                     </div>
                 ))}
+                </InfiniteScroll>
             </React.Fragment>
         );
     }
