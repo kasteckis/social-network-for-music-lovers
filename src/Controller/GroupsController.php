@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Performer;
+use App\Repository\PerformerRepository;
 use App\Service\GroupsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +30,16 @@ class GroupsController extends AbstractController
     {
         $offset = $request->get('offset') ? $request->get('offset') : 0;
         $limit = $request->get('limit') ? $request->get('limit') : 10;
+        $filter = $request->get('filter') ? $request->get('filter') : null;
 
-        $groupsArray = $this->groupsService->fetchGroups($offset, $limit);
+        /** @var PerformerRepository $performerRepo */
+        $performerRepo = $this->getDoctrine()->getRepository(Performer::class);
 
-        return $this->json($groupsArray);
+        $groupsArray = $this->groupsService->fetchGroups($offset, $limit, $filter);
+
+        return $this->json([
+            'groups' => $groupsArray,
+            'groupsCount' => $performerRepo->getPerformersCount($filter)
+        ]);
     }
 }

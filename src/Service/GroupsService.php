@@ -20,10 +20,10 @@ class GroupsService
         $this->entityManager = $entityManager;
     }
 
-    public function fetchGroups(int $offset, int $limit): array
+    public function fetchGroups(int $offset, int $limit, ?string $filter): array
     {
         /** @var Performer[] $groups */
-        $groups = $this->entityManager->getRepository(Performer::class)->findBy([], null, $limit, $offset);
+        $groups = $this->entityManager->getRepository(Performer::class)->getPerformersByFilter($offset, $limit, $filter);
 
         $groupsArray = [];
 

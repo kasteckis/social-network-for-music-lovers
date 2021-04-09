@@ -19,32 +19,30 @@ class PerformerRepository extends ServiceEntityRepository
         parent::__construct($registry, Performer::class);
     }
 
-    // /**
-    //  * @return Performer[] Returns an array of Performer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getPerformersByFilter(int $offset, int $limit, ?string $filter)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        $qb = $this->createQueryBuilder('performer');
+
+        return $qb
+            ->andWhere('performer.title LIKE :filter')
+            ->setParameter('filter', '%' . $filter . '%')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Performer
+    public function getPerformersCount(?string $filter): string
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+        $qb = $this->createQueryBuilder('performer');
+
+        return $qb
+            ->select('count(performer.id)')
+            ->andWhere('performer.title LIKE :filter')
+            ->setParameter('filter', '%' . $filter . '%')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult()
+            ;
     }
-    */
 }
