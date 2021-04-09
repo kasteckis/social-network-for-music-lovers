@@ -37,6 +37,7 @@ class GroupsService
     private function groupEntityToArray(Performer $performer): array
     {
         return [
+            'id' => $performer->getId(),
             'title' => $performer->getTitle(),
             'songs' => $performer->getSongs()->count(),
             'albums' => $performer->getAlbums()->count()
