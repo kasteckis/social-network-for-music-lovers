@@ -24,7 +24,7 @@ class FeedService
         $this->entityManager = $entityManager;
     }
 
-    public function fetchPosts(?User $user, int $offset): array
+    public function fetchPosts(?User $user, int &$offset): array
     {
         /** @var Post[] $posts */
         $posts = $this->entityManager->getRepository(Post::class)->findBy([
@@ -32,6 +32,8 @@ class FeedService
         ], [
             'modifiedAt' => 'DESC'
         ], 5, $offset);
+
+        $offset = $offset + count($posts);
 
         $postsArray = [];
 
@@ -57,7 +59,7 @@ class FeedService
         return $feedArray;
     }
 
-    public function fetchNews(?User $user, int $offset): array
+    public function fetchNews(?User $user, int &$offset): array
     {
         /** @var Post[] $news */
         $news = $this->entityManager->getRepository(Post::class)->findBy([
@@ -65,6 +67,8 @@ class FeedService
         ], [
             'modifiedAt' => 'DESC'
         ], 5, $offset);
+
+        $offset = $offset + count($news);
 
         $newsArray = [];
 

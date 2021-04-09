@@ -9,8 +9,8 @@ class Feed extends React.Component {
     state = {
         feedArray: [],
         hasMoreFeed: true,
-        offsetPosts: 0,
         offsetNews: 0,
+        offsetPosts: 0,
         offsetEvents: 0
     }
 
@@ -37,7 +37,13 @@ class Feed extends React.Component {
 
         axios.get('/api/feed', headers)
             .then(response => {
-                this.setState({feedArray: response.data})
+                console.log(response.data);
+                this.setState({
+                    feedArray: response.data.feedArray,
+                    offsetPosts: response.data.offsetPosts,
+                    offsetNews: response.data.offsetNews,
+                    offsetEvents: response.data.offsetEvents
+                })
             })
             .catch(error => {
                 console.log(error);

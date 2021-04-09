@@ -27,21 +27,25 @@ class FeedController extends AbstractController
      */
     public function getFeed(Request $request): Response
     {
-        $offsetPosts = $request->get('offsetPosts') ? (int)$request->get('offsetPosts') : 0;
         $offsetNews = $request->get('offsetNews') ? (int)$request->get('offsetNews') : 0;
+        $offsetPosts = $request->get('offsetPosts') ? (int)$request->get('offsetPosts') : 0;
         $offsetEvents = $request->get('offsetEvents') ? (int)$request->get('offsetEvents') : 0;
 
         /** @var User|null $user */
         $user = $this->getUser();
 
         $feedArray = [];
-
-        $feedArray = $this->feedService->getNews($feedArray, $user);
-        $feedArray = $this->feedService->getPosts($feedArray, $user);
-        $feedArray = $this->eventService->getEventsForFeed($feedArray, 0);
+        $feedArray = array_merge($feedArray, $this->feedService->fetchNews($user, $offsetNews));
+        $feedArray = array_merge($feedArray, $this->feedService->fetchPosts($user, $offsetPosts));
+        $feedArray = array_merge($feedArray, $this->eventService->getEventsForFeed($feedArray, $offsetEvents));
 
         $feedArray = $this->feedService->sortFeeds($feedArray);
 
-        return $this->json($feedArray);
+        return $this->json([
+            'feedArray' => $feedArray,
+            'offsetNews' => $offsetNews,
+            'offsetPosts' => $offsetPosts,
+            'offsetEvents' => $offsetEvents
+        ]);
     }
 }
