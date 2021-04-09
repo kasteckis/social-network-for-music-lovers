@@ -3,6 +3,7 @@ import Post from "./Post/Post";
 import axios from "axios";
 import Event from "../Events/Event/Event";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingInfiniteScroll from "../../../Utils/LoadingInfiniteScroll/LoadingInfiniteScroll";
 
 class Feed extends React.Component {
 
@@ -94,7 +95,7 @@ class Feed extends React.Component {
                     dataLength={this.state.feedArray.length}
                     next={() => this.fetchMoreFeed()}
                     hasMore={this.state.hasMoreFeed}
-                    loader={<h4>Kraunasi..</h4>}
+                    loader={<LoadingInfiniteScroll />}
                 >
                 {this.state.feedArray.map((feed, index) => (
                     <div className="mt-2" key={index}>
