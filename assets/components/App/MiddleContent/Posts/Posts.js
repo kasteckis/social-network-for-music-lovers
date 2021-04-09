@@ -63,7 +63,6 @@ class Posts extends Component {
 
         axios.get('/api/posts', headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     posts: this.state.posts.concat(response.data),
                     offset: this.state.offset + response.data.length,

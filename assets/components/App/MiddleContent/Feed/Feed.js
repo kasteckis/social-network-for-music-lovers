@@ -73,7 +73,6 @@ class Feed extends React.Component {
 
         axios.get('/api/feed', headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     feedArray: this.state.feedArray.concat(response.data.feedArray),
                     offsetNews: this.state.offsetNews + response.data.offsetNews,
