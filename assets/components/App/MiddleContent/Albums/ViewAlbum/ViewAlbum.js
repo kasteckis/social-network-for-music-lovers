@@ -42,7 +42,6 @@ class ViewAlbum extends Component {
         axios.get('/api/album/' + this.props.match.params.id)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data);
                     this.setState({
                         album: response.data.album,
                         songs: response.data.songs,
