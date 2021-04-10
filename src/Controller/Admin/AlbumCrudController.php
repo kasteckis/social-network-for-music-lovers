@@ -24,6 +24,8 @@ class AlbumCrudController extends AbstractCrudController
                 ->setUploadDir('public/images/albums'),
             AssociationField::new('songs'),
             AssociationField::new('performer'),
+            TextField::new('year'),
+            TextField::new('style'),
         ];
     }
 }

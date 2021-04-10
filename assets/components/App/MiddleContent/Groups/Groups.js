@@ -13,8 +13,6 @@ import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {Pagination} from "@material-ui/lab";
 import axios from "axios";
-import Linkify from "react-linkify";
-import {Delete, Edit, Person} from "@material-ui/icons";
 
 class Groups extends Component {
 

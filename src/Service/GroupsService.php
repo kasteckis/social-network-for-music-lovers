@@ -82,6 +82,18 @@ class GroupsService
         return $albumsArray;
     }
 
+    public function albumEntityToSongsArray(Album $album): array
+    {
+        $songs = $album->getSongs();
+        $songsArray = [];
+
+        foreach ($songs as $song) {
+            $songsArray[] = $this->songEntityToArray($song);
+        }
+
+        return $songsArray;
+    }
+
     public function groupEntityToArray(Performer $performer): array
     {
         return [
@@ -113,7 +125,10 @@ class GroupsService
             'id' => $album->getId(),
             'title' => $album->getTitle(),
             'songs' => $album->getSongs()->count(),
-            'image' => $album->getImage()
+            'image' => $album->getImage(),
+            'performer' => $album->getPerformer() ? $this->groupEntityToArray($album->getPerformer()) : null,
+            'year' => $album->getYear(),
+            'style' => $album->getStyle()
         ];
     }
 }

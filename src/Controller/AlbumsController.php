@@ -44,4 +44,26 @@ class AlbumsController extends AbstractController
             'albumsCount' => $albumRepo->getAlbumsCount($filter)
         ]);
     }
+
+    /**
+     * @Route("/api/album/{album}", name="api_get_one_album")
+     */
+    public function getOnePerformer(Request $request, ?Album $album): Response
+    {
+        if (!($album instanceof Album)) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Albumas nerastas'
+            ]);
+        }
+
+        $albumArray = $this->groupsService->albumEntityToArray($album);
+        $songsArray = $this->groupsService->albumEntityToSongsArray($album);
+
+        return $this->json([
+            'success' => true,
+            'album' => $albumArray,
+            'songs' => $songsArray
+        ]);
+    }
 }
