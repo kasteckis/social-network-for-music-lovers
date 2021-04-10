@@ -4,7 +4,9 @@
 namespace App\Service;
 
 
+use App\Entity\Album;
 use App\Entity\Performer;
+use App\Entity\Song;
 use App\Repository\PerformerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -38,6 +40,30 @@ class GroupsService
         return $groupsArray;
     }
 
+    public function groupEntityToPerformerSongsArray(Performer $performer): array
+    {
+        $songs = $performer->getSongs();
+        $songsArray = [];
+
+        foreach ($songs as $song) {
+            $songsArray[] = $this->songEntityToArray($song);
+        }
+
+        return $songsArray;
+    }
+
+    public function groupEntityToPerformerAlbumsArray(Performer $performer): array
+    {
+        $albums = $performer->getAlbums();
+        $albumsArray = [];
+
+        foreach ($albums as $album) {
+            $albumsArray[] = $this->albumEntityToArray($album);
+        }
+
+        return $albumsArray;
+    }
+
     public function groupEntityToArray(Performer $performer): array
     {
         return [
@@ -46,6 +72,23 @@ class GroupsService
             'songs' => $performer->getSongs()->count(),
             'albums' => $performer->getAlbums()->count(),
             'image' => $performer->getImage()
+        ];
+    }
+
+    public function songEntityToArray(Song $song): array
+    {
+        return [
+            'id' => $song->getId(),
+            'title' => $song->getTitle(),
+            'spotifyLink' => $song->getSpotifyLink(),
+        ];
+    }
+
+    public function albumEntityToArray(Album $album): array
+    {
+        return [
+            'id' => $album->getId(),
+            'title' => $album->getTitle()
         ];
     }
 }

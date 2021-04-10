@@ -29,6 +29,7 @@ class ViewGroup extends Component {
         axios.get('/api/group/' + this.props.match.params.id)
             .then(response => {
                 if (response.data.success) {
+                    console.log(response.data.group);
                     this.setState({
                         group: response.data.group
                     });
@@ -73,7 +74,7 @@ class ViewGroup extends Component {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Grupė - {"grupes pav"}
+                                        {this.state.group.title}
                                     </Typography>
                                 </ListItem>
                             </CardContent>

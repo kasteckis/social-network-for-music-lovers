@@ -56,10 +56,14 @@ class GroupsController extends AbstractController
         }
 
         $groupArray = $this->groupsService->groupEntityToArray($performer);
+        $songsArray = $this->groupsService->groupEntityToPerformerSongsArray($performer);
+        $albumsArray = $this->groupsService->groupEntityToPerformerAlbumsArray($performer);
 
         return $this->json([
             'success' => true,
-            'group' => $groupArray
+            'group' => $groupArray,
+            'songs' => $songsArray,
+            'albums' => $albumsArray
         ]);
     }
 }
