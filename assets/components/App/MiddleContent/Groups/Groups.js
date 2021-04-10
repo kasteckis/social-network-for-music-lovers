@@ -103,8 +103,8 @@ class Groups extends Component {
                                     <ListItem button onClick={() => this.handleRedirectToGroup(group.title, group.id)}>
                                         <Avatar>
                                             <CardActionArea>
-                                                {group.picture ?
-                                                    <img style={{maxWidth: '100%'}} src={"/images/profile/" + group.picture} alt={group.picture + ' nuotrauka'} />
+                                                {group.image ?
+                                                    <img style={{maxWidth: '100%'}} src={"/images/groups/" + group.image} alt={group.title + ' nuotrauka'} />
                                                     :
                                                     <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={'numatyta atlikejo nuotrauka'} />
                                                 }

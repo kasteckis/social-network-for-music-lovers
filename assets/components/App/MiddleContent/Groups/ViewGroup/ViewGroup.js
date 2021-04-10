@@ -19,7 +19,8 @@ class ViewGroup extends Component {
             id: 0,
             title: null,
             songs: 0,
-            albums: 0
+            albums: 0,
+            image: null
         },
         groupDoesNotExist: false
     }
@@ -63,10 +64,10 @@ class ViewGroup extends Component {
                                     <ListItemAvatar>
                                         <Avatar>
                                             <CardActionArea>
-                                                {null ?
-                                                    <img style={{maxWidth: '100%'}} src={"/images/profile/" + "grupes pav"} alt={"grupes pav" + ' profilio nuotrauka'} />
+                                                {this.state.group.image ?
+                                                    <img style={{maxWidth: '100%'}} src={"/images/groups/" + this.state.group.image} alt={this.state.group.title + ' profilio nuotrauka'} />
                                                     :
-                                                    <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={"grupes pav" + ' profilio nuotrauka'} />
+                                                    <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.group.title + ' profilio nuotrauka'} />
                                                 }
                                             </CardActionArea>
                                         </Avatar>
