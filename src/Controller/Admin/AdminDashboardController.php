@@ -12,6 +12,8 @@ use App\Entity\PostComment;
 use App\Entity\Song;
 use App\Entity\Survey;
 use App\Entity\SurveyAnswer;
+use App\Entity\TOP40;
+use App\Entity\TOP40Live;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,20 +44,23 @@ class AdminDashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('Users');
-        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
         yield MenuItem::section('Content');
-        yield MenuItem::linkToCrud('Posts / News', 'fas fa-list', Post::class);
-        yield MenuItem::linkToCrud('Comments', 'fas fa-list', PostComment::class);
-        yield MenuItem::linkToCrud('Chat messages', 'fas fa-list', ChatMessage::class);
+        yield MenuItem::linkToCrud('Posts / News', 'fa fa-file-text-o', Post::class);
+        yield MenuItem::linkToCrud('Comments', 'fa fa-comments', PostComment::class);
+        yield MenuItem::linkToCrud('Chat messages', 'fa fa-commenting-o', ChatMessage::class);
         yield MenuItem::section('Frontpage right content');
-        yield MenuItem::linkToCrud('Day Songs', 'fas fa-list', DaySong::class);
-        yield MenuItem::linkToCrud('Surveys', 'fas fa-list', Survey::class);
-        yield MenuItem::linkToCrud('Survey Answers', 'fas fa-list', SurveyAnswer::class);
+        yield MenuItem::linkToCrud('Day Songs', 'fa fa-music', DaySong::class);
+        yield MenuItem::linkToCrud('Surveys', 'fa fa-question', Survey::class);
+        yield MenuItem::linkToCrud('Survey Answers', 'fa fa-question', SurveyAnswer::class);
         yield MenuItem::section('Songs, performers and albums');
-        yield MenuItem::linkToCrud('Songs', 'fas fa-list', Song::class);
-        yield MenuItem::linkToCrud('Performers', 'fas fa-list', Performer::class);
-        yield MenuItem::linkToCrud('Albums', 'fas fa-list', Album::class);
+        yield MenuItem::linkToCrud('Songs', 'fa fa-music', Song::class);
+        yield MenuItem::linkToCrud('Performers (Groups)', 'fa fa-music', Performer::class);
+        yield MenuItem::linkToCrud('Albums', 'fa fa-music', Album::class);
+        yield MenuItem::section('TOPs');
+        yield MenuItem::linkToCrud('TOP40', 'fa fa-trophy', TOP40::class);
+        yield MenuItem::linkToCrud('TOP40 Live (sugeneruota sistemos)', 'fa fa-trophy', TOP40Live::class);
         yield MenuItem::section('Other');
-        yield MenuItem::linkToCrud('Events', 'fas fa-list', Event::class);
+        yield MenuItem::linkToCrud('Events', 'fa fa-calendar', Event::class);
     }
 }
