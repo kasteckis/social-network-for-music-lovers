@@ -26,6 +26,7 @@ import EditPost from "../FeedContent/CreateContent/EditPost/EditPost";
 import Groups from "./Groups/Groups";
 import ViewGroup from "./Groups/ViewGroup/ViewGroup";
 import Albums from "./Albums/Albums";
+import ViewAlbum from "./Albums/ViewAlbum/ViewAlbum";
 
 class MiddleContent extends Component {
     render() {
@@ -71,12 +72,16 @@ class MiddleContent extends Component {
                         <Groups {...props} auth={this.props.auth} />
                     )} />
 
+                    <Route path="/grupe/:name/:id" exact render={(props) => (
+                        <ViewGroup {...props} auth={this.props.auth} />
+                    )} />
+
                     <Route path="/albumai" exact render={(props) => (
                         <Albums {...props} auth={this.props.auth} />
                     )} />
 
-                    <Route path="/grupe/:name/:id" exact render={(props) => (
-                        <ViewGroup {...props} auth={this.props.auth} />
+                    <Route path="/albumas/:name/:id" exact render={(props) => (
+                        <ViewAlbum {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/renginiai/:id" exact render={(props) => (

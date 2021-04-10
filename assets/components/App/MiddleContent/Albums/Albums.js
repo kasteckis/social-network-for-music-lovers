@@ -65,8 +65,7 @@ class Albums extends Component {
     }
 
     handleRedirectToAlbum(name, id) {
-        // this.props.history.push('/grupe/' + name + '/' + id);
-        console.log("redirectas i albuma");
+        this.props.history.push('/albumas/' + name + '/' + id);
     }
     
     render() {

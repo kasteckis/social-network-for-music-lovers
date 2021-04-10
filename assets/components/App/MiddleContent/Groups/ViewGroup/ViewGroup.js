@@ -51,6 +51,10 @@ class ViewGroup extends Component {
             })
     }
 
+    handleRedirectToAlbum(name, id) {
+        this.props.history.push('/albumas/' + name + '/' + id);
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -151,7 +155,7 @@ class ViewGroup extends Component {
                         <List>
                             {this.state.albums.map((album) => (
                                 <React.Fragment key={album.id}>
-                                    <ListItem button onClick={() => console.log('redirect to album')}>
+                                    <ListItem button onClick={() => this.handleRedirectToAlbum(album.title, album.id)}>
                                         <Avatar>
                                             <CardActionArea>
                                                 {album.image ?
