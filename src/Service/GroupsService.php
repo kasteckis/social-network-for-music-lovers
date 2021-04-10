@@ -71,7 +71,11 @@ class GroupsService
             'title' => $performer->getTitle(),
             'songs' => $performer->getSongs()->count(),
             'albums' => $performer->getAlbums()->count(),
-            'image' => $performer->getImage()
+            'image' => $performer->getImage(),
+            'bio' => $performer->getBio(),
+            'country' => $performer->getCountry(),
+            'startedCareer' => $performer->getStartedCareer(),
+            'style' => $performer->getStyle()
         ];
     }
 
@@ -81,6 +85,7 @@ class GroupsService
             'id' => $song->getId(),
             'title' => $song->getTitle(),
             'spotifyLink' => $song->getSpotifyLink(),
+            'year' => $song->getYear()
         ];
     }
 
@@ -88,7 +93,9 @@ class GroupsService
     {
         return [
             'id' => $album->getId(),
-            'title' => $album->getTitle()
+            'title' => $album->getTitle(),
+            'songs' => $album->getSongs()->count(),
+            'image' => $album->getImage()
         ];
     }
 }

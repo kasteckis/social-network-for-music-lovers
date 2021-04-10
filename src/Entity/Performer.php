@@ -39,6 +39,26 @@ class Performer
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bio;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $startedCareer;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $style;
+
     public function __construct()
     {
         $this->songs = new ArrayCollection();
@@ -135,6 +155,54 @@ class Performer
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getStartedCareer(): ?string
+    {
+        return $this->startedCareer;
+    }
+
+    public function setStartedCareer(?string $startedCareer): self
+    {
+        $this->startedCareer = $startedCareer;
+
+        return $this;
+    }
+
+    public function getStyle(): ?string
+    {
+        return $this->style;
+    }
+
+    public function setStyle(?string $style): self
+    {
+        $this->style = $style;
 
         return $this;
     }

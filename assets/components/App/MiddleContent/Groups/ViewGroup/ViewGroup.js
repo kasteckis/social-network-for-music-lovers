@@ -20,8 +20,14 @@ class ViewGroup extends Component {
             title: null,
             songs: 0,
             albums: 0,
-            image: null
+            image: null,
+            bio: null,
+            country: null,
+            startedCareer: null,
+            style: null
         },
+        songs: [],
+        albums: [],
         groupDoesNotExist: false
     }
 
@@ -29,9 +35,10 @@ class ViewGroup extends Component {
         axios.get('/api/group/' + this.props.match.params.id)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.group);
                     this.setState({
-                        group: response.data.group
+                        group: response.data.group,
+                        songs: response.data.songs,
+                        albums: response.data.albums
                     });
                 } else {
                     this.setState({
@@ -46,75 +53,126 @@ class ViewGroup extends Component {
 
     render() {
         return (
-            <Card>
-                <List>
-                    {this.state.groupDoesNotExist ?
-                        <CardActionArea>
-                            <CardContent>
-                                <ListItem>
-                                    <Typography align="center" variant="body2" color="textSecondary" component="p">
-                                        Tokia grupė sistemoje nerasta
-                                    </Typography>
-                                </ListItem>
-                            </CardContent>
-                        </CardActionArea>
-                        :
-                        <React.Fragment>
-                            <CardContent>
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <CardActionArea>
-                                                {this.state.group.image ?
-                                                    <img style={{maxWidth: '100%'}} src={"/images/groups/" + this.state.group.image} alt={this.state.group.title + ' profilio nuotrauka'} />
-                                                    :
-                                                    <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.group.title + ' profilio nuotrauka'} />
-                                                }
-                                            </CardActionArea>
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {this.state.group.title}
-                                    </Typography>
-                                </ListItem>
-                            </CardContent>
-
+            <React.Fragment>
+                <Card>
+                    <List>
+                        {this.state.groupDoesNotExist ?
                             <CardActionArea>
                                 <CardContent>
                                     <ListItem>
                                         <Typography align="center" variant="body2" color="textSecondary" component="p">
-                                            {"a"}
+                                            Tokia grupė sistemoje nerasta
                                         </Typography>
                                     </ListItem>
                                 </CardContent>
                             </CardActionArea>
+                            :
+                            <React.Fragment>
+                                <CardContent>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <CardActionArea>
+                                                    {this.state.group.image ?
+                                                        <img style={{maxWidth: '100%'}} src={"/images/groups/" + this.state.group.image} alt={this.state.group.title + ' profilio nuotrauka'} />
+                                                        :
+                                                        <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.group.title + ' profilio nuotrauka'} />
+                                                    }
+                                                </CardActionArea>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {this.state.group.title}
+                                        </Typography>
+                                    </ListItem>
+                                </CardContent>
 
-                            <CardActionArea>
-                                <CardContent>
-                                    <ListItem>
-                                        <ListItemText primary="Užsiregistruota" secondary={"qq"} />
-                                    </ListItem>
-                                </CardContent>
-                            </CardActionArea>
-                            <CardActionArea>
-                                <CardContent>
-                                    <ListItem>
-                                        <ListItemText primary="Rolė" secondary={"b"} />
-                                    </ListItem>
-                                </CardContent>
-                            </CardActionArea>
-                            <Divider/>
-                            <CardActionArea>
-                                <CardContent>
-                                    <ListItem>
-                                        <ListItemText primary="Slapyvardis" secondary={"aa"} />
-                                    </ListItem>
-                                </CardContent>
-                            </CardActionArea>
-                        </React.Fragment>
-                    }
-                </List>
-            </Card>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <ListItem>
+                                            <Typography align="center" variant="body2" color="textSecondary" component="p">
+                                                {this.state.group.bio}
+                                            </Typography>
+                                        </ListItem>
+                                    </CardContent>
+                                </CardActionArea>
+                                <Divider/>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <ListItem>
+                                            <ListItemText primary="Šalis" secondary={this.state.group.country} />
+                                        </ListItem>
+                                    </CardContent>
+                                </CardActionArea>
+                                <Divider/>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <ListItem>
+                                            <ListItemText primary="Pradėjo veikla" secondary={this.state.group.startedCareer} />
+                                        </ListItem>
+                                    </CardContent>
+                                </CardActionArea>
+                                <Divider/>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <ListItem>
+                                            <ListItemText primary="Stilius (-iai)" secondary={this.state.group.style} />
+                                        </ListItem>
+                                    </CardContent>
+                                </CardActionArea>
+                            </React.Fragment>
+                        }
+                    </List>
+                </Card>
+                <Card className={"mt-2"}>
+                    <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
+                        Dainos
+                    </Typography>
+                    <List>
+                        {this.state.songs.map((song) => (
+                            <React.Fragment key={song.id}>
+                                <ListItem button onClick={() => console.log('redirect to song')}>
+                                    {/*<Avatar>*/}
+                                    {/*    <CardActionArea>*/}
+                                    {/*        {null ?*/}
+                                    {/*            <img style={{maxWidth: '100%'}} src={"/images/groups/" + user.profilePicture} alt={user.username + ' profilio nuotrauka'} />*/}
+                                    {/*            :*/}
+                                    {/*            <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={user.username + ' profilio nuotrauka'} />*/}
+                                    {/*        }*/}
+                                    {/*    </CardActionArea>*/}
+                                    {/*</Avatar>*/}
+                                    <ListItemText className="ml-2" primary={song.title} secondary={song.year} />
+                                </ListItem>
+                                <Divider />
+                            </React.Fragment>
+                        ))}
+                    </List>
+                </Card>
+                <Card className={"mt-2"}>
+                    <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
+                        Albumai
+                    </Typography>
+                    <List>
+                        {this.state.albums.map((album) => (
+                            <React.Fragment key={album.id}>
+                                <ListItem button onClick={() => console.log('redirect to album')}>
+                                    <Avatar>
+                                        <CardActionArea>
+                                            {album.image ?
+                                                <img style={{maxWidth: '100%'}} src={"/images/albums/" + album.image} alt={album.title + ' nuotrauka'} />
+                                                :
+                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={album.title + ' nuotrauka'} />
+                                            }
+                                        </CardActionArea>
+                                    </Avatar>
+                                    <ListItemText className="ml-2" primary={album.title} secondary={album.songs + " dainos"} />
+                                </ListItem>
+                                <Divider />
+                            </React.Fragment>
+                        ))}
+                    </List>
+                </Card>
+            </React.Fragment>
         );
     }
 }

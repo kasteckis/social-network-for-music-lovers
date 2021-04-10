@@ -39,6 +39,11 @@ class Song
      */
     private $spotifyLink;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $year;
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -113,6 +118,18 @@ class Song
     public function setSpotifyLink(?string $spotifyLink): self
     {
         $this->spotifyLink = $spotifyLink;
+
+        return $this;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    public function setYear(?string $year): self
+    {
+        $this->year = $year;
 
         return $this;
     }
