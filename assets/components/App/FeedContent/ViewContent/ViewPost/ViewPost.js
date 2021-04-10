@@ -211,8 +211,15 @@ class ViewPost extends Component {
         }, 100);
     }
 
-    handleEditPostComment(event) {
+    handleEditPostComment(event, comment) {
         event.preventDefault();
+
+        if (comment.text === this.editPostCommentRef.current.value) {
+            this.setState({
+                currentlyEditingPostCommentId: -1
+            });
+            return;
+        }
 
         const headers = {
             headers: {
@@ -374,7 +381,7 @@ class ViewPost extends Component {
                         {this.state.post.commentsArray.map((comment) => (
                             <React.Fragment key={comment.id}>
                                 {this.state.currentlyEditingPostCommentId === comment.id ?
-                                    <form onSubmit={(event) => this.handleEditPostComment(event)}>
+                                    <form onSubmit={(event) => this.handleEditPostComment(event, comment)}>
                                         <TextField
                                             InputLabelProps={{
                                                 shrink: true,
@@ -390,7 +397,7 @@ class ViewPost extends Component {
                                             rows={6}
                                             rowsMax={Infinity}
                                         />
-                                        <Button onClick={(event) => this.handleEditPostComment(event)} color="primary">
+                                        <Button onClick={(event) => this.handleEditPostComment(event, comment)} color="primary">
                                             Išsaugoti
                                         </Button>
                                     </form>
