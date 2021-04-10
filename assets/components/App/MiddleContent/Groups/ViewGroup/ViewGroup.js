@@ -124,54 +124,53 @@ class ViewGroup extends Component {
                         }
                     </List>
                 </Card>
-                <Card className={"mt-2"}>
-                    <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
-                        Dainos
-                    </Typography>
-                    <List>
-                        {this.state.songs.map((song) => (
-                            <React.Fragment key={song.id}>
-                                <ListItem button onClick={() => console.log('redirect to song')}>
-                                    {/*<Avatar>*/}
-                                    {/*    <CardActionArea>*/}
-                                    {/*        {null ?*/}
-                                    {/*            <img style={{maxWidth: '100%'}} src={"/images/groups/" + user.profilePicture} alt={user.username + ' profilio nuotrauka'} />*/}
-                                    {/*            :*/}
-                                    {/*            <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={user.username + ' profilio nuotrauka'} />*/}
-                                    {/*        }*/}
-                                    {/*    </CardActionArea>*/}
-                                    {/*</Avatar>*/}
-                                    <ListItemText className="ml-2" primary={song.title} secondary={song.year} />
-                                </ListItem>
-                                <Divider />
-                            </React.Fragment>
-                        ))}
-                    </List>
-                </Card>
-                <Card className={"mt-2"}>
-                    <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
-                        Albumai
-                    </Typography>
-                    <List>
-                        {this.state.albums.map((album) => (
-                            <React.Fragment key={album.id}>
-                                <ListItem button onClick={() => console.log('redirect to album')}>
-                                    <Avatar>
-                                        <CardActionArea>
-                                            {album.image ?
-                                                <img style={{maxWidth: '100%'}} src={"/images/albums/" + album.image} alt={album.title + ' nuotrauka'} />
-                                                :
-                                                <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={album.title + ' nuotrauka'} />
-                                            }
-                                        </CardActionArea>
-                                    </Avatar>
-                                    <ListItemText className="ml-2" primary={album.title} secondary={album.songs + " dainos"} />
-                                </ListItem>
-                                <Divider />
-                            </React.Fragment>
-                        ))}
-                    </List>
-                </Card>
+                {this.state.songs.length > 0 ?
+                    <Card className={"mt-2"}>
+                        <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
+                            Dainos
+                        </Typography>
+                        <List>
+                            {this.state.songs.map((song) => (
+                                <React.Fragment key={song.id}>
+                                    <ListItem button onClick={() => console.log('redirect to song')}>
+                                        <ListItemText className="ml-2" primary={song.title} secondary={song.year} />
+                                    </ListItem>
+                                    <Divider />
+                                </React.Fragment>
+                            ))}
+                        </List>
+                    </Card>
+                    :
+                    null
+                }
+                {this.state.albums.length > 0 ?
+                    <Card className={"mt-2"}>
+                        <Typography align={"center"} className={"mt-2"} gutterBottom variant="h5" component="h2">
+                            Albumai
+                        </Typography>
+                        <List>
+                            {this.state.albums.map((album) => (
+                                <React.Fragment key={album.id}>
+                                    <ListItem button onClick={() => console.log('redirect to album')}>
+                                        <Avatar>
+                                            <CardActionArea>
+                                                {album.image ?
+                                                    <img style={{maxWidth: '100%'}} src={"/images/albums/" + album.image} alt={album.title + ' nuotrauka'} />
+                                                    :
+                                                    <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={album.title + ' nuotrauka'} />
+                                                }
+                                            </CardActionArea>
+                                        </Avatar>
+                                        <ListItemText className="ml-2" primary={album.title} secondary={album.songs + " dainos"} />
+                                    </ListItem>
+                                    <Divider />
+                                </React.Fragment>
+                            ))}
+                        </List>
+                    </Card>
+                    :
+                    null
+                }
             </React.Fragment>
         );
     }
