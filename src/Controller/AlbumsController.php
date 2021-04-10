@@ -34,7 +34,7 @@ class AlbumsController extends AbstractController
         $limit = $request->get('limit') ? $request->get('limit') : 10;
         $filter = $request->get('filter') ? $request->get('filter') : null;
 
-        /** @var AlbumRepository $performerRepo */
+        /** @var AlbumRepository $albumRepo */
         $albumRepo = $this->getDoctrine()->getRepository(Album::class);
 
         $albumsArray = $this->groupsService->fetchAlbums($offset, $limit, $filter);

@@ -43,7 +43,7 @@ class GroupsService
 
     public function fetchAlbums(int $offset, int $limit, ?string $filter): array
     {
-        /** @var AlbumRepository $performerRepo */
+        /** @var AlbumRepository $albumRepo */
         $albumRepo = $this->entityManager->getRepository(Album::class);
 
         /** @var Album[] $albums */
