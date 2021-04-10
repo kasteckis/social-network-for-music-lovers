@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Album;
 use App\Entity\Performer;
 use App\Entity\Song;
+use App\Repository\AlbumRepository;
 use App\Repository\PerformerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -38,6 +39,23 @@ class GroupsService
         }
 
         return $groupsArray;
+    }
+
+    public function fetchAlbums(int $offset, int $limit, ?string $filter): array
+    {
+        /** @var AlbumRepository $performerRepo */
+        $albumRepo = $this->entityManager->getRepository(Album::class);
+
+        /** @var Album[] $albums */
+        $albums = $albumRepo->getAlbumsByFilter($offset, $limit, $filter);
+
+        $albumsArray = [];
+
+        foreach ($albums as $album) {
+            $albumsArray[] = $this->albumEntityToArray($album);
+        }
+
+        return $albumsArray;
     }
 
     public function groupEntityToPerformerSongsArray(Performer $performer): array

@@ -19,32 +19,30 @@ class AlbumRepository extends ServiceEntityRepository
         parent::__construct($registry, Album::class);
     }
 
-    // /**
-    //  * @return Album[] Returns an array of Album objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getAlbumsCount(?string $filter): string
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        $qb = $this->createQueryBuilder('album');
+
+        return $qb
+            ->select('count(album.id)')
+            ->andWhere('album.title LIKE :filter')
+            ->setParameter('filter', '%' . $filter . '%')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function getAlbumsByFilter(int $offset, int $limit, ?string $filter)
+    {
+        $qb = $this->createQueryBuilder('album');
+
+        return $qb
+            ->andWhere('album.title LIKE :filter')
+            ->setParameter('filter', '%' . $filter . '%')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Album
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
