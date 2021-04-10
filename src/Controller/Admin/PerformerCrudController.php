@@ -24,6 +24,10 @@ class PerformerCrudController extends AbstractCrudController
                 ->setUploadDir('public/images/groups'),
             AssociationField::new('songs'),
             AssociationField::new('albums'),
+            TextField::new('bio'),
+            TextField::new('country'),
+            TextField::new('startedCareer'),
+            TextField::new('style')
         ];
     }
 }

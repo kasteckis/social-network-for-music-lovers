@@ -22,6 +22,7 @@ class SongCrudController extends AbstractCrudController
             UrlField::new('spotifyLink'),
             AssociationField::new('performer'),
             AssociationField::new('albums'),
+            TextField::new('year')
         ];
     }
 }
