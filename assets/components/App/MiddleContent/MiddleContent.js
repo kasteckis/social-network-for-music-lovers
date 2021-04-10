@@ -24,6 +24,7 @@ import ForgotPassword from "./Auth/Login/ForgotPassword/ForgotPassword";
 import ForgotPasswordResetForm from "./Auth/Login/ForgotPasswordResetForm/ForgotPasswordResetForm";
 import EditPost from "../FeedContent/CreateContent/EditPost/EditPost";
 import Groups from "./Groups/Groups";
+import ViewGroup from "./Groups/ViewGroup/ViewGroup";
 
 class MiddleContent extends Component {
     render() {
@@ -67,6 +68,10 @@ class MiddleContent extends Component {
 
                     <Route path="/grupes" exact render={(props) => (
                         <Groups {...props} auth={this.props.auth} />
+                    )} />
+
+                    <Route path="/grupe/:name/:id" exact render={(props) => (
+                        <ViewGroup {...props} auth={this.props.auth} />
                     )} />
 
                     <Route path="/renginiai/:id" exact render={(props) => (

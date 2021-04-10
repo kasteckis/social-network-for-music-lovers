@@ -42,4 +42,24 @@ class GroupsController extends AbstractController
             'groupsCount' => $performerRepo->getPerformersCount($filter)
         ]);
     }
+
+    /**
+     * @Route("/api/group/{performer}", name="api_get_one_performer")
+     */
+    public function getOnePerformer(Request $request, ?Performer $performer): Response
+    {
+        if (!($performer instanceof Performer)) {
+            return $this->json([
+                'success' => false,
+                'error' => 'Grupė nerasta'
+            ]);
+        }
+
+        $groupArray = $this->groupsService->groupEntityToArray($performer);
+
+        return $this->json([
+            'success' => true,
+            'group' => $groupArray
+        ]);
+    }
 }

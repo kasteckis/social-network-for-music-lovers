@@ -64,6 +64,10 @@ class Groups extends Component {
         this.loadGroups((value-1) * 10, 10, this.filterTextRef.current.value);
     }
 
+    handleRedirectToGroup(name, id) {
+        this.props.history.push('/grupe/' + name + '/' + id);
+    }
+
     render() {
         return (
             <Card className="mt-2" variant="outlined">
@@ -96,7 +100,7 @@ class Groups extends Component {
                         <List>
                             {this.state.groups.map((group) => (
                                 <React.Fragment key={group.id}>
-                                    <ListItem button onClick={() => console.log("redirectas")}>
+                                    <ListItem button onClick={() => this.handleRedirectToGroup(group.title, group.id)}>
                                         <Avatar>
                                             <CardActionArea>
                                                 {group.picture ?

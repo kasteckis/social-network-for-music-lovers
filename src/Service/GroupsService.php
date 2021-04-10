@@ -38,7 +38,7 @@ class GroupsService
         return $groupsArray;
     }
 
-    private function groupEntityToArray(Performer $performer): array
+    public function groupEntityToArray(Performer $performer): array
     {
         return [
             'id' => $performer->getId(),
