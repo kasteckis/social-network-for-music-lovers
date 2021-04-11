@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\TOP40;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class TopService
@@ -56,6 +57,42 @@ class TopService
         }
 
         $user->setCanVoteInTop40(false);
+
+        $this->entityManager->flush();
+    }
+
+    // Kviečiamas per - bin/console app:reload-top40
+    public function reloadTop40(): void
+    {
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $top40Repo = $this->entityManager->getRepository(TOP40::class);
+
+        $userRepo->makeEveryoneAbleToVoteInTop40();
+
+        /** @var TOP40[] $top40s */
+        $top40s = $top40Repo->findBy([
+            'active' => true
+        ], [
+            'likes' => 'DESC'
+        ]);
+
+        foreach ($top40s as $index => $top40) {
+            $top40->setLastWeekPlace($index+1);
+            $top40->setWeeksInTop($top40->getWeeksInTop()+1);
+            $top40->setNew(false);
+            $top40->setLikes(0);
+        }
+
+        /** @var TOP40[] $top40sInactive */
+        $top40sInactive = $top40Repo->findBy([
+            'active' => false
+        ]);
+
+        foreach ($top40sInactive as $top40) {
+            $top40->setNew(true);
+            $top40->setActive(true);
+        }
 
         $this->entityManager->flush();
     }

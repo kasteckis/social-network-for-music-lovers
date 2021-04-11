@@ -58,4 +58,17 @@ class TopController extends AbstractController
             'canUserVote' => $user instanceof User ? $user->getCanVoteInTop40() : false
         ]);
     }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     * @Route("/reload/top40", name="reload_top40_for_admins", methods={"GET"})
+     */
+    public function reloadTop40ForAdmins(Request $request): Response
+    {
+        $this->topService->reloadTop40();
+
+        return $this->json([
+            'message' => 'Perkrauta!'
+        ]);
+    }
 }

@@ -19,32 +19,13 @@ class TOP40Repository extends ServiceEntityRepository
         parent::__construct($registry, TOP40::class);
     }
 
-    // /**
-    //  * @return TOP40[] Returns an array of TOP40 objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function resetLikes()
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('top40')
+            ->update('App:TOP40', 'top')
+            ->set('top.likes', 0)
             ->getQuery()
-            ->getResult()
-        ;
+            ->execute()
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TOP40
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
