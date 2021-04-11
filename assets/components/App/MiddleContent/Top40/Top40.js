@@ -166,7 +166,13 @@ class Top40 extends Component {
                                 <TableRow key={top.id}>
                                     <TableCell component="th" scope="row">
                                         <b>
-                                            {top.place}
+                                            {top.place <= 40 ?
+                                                <React.Fragment>
+                                                    {top.place}
+                                                </React.Fragment>
+                                                :
+                                                'Iškritusi daina'
+                                            }
                                             {top.new ?
                                                 ' (Naujiena)'
                                                 :
