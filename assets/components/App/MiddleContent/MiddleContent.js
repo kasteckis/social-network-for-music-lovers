@@ -38,11 +38,14 @@ class MiddleContent extends Component {
                     )} />
                     <Route path="/paieska" exact component={Search} />
                     <Route path="/top30lt" exact component={Top30Lt} />
-                    <Route path="/top40" exact component={Top40} />
                     <Route path="/prisijungti" exact component={Login} />
                     <Route path="/registruotis" exact component={Register} />
                     {/*<Route path="/ikelti" exact component={CreateContent} />*/}
                     <Route path="/atsijungti" exact component={Logout} />
+
+                    <Route path="/top40" exact render={(props) => (
+                        <Top40 {...props} auth={this.props.auth} />
+                    )} />
 
                     <Route path="/profilis" exact render={(props) => (
                         <Profile {...props} auth={this.props.auth} />

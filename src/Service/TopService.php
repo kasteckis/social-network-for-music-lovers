@@ -31,18 +31,20 @@ class TopService
 
         $top40Entities = $top40Repo->findBy([
             'active' => true
+        ], [
+            'likes' => 'DESC'
         ]);
 
         $top40Array = [];
 
-        foreach ($top40Entities as $top40) {
-            $top40Array[] = $this->top40LiveEntityToArray($top40);
+        foreach ($top40Entities as $index => $top40) {
+            $top40Array[] = $this->top40LiveEntityToArray($top40, $index+1);
         }
 
         return $top40Array;
     }
 
-    public function top40LiveEntityToArray(TOP40 $top40): array
+    public function top40LiveEntityToArray(TOP40 $top40, int $place): array
     {
         return [
             'id' => $top40->getId(),
@@ -51,7 +53,10 @@ class TopService
             'weeksInTop' => $top40->getWeeksInTop(),
             'song' => $this->groupsService->songEntityToArray($top40->getSong()),
             'lastWeekPlace' => $top40->getLastWeekPlace(),
-            'place' => 'todo isskaiciuot'
+            'place' => $place,
+
+            // backende nieko nereiskia, naudojamas fronte
+            'difference' => 0
         ];
     }
 }

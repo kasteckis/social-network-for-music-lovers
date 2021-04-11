@@ -27,6 +27,8 @@ class TopController extends AbstractController
     {
         $top40Array = $this->topService->getTop40Array();
 
-        return $this->json($top40Array);
+        return $this->json([
+            'tops' => $top40Array
+        ]);
     }
 }
