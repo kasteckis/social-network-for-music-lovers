@@ -33,6 +33,21 @@ class TOP40
      */
     private $weeksInTop = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $likes = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $lastWeekPlace = -1;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +85,42 @@ class TOP40
     public function setWeeksInTop(int $weeksInTop): self
     {
         $this->weeksInTop = $weeksInTop;
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): self
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getLastWeekPlace(): ?int
+    {
+        return $this->lastWeekPlace;
+    }
+
+    public function setLastWeekPlace(int $lastWeekPlace): self
+    {
+        $this->lastWeekPlace = $lastWeekPlace;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
