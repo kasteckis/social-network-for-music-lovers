@@ -24,7 +24,7 @@ class TopController extends AbstractController
     }
 
     /**
-     * @Route("/api/top40", name="api_get_top40")
+     * @Route("/api/top40", name="api_get_top40", methods={"GET"})
      */
     public function getTop40(): Response
     {
@@ -41,13 +41,15 @@ class TopController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
-     * @Route("/api/top40", name="api_post_vote_top40")
+     * @Route("/api/top40", name="api_post_vote_top40", methods={"POST"})
      */
     public function postVoteTop40(Request $request): Response
     {
         /** @var User $user */
         $user = $this->getUser();
-        $data = json_decode($request->getContent());
+        $dataTops = json_decode($request->getContent());
+
+        $this->topService->handleVote($dataTops, $user);
 
         $top40Array = $this->topService->getTop40Array();
 

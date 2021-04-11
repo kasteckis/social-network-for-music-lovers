@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\TOP40;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class TopService
@@ -42,6 +43,21 @@ class TopService
         }
 
         return $top40Array;
+    }
+
+    public function handleVote(array $dataTops, User $user): void
+    {
+        $top40Repo = $this->entityManager->getRepository(TOP40::class);
+        foreach ($dataTops as $dataTop) {
+            $top40 = $top40Repo->find($dataTop->id);
+            if ($top40 instanceof TOP40) {
+                $top40->setLikes($top40->getLikes() + $dataTop->difference);
+            }
+        }
+
+        $user->setCanVoteInTop40(false);
+
+        $this->entityManager->flush();
     }
 
     public function top40LiveEntityToArray(TOP40 $top40, int $place): array

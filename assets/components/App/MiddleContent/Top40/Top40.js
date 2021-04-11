@@ -135,10 +135,10 @@ class Top40 extends Component {
 
         axios.post('/api/top40', tops, headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     tops: response.data.tops,
-                    canUserVote: response.data.canUserVote
+                    canUserVote: response.data.canUserVote,
+                    availableVotes: 15
                 });
             })
             .catch(error => {
