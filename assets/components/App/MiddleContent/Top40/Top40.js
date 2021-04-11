@@ -10,14 +10,15 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
-import {Favorite} from "@material-ui/icons";
+import {ArrowDropDown, ArrowDropUp, Favorite} from "@material-ui/icons";
 import {withRouter} from "react-router-dom";
 import axios from "axios";
 
 class Top40 extends Component {
     state = {
         tops: [],
-        availableVotes: 15
+        availableVotes: 15,
+        canUserVote: false
     }
 
     componentDidMount() {
@@ -43,9 +44,9 @@ class Top40 extends Component {
 
         axios.get('/api/top40', headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
-                    tops: response.data.tops
+                    tops: response.data.tops,
+                    canUserVote: response.data.canUserVote
                 });
             })
             .catch(error => {
@@ -94,6 +95,10 @@ class Top40 extends Component {
     canYouDecrementHandler(top) {
         // jeigu return true, reiskia negalima
 
+        if (!this.state.canUserVote) {
+            return true;
+        }
+
         if (top.difference === 0) {
             return true;
         }
@@ -103,6 +108,10 @@ class Top40 extends Component {
 
     canYouIncrementHandler(top) {
         // jeigu return true, reiskia negalima
+
+        if (!this.state.canUserVote) {
+            return true;
+        }
 
         if (this.state.availableVotes === 0) {
             return true;
@@ -115,6 +124,28 @@ class Top40 extends Component {
         return false;
     }
 
+    submitVoteHandler() {
+        let tops = this.state.tops.filter(top => top.difference > 0);
+
+        const headers = {
+            headers: {
+                Authorization: 'Bearer ' + this.props.auth.token
+            }
+        }
+
+        axios.post('/api/top40', tops, headers)
+            .then(response => {
+                console.log(response.data);
+                this.setState({
+                    tops: response.data.tops,
+                    canUserVote: response.data.canUserVote
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     render() {
         return (
             <Card>
@@ -125,7 +156,9 @@ class Top40 extends Component {
                             <TableRow>
                                 <TableCell>Vieta</TableCell>
                                 <TableCell>Daina</TableCell>
-                                <TableCell/>
+                                <TableCell>
+                                    <Button onClick={() => this.submitVoteHandler()} disabled={this.state.availableVotes !== 0} variant="contained" style={{backgroundColor: 'orange'}}>Balsuoti</Button>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -137,7 +170,25 @@ class Top40 extends Component {
                                             {top.new ?
                                                 ' (Naujiena)'
                                                 :
-                                                null
+                                                <React.Fragment>
+                                                    {top.place === top.lastWeekPlace ?
+                                                        null
+                                                        :
+                                                        <React.Fragment>
+                                                            {top.place < top.lastWeekPlace ?
+                                                                <React.Fragment>
+                                                                    <ArrowDropUp style={{fill: "green"}} />
+                                                                    <span>+{top.lastWeekPlace - top.place}</span>
+                                                                </React.Fragment>
+                                                                :
+                                                                <React.Fragment>
+                                                                    <ArrowDropDown style={{fill: "red"}} />
+                                                                    <span>{top.lastWeekPlace - top.place}</span>
+                                                                </React.Fragment>
+                                                            }
+                                                        </React.Fragment>
+                                                    }
+                                                </React.Fragment>
                                             }
                                         </b>
                                     </TableCell>

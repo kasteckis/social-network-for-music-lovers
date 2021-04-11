@@ -123,6 +123,11 @@ class User implements UserInterface
     private $emailConfirmations;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canVoteInTop40 = true;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -559,6 +564,18 @@ class User implements UserInterface
                 $emailConfirmation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCanVoteInTop40(): ?bool
+    {
+        return $this->canVoteInTop40;
+    }
+
+    public function setCanVoteInTop40(bool $canVoteInTop40): self
+    {
+        $this->canVoteInTop40 = $canVoteInTop40;
 
         return $this;
     }
