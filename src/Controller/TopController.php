@@ -45,7 +45,7 @@ class TopController extends AbstractController
      */
     public function postVoteTop40(Request $request): Response
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         $dataTops = json_decode($request->getContent());
 
