@@ -45,4 +45,15 @@ class PerformerRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
+
+    public function getEntitiesByKeyword(string $keyword): array
+    {
+        return $this->createQueryBuilder('performer')
+            ->where('performer.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Service;
 
 
 use App\Entity\Album;
+use App\Entity\Event;
+use App\Entity\Performer;
 use App\Entity\Post;
 use App\Entity\Song;
 
@@ -51,7 +53,7 @@ class SearchConverterService
     }
 
     /**
-     * @param Song[] $albums
+     * @param Song[] $songs
      * @return array
      */
     public function songsToSearchResultArray(array $songs): array
@@ -64,6 +66,46 @@ class SearchConverterService
                 'title' => $song->getTitle(),
                 'type' => 'Daina',
                 'link' => 'linkas' // todo add link to song
+            ];
+        }
+
+        return $resultArray;
+    }
+
+    /**
+     * @param Performer[] $performers
+     * @return array
+     */
+    public function performersToSearchResultArray(array $performers): array
+    {
+        $resultArray = [];
+
+        foreach ($performers as $performer) {
+            $resultArray[] = [
+                'id' => 'performer' . $performer->getId(),
+                'title' => $performer->getTitle(),
+                'type' => 'Grupė / Atlikėjas',
+                'link' => '/grupe/' . $performer->getTitle() . '/' . $performer->getId()
+            ];
+        }
+
+        return $resultArray;
+    }
+
+    /**
+     * @param Event[] $events
+     * @return array
+     */
+    public function eventsToSearchResultArray(array $events): array
+    {
+        $resultArray = [];
+
+        foreach ($events as $event) {
+            $resultArray[] = [
+                'id' => 'event' . $event->getId(),
+                'title' => $event->getTitle(),
+                'type' => 'Renginys',
+                'link' => '/renginiai/' . $event->getId()
             ];
         }
 

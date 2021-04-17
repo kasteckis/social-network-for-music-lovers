@@ -136,4 +136,15 @@ class EventRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
+
+    public function getEntitiesByKeyword(string $keyword): array
+    {
+        return $this->createQueryBuilder('event')
+            ->where('event.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

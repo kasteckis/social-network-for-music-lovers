@@ -117,7 +117,7 @@ class Search extends Component {
                                                     {result.title}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <a href='#' onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                                    <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
