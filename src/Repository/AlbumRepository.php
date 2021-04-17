@@ -45,4 +45,15 @@ class AlbumRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function getEntitiesByKeyword(string $keyword): array
+    {
+        return $this->createQueryBuilder('album')
+            ->where('album.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

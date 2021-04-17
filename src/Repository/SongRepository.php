@@ -18,4 +18,16 @@ class SongRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Song::class);
     }
+
+    public function getEntitiesByKeyword(string $keyword): array
+    {
+        return $this->createQueryBuilder('song')
+            ->where('song.title LIKE :keyword')
+            ->orWhere('song.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -20,13 +20,16 @@ class SearchService
 {
     private EntityManagerInterface $entityManager;
 
+    private SearchConverterService $searchConverterService;
+
     /**
      * SearchService constructor.
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, SearchConverterService $searchConverterService)
     {
         $this->entityManager = $entityManager;
+        $this->searchConverterService = $searchConverterService;
     }
 
     public function searchByKeyword(string $keyword): array
@@ -42,6 +45,17 @@ class SearchService
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->entityManager->getRepository(Event::class);
 
-        return [];
+        $searchResults = [];
+
+        $posts = $postRepo->getEntitiesByKeyword($keyword);
+        $searchResults = array_merge($searchResults, $this->searchConverterService->postsToSearchResultArray($posts));
+
+        $albums = $albumRepo->getEntitiesByKeyword($keyword);
+        $searchResults = array_merge($searchResults, $this->searchConverterService->albumsToSearchResultArray($albums));
+
+//        $songs = $songRepo->getEntitiesByKeyword($keyword);
+//        $searchResults = array_merge($searchResults, $this->searchConverterService->songsToSearchResultArray($songs));
+
+        return $searchResults;
     }
 }
