@@ -126,17 +126,17 @@ class Search extends Component {
                                             :
                                             <React.Fragment>
                                                 {this.state.searchResults.map((result) => (
-                                                        <TableRow key={result.id}>
-                                                            <TableCell component="th" scope="row">
-                                                                {result.type}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {result.title}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
-                                                            </TableCell>
-                                                        </TableRow>
+                                                    <TableRow key={result.id}>
+                                                        <TableCell component="th" scope="row">
+                                                            {result.type}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {result.title}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                                        </TableCell>
+                                                    </TableRow>
                                                 ))}
                                             </React.Fragment>
                                         }
