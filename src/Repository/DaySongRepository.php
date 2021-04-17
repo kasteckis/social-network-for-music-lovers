@@ -58,16 +58,4 @@ class DaySongRepository extends ServiceEntityRepository
             return null;
         }
     }
-
-    /*
-    public function findOneBySomeField($value): ?DaySong
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

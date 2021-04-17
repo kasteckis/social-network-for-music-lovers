@@ -55,16 +55,4 @@ class DailyVisitRepository extends ServiceEntityRepository
 
         return count($result);
     }
-
-    /*
-    public function findOneBySomeField($value): ?DailyVisit
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
