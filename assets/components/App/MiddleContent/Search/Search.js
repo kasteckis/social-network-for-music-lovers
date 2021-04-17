@@ -11,6 +11,7 @@ import {
     TextField
 } from "@material-ui/core";
 import axios from "axios";
+import {withRouter} from "react-router-dom";
 
 class Search extends Component {
 
@@ -25,7 +26,13 @@ class Search extends Component {
         this.searchRef = React.createRef();
     }
 
-    searchHandler() {
+    componentDidMount() {
+        // todo issaugoti search texta session storage, kad sugrizus islaikyt sarasa
+    }
+
+    searchHandler(event) {
+        event.preventDefault();
+
         this.setState({
             searchErrorText: ''
         });
@@ -44,7 +51,6 @@ class Search extends Component {
 
         axios.get('/api/search', {params})
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     searchResults: response.data,
                     clickedSearch: true
@@ -55,12 +61,18 @@ class Search extends Component {
             })
     }
 
+    redirectToLinkHandler(event, link) {
+        event.preventDefault();
+
+        this.props.history.push(link);
+    }
+
     render() {
         return (
             <Card className="mt-2">
                 <CardContent>
                     <h5 className="card-title">Paieška</h5>
-                    <form>
+                    <form onSubmit={(event) => this.searchHandler(event)}>
                         <div className="form-group">
                             <TextField
                                 error={this.state.searchErrorText.length !== 0}
@@ -77,7 +89,7 @@ class Search extends Component {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={() => this.searchHandler()}
+                            onClick={(event) => this.searchHandler(event)}
                         >
                             Ieškoti
                         </Button>
@@ -96,15 +108,19 @@ class Search extends Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">
-                                                abc
-                                            </TableCell>
-                                            <TableCell>abc</TableCell>
-                                            <TableCell>
-                                                abc
-                                            </TableCell>
-                                        </TableRow>
+                                        {this.state.searchResults.map((result) => (
+                                            <TableRow key={result.id}>
+                                                <TableCell component="th" scope="row">
+                                                    {result.type}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {result.title}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <a href='#' onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -118,4 +134,4 @@ class Search extends Component {
     }
 }
 
-export default Search;
+export default withRouter(Search);
