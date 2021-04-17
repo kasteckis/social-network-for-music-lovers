@@ -27,17 +27,25 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        // todo issaugoti search texta session storage, kad sugrizus islaikyt sarasa
+        const searchRefText = sessionStorage.getItem('search_search_text');
+
+        if (searchRefText) {
+            this.searchRef.current.value = searchRefText;
+            this.searchByKeyword(searchRefText);
+        }
     }
 
     searchHandler(event) {
         event.preventDefault();
+        this.searchByKeyword(this.searchRef.current.value);
+    }
 
+    searchByKeyword(keyword) {
         this.setState({
             searchErrorText: ''
         });
 
-        if (this.searchRef.current.value.length === 0) {
+        if (keyword.length === 0) {
             this.setState({
                 searchErrorText: 'Įrašykite kažką'
             });
@@ -46,11 +54,12 @@ class Search extends Component {
         }
 
         const params = {
-            search: this.searchRef.current.value
+            search: keyword
         };
 
         axios.get('/api/search', {params})
             .then(response => {
+                sessionStorage.setItem('search_search_text', keyword);
                 this.setState({
                     searchResults: response.data,
                     clickedSearch: true
