@@ -67,7 +67,7 @@ function MobileNavbar(props) {
                         <BottomNavigationAction classes={{label: classes.label}} label="Srautas" value="" icon={<RssFeed style={white} />} />
                         <BottomNavigationAction classes={{label: classes.label}} label="Paieška" value="paieska" icon={<Search style={white} />} />
                         <BottomNavigationAction classes={{label: classes.label}} label="Įkelti" value="ikelti" icon={<AddCircle style={white} />} />
-                        <BottomNavigationAction classes={{label: classes.label}} label="Draugai" value="draugai" icon={<Group style={white} />} />
+                        {/*<BottomNavigationAction classes={{label: classes.label}} label="Draugai" value="draugai" icon={<Group style={white} />} />*/}
                         <BottomNavigationAction classes={{label: classes.label}} label="Profilis" value="profilis" icon={<Person style={white} />} />
                     </BottomNavigation>
                 }

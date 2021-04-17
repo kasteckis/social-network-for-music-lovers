@@ -61,54 +61,54 @@ function CreateContentPopup(props) {
                         :
                         null
                     }
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <MusicNote />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Pridėti mėgstamą dainą" />
-                    </ListItem>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <QueueMusic />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Pridėti grojaraštį" />
-                    </ListItem>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <RecordVoiceOver />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Pridėti mėgstamą atlikėją" />
-                    </ListItem>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <Description />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Pridėti dainos tekstą" />
-                    </ListItem>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <PostAdd />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Pridėti blogo įrašą" />
-                    </ListItem>
-                    <ListItem button onClick={() => console.log("aagfasdfas")}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <Poll />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Sukurti balsavimą" />
-                    </ListItem>
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <MusicNote />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Pridėti mėgstamą dainą" />*/}
+                    {/*</ListItem>*/}
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <QueueMusic />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Pridėti grojaraštį" />*/}
+                    {/*</ListItem>*/}
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <RecordVoiceOver />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Pridėti mėgstamą atlikėją" />*/}
+                    {/*</ListItem>*/}
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <Description />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Pridėti dainos tekstą" />*/}
+                    {/*</ListItem>*/}
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <PostAdd />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Pridėti blogo įrašą" />*/}
+                    {/*</ListItem>*/}
+                    {/*<ListItem button onClick={() => console.log("aagfasdfas")}>*/}
+                    {/*    <ListItemAvatar>*/}
+                    {/*        <Avatar>*/}
+                    {/*            <Poll />*/}
+                    {/*        </Avatar>*/}
+                    {/*    </ListItemAvatar>*/}
+                    {/*    <ListItemText primary="Sukurti balsavimą" />*/}
+                    {/*</ListItem>*/}
                 </List>
             </Dialog>
         </div>
