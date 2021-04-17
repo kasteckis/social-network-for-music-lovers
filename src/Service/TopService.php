@@ -41,34 +41,34 @@ class TopService
         // Visos dainos
         $topArray = [];
 
-        // Pasikartojančios dainos t.y. ne pirmą sav.
-        $topOldArray = [];
+        // Pasikartojančios dainos t.y. ne pirmą sav. (kiekis)
+        $topOldCount = 0;
 
-        // Naujienos
-        $topNewArray = [];
+        // Naujienos (kiekis)
+        $topNewCount = 0;
 
-        // Dainos kurių vieta virš 40
-        $topDisqArray = [];
+        // Dainos kurių vieta virš 40 (kiekis)
+        $topDisqCount = 0;
 
         foreach ($top40Entities as $top40) {
             $topArray[] = $this->top40LiveEntityToArray($top40);
             if ($top40->getNew()) {
                 // Jeigu daina nauja, dedam į naujienų masyvą
-                $topNewArray[] = $this->top40LiveEntityToArray($top40);
+                $topNewCount++;
             } else {
                 // Jeigu daina nenauja ir jeigu jos pozicija [0;40], tai:
                 // į dedam pagr. masyvą
                 // jeigu [41;999+], tai skaitosi kaip iškritusi daina
 
                 if ($top40->getPlace() <= 40) {
-                    $topOldArray[] = $this->top40LiveEntityToArray($top40);
+                    $topOldCount++;
                 } else {
-                    $topDisqArray[] = $this->top40LiveEntityToArray($top40);
+                    $topDisqCount++;
                 }
             }
         }
 
-        return [$topArray, $topOldArray, $topNewArray, $topDisqArray];
+        return [$topArray, $topOldCount, $topNewCount, $topDisqCount];
     }
 
     public function handleVote(array $dataTops, User $user): void

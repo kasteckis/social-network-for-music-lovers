@@ -18,9 +18,6 @@ import axios from "axios";
 class Top40 extends Component {
     state = {
         tops: [],
-        topsOld: [],
-        topsNew: [],
-        topsDisq: [],
         availableVotes: 15,
         canUserVote: false
     }
@@ -50,9 +47,9 @@ class Top40 extends Component {
             .then(response => {
                 this.setState({
                     tops: response.data.tops,
-                    topsOld: response.data.topsOld,
-                    topsNew: response.data.topsNew,
-                    topsDisq: response.data.topsDisq,
+                    topOldCount: response.data.topOldCount,
+                    topNewCount: response.data.topNewCount,
+                    topDisqCount: response.data.topDisqCount,
                     canUserVote: response.data.canUserVote
                 });
             })
@@ -142,12 +139,11 @@ class Top40 extends Component {
 
         axios.post('/api/top40', tops, headers)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     tops: response.data.tops,
-                    topsOld: response.data.topsOld,
-                    topsNew: response.data.topsNew,
-                    topsDisq: response.data.topsDisq,
+                    topOldCount: response.data.topOldCount,
+                    topNewCount: response.data.topNewCount,
+                    topDisqCount: response.data.topDisqCount,
                     canUserVote: response.data.canUserVote,
                     availableVotes: 15
                 });
@@ -183,74 +179,217 @@ class Top40 extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.topsOld.map((top) => (
-                                    <TableRow key={top.id}>
-                                        <TableCell component="th" scope="row">
-                                            <b>
-                                                {top.place <= 40 ?
-                                                    <React.Fragment>
+                                {this.state.tops.map((top) => (
+                                    <React.Fragment key={top.id}>
+                                        {top.new && top.place <= 40 ?
+                                            null
+                                            :
+                                            <TableRow>
+                                                <TableCell component="th" scope="row">
+                                                    <b>
                                                         {top.place}
-                                                    </React.Fragment>
-                                                    :
-                                                    'Iškritusi daina'
-                                                }
-                                                {top.new ?
-                                                    ' (Naujiena)'
-                                                    :
-                                                    <React.Fragment>
-                                                        {top.place === top.lastWeekPlace ?
-                                                            null
+                                                        {top.new ?
+                                                            ' (Naujiena)'
                                                             :
                                                             <React.Fragment>
-                                                                {top.place < top.lastWeekPlace ?
-                                                                    <React.Fragment>
-                                                                        <ArrowDropUp style={{fill: "green"}} />
-                                                                        <span>+{top.lastWeekPlace - top.place}</span>
-                                                                    </React.Fragment>
+                                                                {top.place === top.lastWeekPlace ?
+                                                                    null
                                                                     :
                                                                     <React.Fragment>
-                                                                        <ArrowDropDown style={{fill: "red"}} />
-                                                                        <span>{top.lastWeekPlace - top.place}</span>
+                                                                        {top.place < top.lastWeekPlace ?
+                                                                            <React.Fragment>
+                                                                                <ArrowDropUp style={{fill: "green"}} />
+                                                                                <span>+{top.lastWeekPlace - top.place}</span>
+                                                                            </React.Fragment>
+                                                                            :
+                                                                            <React.Fragment>
+                                                                                <ArrowDropDown style={{fill: "red"}} />
+                                                                                <span>{top.lastWeekPlace - top.place}</span>
+                                                                            </React.Fragment>
+                                                                        }
                                                                     </React.Fragment>
                                                                 }
                                                             </React.Fragment>
                                                         }
-                                                    </React.Fragment>
-                                                }
-                                            </b>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Avatar>
-                                                {top.performerImage ?
-                                                    <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
-                                                        <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
-                                                    </CardActionArea>
-                                                    :
-                                                    null
-                                                }
-                                            </Avatar>
-                                        </TableCell>
-                                        <TableCell>
-                                            {top.performer === '-' ?
-                                                '-'
-                                                :
-                                                <a
-                                                    href={'/grupe/' + top.performer + '/' + top.performerId}
-                                                    onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
-                                                >
-                                                    {top.performer}
-                                                </a>
-                                            }
-                                        </TableCell>
-                                        <TableCell>{top.song.title}</TableCell>
-                                        <TableCell>
-                                            <ButtonGroup color="primary" aria-label="outlined primary button group">
-                                                <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
-                                                <Button disabled>{top.likes}</Button>
-                                                <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
-                                            </ButtonGroup>
-                                        </TableCell>
-                                    </TableRow>
+                                                    </b>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Avatar>
+                                                        {top.performerImage ?
+                                                            <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
+                                                                <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
+                                                            </CardActionArea>
+                                                            :
+                                                            null
+                                                        }
+                                                    </Avatar>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {top.performer === '-' ?
+                                                        '-'
+                                                        :
+                                                        <a
+                                                            href={'/grupe/' + top.performer + '/' + top.performerId}
+                                                            onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
+                                                        >
+                                                            {top.performer}
+                                                        </a>
+                                                    }
+                                                </TableCell>
+                                                <TableCell>{top.song.title}</TableCell>
+                                                <TableCell>
+                                                    <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                                        <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
+                                                        <Button disabled>{top.likes}</Button>
+                                                        <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
+                                                    </ButtonGroup>
+                                                </TableCell>
+                                            </TableRow>
+                                        }
+                                    </React.Fragment>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <h2 className={"mt-2"} align={'center'}>Iškritę kuriniai</h2>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Vieta</TableCell>
+                                    <TableCell />
+                                    <TableCell>Atlikėjas / Grupė</TableCell>
+                                    <TableCell>Daina</TableCell>
+                                    <TableCell />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.tops.map((top) => (
+                                    <React.Fragment key={top.id}>
+                                        {top.place > 40 ?
+                                            <TableRow>
+                                                <TableCell component="th" scope="row">
+                                                    <b>
+                                                        {top.place}
+                                                        <React.Fragment>
+                                                            {top.place === top.lastWeekPlace ?
+                                                                null
+                                                                :
+                                                                <React.Fragment>
+                                                                    {top.place < top.lastWeekPlace ?
+                                                                        <React.Fragment>
+                                                                            <ArrowDropUp style={{fill: "green"}} />
+                                                                            <span>+{top.lastWeekPlace - top.place}</span>
+                                                                        </React.Fragment>
+                                                                        :
+                                                                        <React.Fragment>
+                                                                            <ArrowDropDown style={{fill: "red"}} />
+                                                                            <span>{top.lastWeekPlace - top.place}</span>
+                                                                        </React.Fragment>
+                                                                    }
+                                                                </React.Fragment>
+                                                            }
+                                                        </React.Fragment>
+                                                    </b>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Avatar>
+                                                        {top.performerImage ?
+                                                            <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
+                                                                <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
+                                                            </CardActionArea>
+                                                            :
+                                                            null
+                                                        }
+                                                    </Avatar>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {top.performer === '-' ?
+                                                        '-'
+                                                        :
+                                                        <a
+                                                            href={'/grupe/' + top.performer + '/' + top.performerId}
+                                                            onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
+                                                        >
+                                                            {top.performer}
+                                                        </a>
+                                                    }
+                                                </TableCell>
+                                                <TableCell>{top.song.title}</TableCell>
+                                                <TableCell>
+                                                    <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                                        <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
+                                                        <Button disabled>{top.likes}</Button>
+                                                        <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
+                                                    </ButtonGroup>
+                                                </TableCell>
+                                            </TableRow>
+                                            :
+                                            null
+                                        }
+                                    </React.Fragment>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <h2 className={"mt-2"} align={'center'}>Naujienos</h2>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Vieta</TableCell>
+                                    <TableCell />
+                                    <TableCell>Atlikėjas / Grupė</TableCell>
+                                    <TableCell>Daina</TableCell>
+                                    <TableCell />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.tops.map((top) => (
+                                    <React.Fragment key={top.id}>
+                                        {top.new ?
+                                            <TableRow>
+                                                <TableCell component="th" scope="row">
+                                                    <b>
+                                                        Naujiena
+                                                    </b>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Avatar>
+                                                        {top.performerImage ?
+                                                            <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
+                                                                <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
+                                                            </CardActionArea>
+                                                            :
+                                                            null
+                                                        }
+                                                    </Avatar>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {top.performer === '-' ?
+                                                        '-'
+                                                        :
+                                                        <a
+                                                            href={'/grupe/' + top.performer + '/' + top.performerId}
+                                                            onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
+                                                        >
+                                                            {top.performer}
+                                                        </a>
+                                                    }
+                                                </TableCell>
+                                                <TableCell>{top.song.title}</TableCell>
+                                                <TableCell>
+                                                    <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                                        <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
+                                                        <Button disabled>{top.likes}</Button>
+                                                        <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
+                                                    </ButtonGroup>
+                                                </TableCell>
+                                            </TableRow>
+                                            :
+                                            null
+                                        }
+                                    </React.Fragment>
                                 ))}
                             </TableBody>
                         </Table>
