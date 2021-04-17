@@ -185,7 +185,7 @@ class Top40 extends Component {
                                 <TableBody>
                                     {this.state.tops.map((top) => (
                                         <React.Fragment key={top.id}>
-                                            {top.new && top.place <= 40 ?
+                                            {top.new || top.place > 40 ?
                                                 null
                                                 :
                                                 <TableRow>
