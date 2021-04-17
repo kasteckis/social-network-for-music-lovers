@@ -31,10 +31,13 @@ class TopController extends AbstractController
         /** @var User|null $user */
         $user = $this->getUser();
 
-        $top40Array = $this->topService->getTop40Array();
+        [$topArray, $topOldArray, $topNewArray, $topDisqArray] = $this->topService->getTop40Arrays();
 
         return $this->json([
-            'tops' => $top40Array,
+            'tops' => $topArray,
+            'topsOld' => $topOldArray,
+            'topsNew' => $topNewArray,
+            'topsDisq' => $topDisqArray,
             'canUserVote' => $user instanceof User ? $user->getCanVoteInTop40() : false
         ]);
     }
@@ -51,10 +54,13 @@ class TopController extends AbstractController
 
         $this->topService->handleVote($dataTops, $user);
 
-        $top40Array = $this->topService->getTop40Array();
+        [$topArray, $topOldArray, $topNewArray, $topDisqArray] = $this->topService->getTop40Arrays();
 
         return $this->json([
-            'tops' => $top40Array,
+            'tops' => $topArray,
+            'topsOld' => $topOldArray,
+            'topsNew' => $topNewArray,
+            'topDisqArray' => $topDisqArray,
             'canUserVote' => $user instanceof User ? $user->getCanVoteInTop40() : false
         ]);
     }

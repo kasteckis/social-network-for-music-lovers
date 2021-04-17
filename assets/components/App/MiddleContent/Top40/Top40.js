@@ -18,6 +18,9 @@ import axios from "axios";
 class Top40 extends Component {
     state = {
         tops: [],
+        topsOld: [],
+        topsNew: [],
+        topsDisq: [],
         availableVotes: 15,
         canUserVote: false
     }
@@ -47,6 +50,9 @@ class Top40 extends Component {
             .then(response => {
                 this.setState({
                     tops: response.data.tops,
+                    topsOld: response.data.topsOld,
+                    topsNew: response.data.topsNew,
+                    topsDisq: response.data.topsDisq,
                     canUserVote: response.data.canUserVote
                 });
             })
@@ -136,8 +142,12 @@ class Top40 extends Component {
 
         axios.post('/api/top40', tops, headers)
             .then(response => {
+                console.log(response.data);
                 this.setState({
                     tops: response.data.tops,
+                    topsOld: response.data.topsOld,
+                    topsNew: response.data.topsNew,
+                    topsDisq: response.data.topsDisq,
                     canUserVote: response.data.canUserVote,
                     availableVotes: 15
                 });
@@ -173,7 +183,7 @@ class Top40 extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.tops.map((top) => (
+                                {this.state.topsOld.map((top) => (
                                     <TableRow key={top.id}>
                                         <TableCell component="th" scope="row">
                                             <b>

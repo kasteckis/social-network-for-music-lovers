@@ -27,23 +27,48 @@ class TopService
         $this->groupsService = $groupsService;
     }
 
-    public function getTop40Array(): array
+    public function getTop40Arrays(): array
     {
         $top40Repo = $this->entityManager->getRepository(TOP40::class);
 
+        /** @var TOP40[] $top40Entities */
         $top40Entities = $top40Repo->findBy([
             'active' => true
         ], [
-            'likes' => 'DESC'
+            'place' => 'DESC'
         ]);
 
-        $top40Array = [];
+        // Visos dainos
+        $topArray = [];
 
-        foreach ($top40Entities as $index => $top40) {
-            $top40Array[] = $this->top40LiveEntityToArray($top40, $index+1);
+        // Pasikartojančios dainos t.y. ne pirmą sav.
+        $topOldArray = [];
+
+        // Naujienos
+        $topNewArray = [];
+
+        // Dainos kurių vieta virš 40
+        $topDisqArray = [];
+
+        foreach ($top40Entities as $top40) {
+            $topArray[] = $this->top40LiveEntityToArray($top40);
+            if ($top40->getNew()) {
+                // Jeigu daina nauja, dedam į naujienų masyvą
+                $topNewArray[] = $this->top40LiveEntityToArray($top40);
+            } else {
+                // Jeigu daina nenauja ir jeigu jos pozicija [0;40], tai:
+                // į dedam pagr. masyvą
+                // jeigu [41;999+], tai skaitosi kaip iškritusi daina
+
+                if ($top40->getPlace() <= 40) {
+                    $topOldArray[] = $this->top40LiveEntityToArray($top40);
+                } else {
+                    $topDisqArray[] = $this->top40LiveEntityToArray($top40);
+                }
+            }
         }
 
-        return $top40Array;
+        return [$topArray, $topOldArray, $topNewArray, $topDisqArray];
     }
 
     public function handleVote(array $dataTops, User $user): void
@@ -72,7 +97,7 @@ class TopService
 
         /** @var TOP40[] $top40s */
         $top40s = $top40Repo->findBy([
-            'active' => true
+            'active' => true,
         ], [
             'likes' => 'DESC'
         ]);
@@ -97,7 +122,7 @@ class TopService
         $this->entityManager->flush();
     }
 
-    public function top40LiveEntityToArray(TOP40 $top40, int $place): array
+    public function top40LiveEntityToArray(TOP40 $top40): array
     {
         return [
             'id' => $top40->getId(),
@@ -109,7 +134,7 @@ class TopService
             'performer' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getTitle() : '-',
             'performerId' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getId() : null,
             'performerImage' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getImage() : null,
-            'place' => $place,
+            'place' => $top40->getPlace(),
 
             // backende nieko nereiskia, naudojamas fronte
             'difference' => 0
