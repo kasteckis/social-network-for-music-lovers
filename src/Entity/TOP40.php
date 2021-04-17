@@ -48,6 +48,11 @@ class TOP40
      */
     private $active = false;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $place = -1;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class TOP40
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getPlace(): ?int
+    {
+        return $this->place;
+    }
+
+    public function setPlace(int $place): self
+    {
+        $this->place = $place;
 
         return $this;
     }

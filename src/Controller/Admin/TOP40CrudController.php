@@ -23,6 +23,7 @@ class TOP40CrudController extends AbstractCrudController
             AssociationField::new('song'),
             IntegerField::new('likes'),
             IntegerField::new('lastWeekPlace'),
+            IntegerField::new('place'),
             BooleanField::new('active')
         ];
     }
