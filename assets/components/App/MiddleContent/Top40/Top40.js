@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Badge, Button, ButtonGroup,
     Card,
-    CardActions,
+    CardActions, CardContent,
     IconButton,
     Paper,
     Table, TableBody, TableCell,
@@ -149,68 +149,70 @@ class Top40 extends Component {
     render() {
         return (
             <Card>
-                <img className="card-img-top" src={window.location.origin + '/images/top40.png'} alt="music.lt top40 topo nuotrauka" />
-                <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Vieta</TableCell>
-                                <TableCell>Daina</TableCell>
-                                <TableCell>
-                                    <Button onClick={() => this.submitVoteHandler()} disabled={this.state.availableVotes !== 0} variant="contained" style={{backgroundColor: 'orange'}}>Balsuoti</Button>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.tops.map((top) => (
-                                <TableRow key={top.id}>
-                                    <TableCell component="th" scope="row">
-                                        <b>
-                                            {top.place <= 40 ?
-                                                <React.Fragment>
-                                                    {top.place}
-                                                </React.Fragment>
-                                                :
-                                                'Iškritusi daina'
-                                            }
-                                            {top.new ?
-                                                ' (Naujiena)'
-                                                :
-                                                <React.Fragment>
-                                                    {top.place === top.lastWeekPlace ?
-                                                        null
-                                                        :
-                                                        <React.Fragment>
-                                                            {top.place < top.lastWeekPlace ?
-                                                                <React.Fragment>
-                                                                    <ArrowDropUp style={{fill: "green"}} />
-                                                                    <span>+{top.lastWeekPlace - top.place}</span>
-                                                                </React.Fragment>
-                                                                :
-                                                                <React.Fragment>
-                                                                    <ArrowDropDown style={{fill: "red"}} />
-                                                                    <span>{top.lastWeekPlace - top.place}</span>
-                                                                </React.Fragment>
-                                                            }
-                                                        </React.Fragment>
-                                                    }
-                                                </React.Fragment>
-                                            }
-                                        </b>
-                                    </TableCell>
-                                    <TableCell>{top.song.title}</TableCell>
+                <CardContent>
+                    <h1 align={'center'}>Music.lt TOP40</h1>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Vieta</TableCell>
+                                    <TableCell>Daina</TableCell>
                                     <TableCell>
-                                        <ButtonGroup color="primary" aria-label="outlined primary button group">
-                                            <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
-                                            <Button disabled>{top.likes}</Button>
-                                            <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
-                                        </ButtonGroup>
+                                        <Button onClick={() => this.submitVoteHandler()} disabled={this.state.availableVotes !== 0} variant="contained" style={{backgroundColor: 'orange'}}>Balsuoti</Button>
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.tops.map((top) => (
+                                    <TableRow key={top.id}>
+                                        <TableCell component="th" scope="row">
+                                            <b>
+                                                {top.place <= 40 ?
+                                                    <React.Fragment>
+                                                        {top.place}
+                                                    </React.Fragment>
+                                                    :
+                                                    'Iškritusi daina'
+                                                }
+                                                {top.new ?
+                                                    ' (Naujiena)'
+                                                    :
+                                                    <React.Fragment>
+                                                        {top.place === top.lastWeekPlace ?
+                                                            null
+                                                            :
+                                                            <React.Fragment>
+                                                                {top.place < top.lastWeekPlace ?
+                                                                    <React.Fragment>
+                                                                        <ArrowDropUp style={{fill: "green"}} />
+                                                                        <span>+{top.lastWeekPlace - top.place}</span>
+                                                                    </React.Fragment>
+                                                                    :
+                                                                    <React.Fragment>
+                                                                        <ArrowDropDown style={{fill: "red"}} />
+                                                                        <span>{top.lastWeekPlace - top.place}</span>
+                                                                    </React.Fragment>
+                                                                }
+                                                            </React.Fragment>
+                                                        }
+                                                    </React.Fragment>
+                                                }
+                                            </b>
+                                        </TableCell>
+                                        <TableCell>{top.song.title}</TableCell>
+                                        <TableCell>
+                                            <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                                <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
+                                                <Button disabled>{top.likes}</Button>
+                                                <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
+                                            </ButtonGroup>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </CardContent>
             </Card>
         );
     }
