@@ -12,7 +12,7 @@ class RightContent extends Component {
                 <DaySong
                     auth={this.props.auth}
                 />
-                <WhatsHappening />
+                {/*<WhatsHappening />*/}
                 <ChatBox
                     auth={this.props.auth}
                 />
