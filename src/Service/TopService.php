@@ -107,6 +107,7 @@ class TopService
             'song' => $this->groupsService->songEntityToArray($top40->getSong()),
             'lastWeekPlace' => $top40->getLastWeekPlace(),
             'performer' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getTitle() : '-',
+            'performerId' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getId() : null,
             'performerImage' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getImage() : null,
             'place' => $place,
 

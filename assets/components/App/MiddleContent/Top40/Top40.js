@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {
+    Avatar,
     Badge, Button, ButtonGroup,
-    Card,
+    Card, CardActionArea,
     CardActions, CardContent,
-    IconButton,
+    IconButton, ListItemAvatar,
     Paper,
     Table, TableBody, TableCell,
     TableContainer,
@@ -146,6 +147,15 @@ class Top40 extends Component {
             })
     }
 
+    redirectToPerformerHandlerWithEvent(event, title, id) {
+        event.preventDefault();
+        this.redirectToPerformerHandler(title, id);
+    }
+
+    redirectToPerformerHandler(title, id) {
+        this.props.history.push('/grupe/' + title + '/' + id);
+    }
+
     render() {
         return (
             <Card>
@@ -156,6 +166,7 @@ class Top40 extends Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Vieta</TableCell>
+                                    <TableCell />
                                     <TableCell>Atlikėjas / Grupė</TableCell>
                                     <TableCell>Daina</TableCell>
                                     <TableCell />
@@ -198,7 +209,29 @@ class Top40 extends Component {
                                                 }
                                             </b>
                                         </TableCell>
-                                        <TableCell>{top.performer}</TableCell>
+                                        <TableCell>
+                                            <Avatar>
+                                                {top.performerImage ?
+                                                    <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
+                                                        <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
+                                                    </CardActionArea>
+                                                    :
+                                                    null
+                                                }
+                                            </Avatar>
+                                        </TableCell>
+                                        <TableCell>
+                                            {top.performer === '-' ?
+                                                '-'
+                                                :
+                                                <a
+                                                    href={'/grupe/' + top.performer + '/' + top.performerId}
+                                                    onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
+                                                >
+                                                    {top.performer}
+                                                </a>
+                                            }
+                                        </TableCell>
                                         <TableCell>{top.song.title}</TableCell>
                                         <TableCell>
                                             <ButtonGroup color="primary" aria-label="outlined primary button group">
