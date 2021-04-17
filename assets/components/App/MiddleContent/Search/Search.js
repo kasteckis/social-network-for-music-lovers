@@ -117,19 +117,29 @@ class Search extends Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.searchResults.map((result) => (
-                                            <TableRow key={result.id}>
-                                                <TableCell component="th" scope="row">
-                                                    {result.type}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {result.title}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                        {this.state.searchResults.length === 0 ?
+                                            <TableRow>
+                                                <TableCell rowSpan={3}>
+                                                    Rezultatų nėra
                                                 </TableCell>
                                             </TableRow>
-                                        ))}
+                                            :
+                                            <React.Fragment>
+                                                {this.state.searchResults.map((result) => (
+                                                        <TableRow key={result.id}>
+                                                            <TableCell component="th" scope="row">
+                                                                {result.type}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {result.title}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                ))}
+                                            </React.Fragment>
+                                        }
                                     </TableBody>
                                 </Table>
                             </TableContainer>
