@@ -239,163 +239,167 @@ class Profile extends Component {
 
         return (
             <Card>
-                <List>
-                    <CardContent>
-                        {bioDialog}
-                        {passwordChangeDialog}
-                        <input
-                            ref={input => this.fileInputElement = input}
-                            type="file"
-                            onChange={(event) => this.uploadProfilePictureHandler(event)}
-                            hidden
-                        />
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <CardActionArea onClick={() => this.fileInputElement.click()}>
-                                        {this.state.dataLoaded ?
-                                            <React.Fragment>
-                                                {this.state.user.profilePicture ?
+                {this.props.auth.token === null ?
+                    null
+                    :
+                    <List>
+                        <CardContent>
+                            {bioDialog}
+                            {passwordChangeDialog}
+                            <input
+                                ref={input => this.fileInputElement = input}
+                                type="file"
+                                onChange={(event) => this.uploadProfilePictureHandler(event)}
+                                hidden
+                            />
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <CardActionArea onClick={() => this.fileInputElement.click()}>
+                                            {this.state.dataLoaded ?
+                                                <React.Fragment>
+                                                    {this.state.user.profilePicture ?
                                                         <img style={{maxWidth: '100%'}} src={"/images/profile/" + this.state.user.profilePicture} alt={this.state.user.username + ' profilio nuotrauka'} />
                                                         :
                                                         <img style={{maxWidth: '100%'}} src="/images/default_profile_picture.png" alt={this.state.user.username + ' profilio nuotrauka'} />
-                                                }
-                                            </React.Fragment>
-                                            :
-                                            null
-                                        }
-                                    </CardActionArea>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                {this.state.user.username} - Profilis
-                            </Typography>
-                        </ListItem>
-                    </CardContent>
-
-                    <CardActionArea onClick={(event) => this.openBioDialogHandler(event)}>
-                        <CardContent>
-                            <ListItem>
-                                <Typography align="center" variant="body2" color="textSecondary" component="p">
-                                    {this.state.user.bio}
+                                                    }
+                                                </React.Fragment>
+                                                :
+                                                null
+                                            }
+                                        </CardActionArea>
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    {this.state.user.username} - Profilis
                                 </Typography>
                             </ListItem>
                         </CardContent>
-                    </CardActionArea>
 
-                    <CardActionArea>
-                        <CardContent>
-                            <ListItem>
-                                <ListItemText primary="Užsiregistruota" secondary={this.state.user.registered} />
-                            </ListItem>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActionArea>
-                        <CardContent>
-                            <ListItem>
-                                <ListItemText primary="Rolė" secondary={this.state.user.role} />
-                            </ListItem>
-                        </CardContent>
-                    </CardActionArea>
-                    <Divider/>
-                    {this.state.editEmail ?
-                        <CardContent>
-                            <span style={{width: '100%', color: 'red'}}>Pasikeitus el. paštą, reikės prisijungti iš naujo</span>
-                            <ListItem>
-                                <TextField
-                                    error={this.state.editEmailErrorText.length > 0}
-                                    helperText={this.state.editEmailErrorText}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    inputRef={this.emailRef}
-                                    margin="dense"
-                                    label="Jūsų el. paštas"
-                                    fullWidth
-                                />
-                                <IconButton onClick={() => this.saveEmailHandler()} >
-                                    <Save />
-                                </IconButton>
-                            </ListItem>
-                        </CardContent>
-                        :
-                        <React.Fragment>
-                            {this.state.user.emailConfirmed ?
-                                null
-                                :
-                                <div style={{textAlign: 'center'}}>
-                                    <Grid
-                                        container
-                                        justify="center"
-                                    >
-                                        <span style={{width: '100%', color: 'red'}}>El. paštas yra nepatvirtintas. Patvirtinkite jį savo el. pašte.</span>
-                                        {this.state.emailConfirmationEmailSent ?
-                                            <Button variant="contained" color="secondary" disabled={true}>
-                                                Laiškas išsiųstas
-                                            </Button>
-                                            :
-                                            <Button variant="contained" color="secondary" onClick={(event) => this.resendEmailConfirmationHandler(event)}>
-                                                Persiųsti laišką
-                                            </Button>
-                                        }
-                                    </Grid>
-                                </div>
-                            }
+                        <CardActionArea onClick={(event) => this.openBioDialogHandler(event)}>
+                            <CardContent>
+                                <ListItem>
+                                    <Typography align="center" variant="body2" color="textSecondary" component="p">
+                                        {this.state.user.bio}
+                                    </Typography>
+                                </ListItem>
+                            </CardContent>
+                        </CardActionArea>
+
+                        <CardActionArea>
+                            <CardContent>
+                                <ListItem>
+                                    <ListItemText primary="Užsiregistruota" secondary={this.state.user.registered} />
+                                </ListItem>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActionArea>
+                            <CardContent>
+                                <ListItem>
+                                    <ListItemText primary="Rolė" secondary={this.state.user.role} />
+                                </ListItem>
+                            </CardContent>
+                        </CardActionArea>
+                        <Divider/>
+                        {this.state.editEmail ?
+                            <CardContent>
+                                <span style={{width: '100%', color: 'red'}}>Pasikeitus el. paštą, reikės prisijungti iš naujo</span>
+                                <ListItem>
+                                    <TextField
+                                        error={this.state.editEmailErrorText.length > 0}
+                                        helperText={this.state.editEmailErrorText}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        inputRef={this.emailRef}
+                                        margin="dense"
+                                        label="Jūsų el. paštas"
+                                        fullWidth
+                                    />
+                                    <IconButton onClick={() => this.saveEmailHandler()} >
+                                        <Save />
+                                    </IconButton>
+                                </ListItem>
+                            </CardContent>
+                            :
+                            <React.Fragment>
+                                {this.state.user.emailConfirmed ?
+                                    null
+                                    :
+                                    <div style={{textAlign: 'center'}}>
+                                        <Grid
+                                            container
+                                            justify="center"
+                                        >
+                                            <span style={{width: '100%', color: 'red'}}>El. paštas yra nepatvirtintas. Patvirtinkite jį savo el. pašte.</span>
+                                            {this.state.emailConfirmationEmailSent ?
+                                                <Button variant="contained" color="secondary" disabled={true}>
+                                                    Laiškas išsiųstas
+                                                </Button>
+                                                :
+                                                <Button variant="contained" color="secondary" onClick={(event) => this.resendEmailConfirmationHandler(event)}>
+                                                    Persiųsti laišką
+                                                </Button>
+                                            }
+                                        </Grid>
+                                    </div>
+                                }
+                                <CardActionArea onClick={() => {
+                                    this.setState({editEmail: true});
+                                    setTimeout(() => {
+                                        this.emailRef.current.value = this.state.user.email;
+                                    }, 100);
+                                }}>
+                                    <CardContent>
+                                        <ListItem>
+                                            <ListItemText primary="El. paštas" secondary={this.state.user.email} />
+                                        </ListItem>
+                                    </CardContent>
+                                </CardActionArea>
+                            </React.Fragment>
+                        }
+                        {this.state.editUsername ?
+                            <CardContent>
+                                <ListItem>
+                                    <TextField
+                                        error={this.state.editUsernameErrorText.length > 0}
+                                        helperText={this.state.editUsernameErrorText}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        inputRef={this.usernameRef}
+                                        margin="dense"
+                                        label="Slapyvardis"
+                                        fullWidth
+                                    />
+                                    <IconButton onClick={() => this.saveUsernameHandler()} >
+                                        <Save />
+                                    </IconButton>
+                                </ListItem>
+                            </CardContent>
+                            :
                             <CardActionArea onClick={() => {
-                                this.setState({editEmail: true});
+                                this.setState({editUsername: true});
                                 setTimeout(() => {
-                                    this.emailRef.current.value = this.state.user.email;
+                                    this.usernameRef.current.value = this.state.user.username;
                                 }, 100);
                             }}>
                                 <CardContent>
                                     <ListItem>
-                                        <ListItemText primary="El. paštas" secondary={this.state.user.email} />
+                                        <ListItemText primary="Slapyvardis" secondary={this.state.user.username} />
                                     </ListItem>
                                 </CardContent>
                             </CardActionArea>
-                        </React.Fragment>
-                    }
-                    {this.state.editUsername ?
-                        <CardContent>
-                            <ListItem>
-                                <TextField
-                                    error={this.state.editUsernameErrorText.length > 0}
-                                    helperText={this.state.editUsernameErrorText}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    inputRef={this.usernameRef}
-                                    margin="dense"
-                                    label="Slapyvardis"
-                                    fullWidth
-                                />
-                                <IconButton onClick={() => this.saveUsernameHandler()} >
-                                    <Save />
-                                </IconButton>
-                            </ListItem>
-                        </CardContent>
-                        :
-                        <CardActionArea onClick={() => {
-                            this.setState({editUsername: true});
-                            setTimeout(() => {
-                                this.usernameRef.current.value = this.state.user.username;
-                            }, 100);
-                        }}>
+                        }
+                        <CardActionArea onClick={() => this.setState({passwordChangeDialog: true})}>
                             <CardContent>
                                 <ListItem>
-                                    <ListItemText primary="Slapyvardis" secondary={this.state.user.username} />
+                                    <ListItemText primary="Slaptažodis" secondary="*********" />
                                 </ListItem>
                             </CardContent>
                         </CardActionArea>
-                    }
-                    <CardActionArea onClick={() => this.setState({passwordChangeDialog: true})}>
-                        <CardContent>
-                            <ListItem>
-                                <ListItemText primary="Slaptažodis" secondary="*********" />
-                            </ListItem>
-                        </CardContent>
-                    </CardActionArea>
-                </List>
+                    </List>
+                }
             </Card>
         );
     }
