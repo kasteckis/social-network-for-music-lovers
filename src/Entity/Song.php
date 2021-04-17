@@ -44,6 +44,11 @@ class Song
      */
     private $year;
 
+    /**
+     * @ORM\OneToOne(targetEntity=TOP40::class, mappedBy="song", cascade={"persist", "remove"})
+     */
+    private $top40;
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -130,6 +135,23 @@ class Song
     public function setYear(?string $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getTop40(): ?TOP40
+    {
+        return $this->top40;
+    }
+
+    public function setTop40(TOP40 $top40): self
+    {
+        // set the owning side of the relation if necessary
+        if ($top40->getSong() !== $this) {
+            $top40->setSong($this);
+        }
+
+        $this->top40 = $top40;
 
         return $this;
     }

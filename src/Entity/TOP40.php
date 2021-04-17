@@ -23,12 +23,6 @@ class TOP40
     private $new = true;
 
     /**
-     * @ORM\OneToOne(targetEntity=Song::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $song;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $weeksInTop = 0;
@@ -58,6 +52,12 @@ class TOP40
      */
     private $displayPlaceChange = false;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Song::class, inversedBy="top40", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $song;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,18 +71,6 @@ class TOP40
     public function setNew(bool $new): self
     {
         $this->new = $new;
-
-        return $this;
-    }
-
-    public function getSong(): ?Song
-    {
-        return $this->song;
-    }
-
-    public function setSong(Song $song): self
-    {
-        $this->song = $song;
 
         return $this;
     }
@@ -155,6 +143,18 @@ class TOP40
     public function setDisplayPlaceChange(bool $displayPlaceChange): self
     {
         $this->displayPlaceChange = $displayPlaceChange;
+
+        return $this;
+    }
+
+    public function getSong(): ?Song
+    {
+        return $this->song;
+    }
+
+    public function setSong(Song $song): self
+    {
+        $this->song = $song;
 
         return $this;
     }
