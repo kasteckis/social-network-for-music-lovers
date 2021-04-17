@@ -35,7 +35,7 @@ class TopService
         $top40Entities = $top40Repo->findBy([
             'active' => true
         ], [
-            'place' => 'DESC'
+            'place' => 'ASC'
         ]);
 
         // Visos dainos
@@ -103,10 +103,17 @@ class TopService
         ]);
 
         foreach ($top40s as $index => $top40) {
-            $top40->setLastWeekPlace($index+1);
-            $top40->setWeeksInTop($top40->getWeeksInTop()+1);
-            $top40->setNew(false);
-            $top40->setLikes(0);
+            $top40->setLastWeekPlace($top40->getPlace()); // Sios savaites pozicija, keliauja i praeitos savaites pozicija
+            $top40->setPlace($index+1); // Nauja vieta pagal likes
+            $top40->setWeeksInTop($top40->getWeeksInTop()+1); // Kiek savaiciu tope
+            $top40->setLikes(0); // Nuresetinam laikus
+            if ($top40->getNew()) {
+                // jeigu daina buvo naujiena, tai reikes nerodyti poziciju pasikeitimo per UI, ir jis tampa nebe naujiena
+                $top40->setNew(false);
+                $top40->setDisplayPlaceChange(false);
+            } else {
+                $top40->setDisplayPlaceChange(true);
+            }
         }
 
         /** @var TOP40[] $top40sInactive */
@@ -117,6 +124,7 @@ class TopService
         foreach ($top40sInactive as $top40) {
             $top40->setNew(true);
             $top40->setActive(true);
+            $top40->setDisplayPlaceChange(false);
         }
 
         $this->entityManager->flush();
@@ -135,6 +143,7 @@ class TopService
             'performerId' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getId() : null,
             'performerImage' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getImage() : null,
             'place' => $top40->getPlace(),
+            'displayPlaceChange' => $top40->getDisplayPlaceChange(),
 
             // backende nieko nereiskia, naudojamas fronte
             'difference' => 0

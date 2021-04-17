@@ -192,9 +192,7 @@ class Top40 extends Component {
                                                     <TableCell component="th" scope="row">
                                                         <b>
                                                             {top.place}
-                                                            {top.new ?
-                                                                ' (Naujiena)'
-                                                                :
+                                                            {top.displayPlaceChange ?
                                                                 <React.Fragment>
                                                                     {top.place === top.lastWeekPlace ?
                                                                         null
@@ -214,6 +212,8 @@ class Top40 extends Component {
                                                                         </React.Fragment>
                                                                     }
                                                                 </React.Fragment>
+                                                                :
+                                                                null
                                                             }
                                                         </b>
                                                     </TableCell>

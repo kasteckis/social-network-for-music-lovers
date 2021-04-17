@@ -53,6 +53,11 @@ class TOP40
      */
     private $place = -1;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $displayPlaceChange = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +143,18 @@ class TOP40
     public function setPlace(int $place): self
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getDisplayPlaceChange(): ?bool
+    {
+        return $this->displayPlaceChange;
+    }
+
+    public function setDisplayPlaceChange(bool $displayPlaceChange): self
+    {
+        $this->displayPlaceChange = $displayPlaceChange;
 
         return $this;
     }
