@@ -53,7 +53,7 @@ class TOP40
     private $displayPlaceChange = false;
 
     /**
-     * @ORM\OneToOne(targetEntity=Song::class, inversedBy="top40", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Song::class, inversedBy="top40")
      * @ORM\JoinColumn(nullable=false)
      */
     private $song;
