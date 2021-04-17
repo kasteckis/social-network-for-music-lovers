@@ -3,6 +3,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.main-body {
+    padding-right: 0 !important;
+}
+
 @font-face {
     font-family: danube;
     src: url(danube.ttf);
