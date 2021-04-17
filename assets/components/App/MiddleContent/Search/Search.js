@@ -97,8 +97,8 @@ class Search extends Component {
                         </div>
                         <Button
                             variant="contained"
-                            color="primary"
                             onClick={(event) => this.searchHandler(event)}
+                            style={{backgroundColor: 'orange'}}
                         >
                             Ieškoti
                         </Button>

@@ -156,24 +156,9 @@ class Top40 extends Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Vieta</TableCell>
+                                    <TableCell>Atlikėjas / Grupė</TableCell>
                                     <TableCell>Daina</TableCell>
-                                    <TableCell>
-                                        {this.state.canUserVote ?
-                                            <React.Fragment>
-                                                <Button
-                                                    onClick={() => this.submitVoteHandler()}
-                                                    disabled={this.state.availableVotes === 15}
-                                                    variant="contained"
-                                                    style={{backgroundColor: 'orange'}}
-                                                >
-                                                    Balsuoti
-                                                </Button>
-                                                <span className={'ml-2'}>(Liko balsų - {this.state.availableVotes})</span>
-                                            </React.Fragment>
-                                            :
-                                            null
-                                        }
-                                    </TableCell>
+                                    <TableCell />
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -213,6 +198,7 @@ class Top40 extends Component {
                                                 }
                                             </b>
                                         </TableCell>
+                                        <TableCell>{top.performer}</TableCell>
                                         <TableCell>{top.song.title}</TableCell>
                                         <TableCell>
                                             <ButtonGroup color="primary" aria-label="outlined primary button group">
@@ -226,6 +212,22 @@ class Top40 extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    {this.state.canUserVote ?
+                        <React.Fragment>
+                            <Button
+                                className={'mt-2'}
+                                onClick={() => this.submitVoteHandler()}
+                                disabled={this.state.availableVotes === 15}
+                                variant="contained"
+                                style={{backgroundColor: 'orange'}}
+                            >
+                                Balsuoti
+                            </Button>
+                            <span className={'ml-2'}>(Liko balsų - {this.state.availableVotes})</span>
+                        </React.Fragment>
+                        :
+                        null
+                    }
                 </CardContent>
             </Card>
         );

@@ -106,6 +106,8 @@ class TopService
             'weeksInTop' => $top40->getWeeksInTop(),
             'song' => $this->groupsService->songEntityToArray($top40->getSong()),
             'lastWeekPlace' => $top40->getLastWeekPlace(),
+            'performer' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getTitle() : '-',
+            'performerImage' => $top40->getSong()->getPerformer() ? $top40->getSong()->getPerformer()->getImage() : null,
             'place' => $place,
 
             // backende nieko nereiskia, naudojamas fronte
