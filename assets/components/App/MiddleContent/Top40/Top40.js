@@ -169,17 +169,13 @@ class Top40 extends Component {
         return (
             <Card>
                 <CardContent>
-                    <h1 align={'center'}>Music.lt TOP40</h1>
                     {this.state.topOldCount > 0 ?
                         <TableContainer component={Paper}>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Vieta</TableCell>
-                                        <TableCell />
-                                        <TableCell>Atlikėjas / Grupė</TableCell>
-                                        <TableCell>Daina</TableCell>
-                                        <TableCell />
+                                        <TableCell>Atlikėjas ir Daina</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -188,67 +184,78 @@ class Top40 extends Component {
                                             {top.new || top.place > 40 ?
                                                 null
                                                 :
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        <b>
-                                                            {top.place}
-                                                            {top.displayPlaceChange ?
-                                                                <React.Fragment>
-                                                                    {top.place === top.lastWeekPlace ?
-                                                                        null
-                                                                        :
-                                                                        <React.Fragment>
-                                                                            {top.place < top.lastWeekPlace ?
-                                                                                <React.Fragment>
-                                                                                    <ArrowDropUp style={{fill: "green"}} />
-                                                                                    <span>+{top.lastWeekPlace - top.place}</span>
-                                                                                </React.Fragment>
-                                                                                :
-                                                                                <React.Fragment>
-                                                                                    <ArrowDropDown style={{fill: "red"}} />
-                                                                                    <span>{top.lastWeekPlace - top.place}</span>
-                                                                                </React.Fragment>
-                                                                            }
-                                                                        </React.Fragment>
-                                                                    }
-                                                                </React.Fragment>
-                                                                :
-                                                                null
-                                                            }
-                                                        </b>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <Avatar>
-                                                            {top.performerImage ?
-                                                                <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
-                                                                    <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
-                                                                </CardActionArea>
-                                                                :
-                                                                null
-                                                            }
-                                                        </Avatar>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {top.performer === '-' ?
-                                                            '-'
+                                                <React.Fragment>
+                                                    <TableRow>
+                                                        <TableCell component="th" scope="row" style={{borderBottom: "none"}}>
+                                                            <b>
+                                                                {top.place}
+                                                                {top.displayPlaceChange ?
+                                                                    <React.Fragment>
+                                                                        {top.place === top.lastWeekPlace ?
+                                                                            null
+                                                                            :
+                                                                            <React.Fragment>
+                                                                                {top.place < top.lastWeekPlace ?
+                                                                                    <React.Fragment>
+                                                                                        <ArrowDropUp style={{fill: "green"}} />
+                                                                                        <span>+{top.lastWeekPlace - top.place}</span>
+                                                                                    </React.Fragment>
+                                                                                    :
+                                                                                    <React.Fragment>
+                                                                                        <ArrowDropDown style={{fill: "red"}} />
+                                                                                        <span>{top.lastWeekPlace - top.place}</span>
+                                                                                    </React.Fragment>
+                                                                                }
+                                                                            </React.Fragment>
+                                                                        }
+                                                                    </React.Fragment>
+                                                                    :
+                                                                    null
+                                                                }
+                                                            </b>
+                                                        </TableCell>
+                                                        <TableCell style={{borderBottom: "none"}}>
+                                                            <Avatar>
+                                                                {top.performerImage ?
+                                                                    <CardActionArea onClick={() => this.redirectToPerformerHandler(top.performer, top.performerId)}>
+                                                                        <img style={{maxWidth: '100%'}} src={"/images/groups/" + top.performerImage} alt={top.performer + ' nuotrauka'} />
+                                                                    </CardActionArea>
+                                                                    :
+                                                                    null
+                                                                }
+                                                            </Avatar>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        {this.state.canUserVote ?
+                                                            <TableCell style={{borderTop: "none", borderBottom: "none"}}>
+                                                                <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                                                    <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
+                                                                    <Button disabled>{top.difference}</Button>
+                                                                    <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
+                                                                </ButtonGroup>
+                                                            </TableCell>
                                                             :
-                                                            <a
-                                                                href={'/grupe/' + top.performer + '/' + top.performerId}
-                                                                onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
-                                                            >
-                                                                {top.performer}
-                                                            </a>
+                                                            <TableCell style={{borderTop: "none", borderBottom: "none"}} />
                                                         }
-                                                    </TableCell>
-                                                    <TableCell>{top.song.title}</TableCell>
-                                                    <TableCell>
-                                                        <ButtonGroup color="primary" aria-label="outlined primary button group">
-                                                            <Button disabled={this.canYouDecrementHandler(top)} onClick={() => this.decrementVote(top.id)}>-</Button>
-                                                            <Button disabled>{top.likes}</Button>
-                                                            <Button disabled={this.canYouIncrementHandler(top)} onClick={() => this.incrementVote(top.id)}>+</Button>
-                                                        </ButtonGroup>
-                                                    </TableCell>
-                                                </TableRow>
+                                                        <TableCell style={{borderTop: "none", borderBottom: "none"}}>
+                                                            {top.performer === '-' ?
+                                                                '-'
+                                                                :
+                                                                <a
+                                                                    href={'/grupe/' + top.performer + '/' + top.performerId}
+                                                                    onClick={(event) => this.redirectToPerformerHandlerWithEvent(event, top.performer, top.performerId)}
+                                                                >
+                                                                    {top.performer}
+                                                                </a>
+                                                            }
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell style={{borderTop: "none"}}/>
+                                                        <TableCell style={{borderTop: "none"}}>{top.song.title}</TableCell>
+                                                    </TableRow>
+                                                </React.Fragment>
                                             }
                                         </React.Fragment>
                                     ))}
