@@ -65,7 +65,7 @@ class SearchConverterService
                 'id' => 'song' . $song->getId(),
                 'title' => $song->getTitle(),
                 'type' => 'Daina',
-                'link' => 'linkas' // todo add link to song
+                'link' => '/daina/' . $song->getTitle() . '/' . $song->getId()
             ];
         }
 
@@ -84,7 +84,7 @@ class SearchConverterService
             $resultArray[] = [
                 'id' => 'performer' . $performer->getId(),
                 'title' => $performer->getTitle(),
-                'type' => 'Grupė / Atlikėjas',
+                'type' => 'Atlikėjas',
                 'link' => '/grupe/' . $performer->getTitle() . '/' . $performer->getId()
             ];
         }

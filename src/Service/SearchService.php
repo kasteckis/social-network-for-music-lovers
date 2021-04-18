@@ -53,8 +53,8 @@ class SearchService
         $albums = $albumRepo->getEntitiesByKeyword($keyword);
         $searchResults = array_merge($searchResults, $this->searchConverterService->albumsToSearchResultArray($albums));
 
-//        $songs = $songRepo->getEntitiesByKeyword($keyword);
-//        $searchResults = array_merge($searchResults, $this->searchConverterService->songsToSearchResultArray($songs));
+        $songs = $songRepo->getEntitiesByKeyword($keyword);
+        $searchResults = array_merge($searchResults, $this->searchConverterService->songsToSearchResultArray($songs));
 
         $performers = $performerRepo->getEntitiesByKeyword($keyword);
         $searchResults = array_merge($searchResults, $this->searchConverterService->performersToSearchResultArray($performers));

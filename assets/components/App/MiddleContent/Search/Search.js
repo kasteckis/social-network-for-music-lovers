@@ -72,6 +72,7 @@ class Search extends Component {
 
     redirectToLinkHandler(event, link) {
         event.preventDefault();
+        window.scrollTo(0, 0);
 
         this.props.history.push(link);
     }
@@ -113,13 +114,12 @@ class Search extends Component {
                                         <TableRow>
                                             <TableCell><b>Tipas</b></TableCell>
                                             <TableCell><b>Pavadinimas</b></TableCell>
-                                            <TableCell><b>Nuoroda</b></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {this.state.searchResults.length === 0 ?
                                             <TableRow>
-                                                <TableCell rowSpan={3}>
+                                                <TableCell rowSpan={2}>
                                                     Rezultatų nėra
                                                 </TableCell>
                                             </TableRow>
@@ -131,10 +131,7 @@ class Search extends Component {
                                                             {result.type}
                                                         </TableCell>
                                                         <TableCell>
-                                                            {result.title}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>Nuoroda</a>
+                                                            <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>{result.title}</a>
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}
