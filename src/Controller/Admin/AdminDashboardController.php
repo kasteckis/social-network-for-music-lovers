@@ -58,7 +58,9 @@ class AdminDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Performers (Groups)', 'fa fa-music', Performer::class);
         yield MenuItem::linkToCrud('Albums', 'fa fa-music', Album::class);
         yield MenuItem::section('TOPs');
-        yield MenuItem::linkToCrud('TOP40', 'fa fa-trophy', TOP40::class);
+        yield MenuItem::linkToCrud('TOP40', 'fa fa-trophy', TOP40::class)
+            ->setDefaultSort(['likes' => 'DESC'])
+        ;
         yield MenuItem::section('Other');
         yield MenuItem::linkToCrud('Events', 'fa fa-calendar', Event::class);
     }
