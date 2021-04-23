@@ -361,23 +361,27 @@ class ViewPost extends Component {
                 <div style={{ padding: 14 }} className="App">
                     <h1>Komentarai ({this.state.post.comments})</h1>
                     <Paper style={{ padding: "40px 20px" }}>
-                        <form onSubmit={(event) => this.handleSubmitPostComment(event)}>
-                            <TextField
-                                error={this.state.newCommentErrorText.length !== 0}
-                                helperText={this.state.newCommentErrorText}
-                                autoFocus={this.props.location.state ? this.props.location.state.autofocusComments : false}
-                                inputRef={this.newCommentRef}
-                                margin="dense"
-                                label="Jūsų komentaras"
-                                fullWidth
-                                multiline
-                                rows={6}
-                                rowsMax={Infinity}
-                            />
-                            <Button className="mb-2" onClick={(event) => this.handleSubmitPostComment(event)} color="primary">
-                                Rašyti
-                            </Button>
-                        </form>
+                        {this.props.auth.token === null ?
+                            null
+                            :
+                            <form onSubmit={(event) => this.handleSubmitPostComment(event)}>
+                                <TextField
+                                    error={this.state.newCommentErrorText.length !== 0}
+                                    helperText={this.state.newCommentErrorText}
+                                    autoFocus={this.props.location.state ? this.props.location.state.autofocusComments : false}
+                                    inputRef={this.newCommentRef}
+                                    margin="dense"
+                                    label="Jūsų komentaras"
+                                    fullWidth
+                                    multiline
+                                    rows={6}
+                                    rowsMax={Infinity}
+                                />
+                                <Button className="mb-2" onClick={(event) => this.handleSubmitPostComment(event)} color="primary">
+                                    Rašyti
+                                </Button>
+                            </form>
+                        }
                         {this.state.post.commentsArray.map((comment) => (
                             <React.Fragment key={comment.id}>
                                 {this.state.currentlyEditingPostCommentId === comment.id ?
