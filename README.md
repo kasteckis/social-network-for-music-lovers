@@ -16,4 +16,4 @@ Dev notes:
 1. bin/console make:admin:crud
 2. ./vendor/bin/phpunit - run php integration/unit tests
 3. ./node_modules/.bin/cypress open - cypress test (ne per dockeri)
-4. ./vendor/bin/phpunit --coverage-html . - gauti phpunit coverage
+4. ./vendor/bin/phpunit --coverage-html ./delete-this - gauti phpunit coverage
