@@ -4,8 +4,6 @@ services:
     image: mysql:8.0
     container_name: music_mysql
     restart: always
-    volumes:
-      - mysql-data:/var/lib/mysql
     networks:
       default:
         ipv4_address: 192.168.10.3
