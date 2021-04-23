@@ -19,8 +19,8 @@ jobs:
         run: docker exec music_web yarn install
       - name: Build project via yarn
         run: yarn build
-      - name: Update database scheme
-        run: docker exec music_web bin/console d:s:u --force
+#      - name: Update database scheme
+#        run: docker exec music_web bin/console d:s:u --force
 #      - name: Add fixtures
 #        run: docker exec music_web bin/console doctrine:fixtures:load --append
 #      - name: Run PHPUNIT
