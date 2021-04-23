@@ -17,15 +17,6 @@ class SmokeTest extends KernelTestCase
         ]);
     }
 
-    public function testAdminPanelLogin(): void
-    {
-        $kernel = self::bootKernel();
-
-        $this->assertSame('test', $kernel->getEnvironment());
-        //$routerService = self::$container->get('router');
-        //$myCustomService = self::$container->get(CustomService::class);
-    }
-
     public function testAdminPanelLoginPage(): void
     {
         $response = $this->client->request('GET', '/admin/login');

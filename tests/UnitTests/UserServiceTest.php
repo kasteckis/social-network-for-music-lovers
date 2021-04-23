@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class UserServiceTest extends TestCase
 {
-    private \App\Service\UserService $userService;
+    private UserService $userService;
 
     protected function setUp(): void
     {
