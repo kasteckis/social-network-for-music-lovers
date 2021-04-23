@@ -78,23 +78,27 @@ class ChatBoxFull extends Component {
         return (
             <Card className="mt-2" variant="outlined">
                 <CardContent>
-                    <form onSubmit={(event) => this.handleSubmitMessage(event)}>
-                        <TextField
-                            error={this.state.newMessageErrorText.length !== 0}
-                            helperText={this.state.newMessageErrorText}
-                            autoFocus
-                            inputRef={this.newMessageRef}
-                            margin="dense"
-                            label="Jūsų tekstas"
-                            fullWidth
-                            multiline
-                            rows={6}
-                            rowsMax={Infinity}
-                        />
-                        <Button onClick={(event) => this.handleSubmitMessage(event)} color="primary">
-                            Rašyti
-                        </Button>
-                    </form>
+                    {this.props.auth.token === null ?
+                        null
+                        :
+                        <form onSubmit={(event) => this.handleSubmitMessage(event)}>
+                            <TextField
+                                error={this.state.newMessageErrorText.length !== 0}
+                                helperText={this.state.newMessageErrorText}
+                                autoFocus
+                                inputRef={this.newMessageRef}
+                                margin="dense"
+                                label="Jūsų tekstas"
+                                fullWidth
+                                multiline
+                                rows={6}
+                                rowsMax={Infinity}
+                            />
+                            <Button onClick={(event) => this.handleSubmitMessage(event)} color="primary">
+                                Rašyti
+                            </Button>
+                        </form>
+                    }
                     <Divider />
                     <div className="mt-2">
                     {this.state.messages.map((message) => (

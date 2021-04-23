@@ -55,7 +55,7 @@ class EventService
         ];
     }
 
-    public function getEventsForFeed(array $feedArray, int &$offset): array
+    public function getEventsForFeed(int &$offset): array
     {
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->entityManager->getRepository(Event::class);
@@ -65,6 +65,8 @@ class EventService
 
         $events = $eventRepo->getEventsByDateRange($today, $afterOneMonth, $offset);
         $offset = $offset + count($events);
+
+        $feedArray = [];
 
         foreach ($events as $event) {
             $feedArray[] = $this->convertEventEntityToArray($event);

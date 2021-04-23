@@ -85,10 +85,10 @@ function LeftSideMenu(props) {
                     <ListItemIcon><LabelImportant /></ListItemIcon>
                     <ListItemText primary={"TOP40"} />
                 </ListItem>
-                <ListItem button onClick={() => history.push('/top30lt')}>
-                    <ListItemIcon><LabelImportant /></ListItemIcon>
-                    <ListItemText primary={"Lietuvos TOP30"} />
-                </ListItem>
+                {/*<ListItem button onClick={() => history.push('/top30lt')}>*/}
+                {/*    <ListItemIcon><LabelImportant /></ListItemIcon>*/}
+                {/*    <ListItemText primary={"Lietuvos TOP30"} />*/}
+                {/*</ListItem>*/}
                 <ListItem button onClick={() => history.push('/paieska')}>
                     <ListItemIcon><Search /></ListItemIcon>
                     <ListItemText primary={"Paieška"} />

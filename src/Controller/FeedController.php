@@ -37,7 +37,7 @@ class FeedController extends AbstractController
         $feedArray = [];
         $feedArray = array_merge($feedArray, $this->feedService->fetchNews($user, $offsetNews));
         $feedArray = array_merge($feedArray, $this->feedService->fetchPosts($user, $offsetPosts));
-        $feedArray = array_merge($feedArray, $this->eventService->getEventsForFeed($feedArray, $offsetEvents));
+        $feedArray = array_merge($feedArray, $this->eventService->getEventsForFeed($offsetEvents));
 
         $feedArray = $this->feedService->sortFeeds($feedArray);
 
