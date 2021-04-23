@@ -14,3 +14,5 @@ Cronjobs:
 
 Dev notes:
 1. bin/console make:admin:crud
+2. ./vendor/bin/phpunit - run php integration/unit tests
+3. ./node_modules/.bin/cypress open - cypress test (ne per dockeri)
