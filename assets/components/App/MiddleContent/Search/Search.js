@@ -131,7 +131,11 @@ class Search extends Component {
                                                             {result.type}
                                                         </TableCell>
                                                         <TableCell>
-                                                            <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>{result.title}</a>
+                                                            {result.type === 'Daina' ?
+                                                                result.title
+                                                                :
+                                                                <a href={result.link} onClick={(event) => this.redirectToLinkHandler(event, result.link)}>{result.title}</a>
+                                                            }
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}
