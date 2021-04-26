@@ -25,8 +25,8 @@ jobs:
         run: docker exec music_web bin/console doctrine:fixtures:load --append
       - name: Run PHPUNIT tests
         run: docker exec music_web ./vendor/bin/phpunit
-      - name: Restart apache2 for cypress
-        run: docker exec music_web /etc/init.d/apache2 reload
+      - name: Generate JWT tokens
+        run: docker exec music_web bin/console lexik:jwt:generate-keypair
       - name: Run Cypress tests
         run: ./node_modules/.bin/cypress install --force && ./node_modules/.bin/cypress run
 #       - name: Deploy to live
