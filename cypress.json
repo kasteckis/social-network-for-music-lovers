@@ -1,5 +1,6 @@
 {
   "env": {
     "CYPRESS_BASE_URL": "http://192.168.10.2"
-  }
+  },
+  "video": false
 }
