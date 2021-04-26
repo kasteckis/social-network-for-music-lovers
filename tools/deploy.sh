@@ -2,7 +2,7 @@
 
 git checkout -- .
 git pull
-composer install
+composer install --no-dev
 bin/console d:s:u --force
-yarn install
+yarn install --production
 yarn build
