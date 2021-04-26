@@ -11,8 +11,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD:
       MYSQL_DATABASE: project
-      MYSQL_USER: root
-      MYSQL_PASSWORD:
+      MYSQL_USER: project
+      MYSQL_PASSWORD: project
     ports:
       - "3306:3306"
 
