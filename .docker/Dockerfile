@@ -6,7 +6,7 @@ RUN apt-get install git zlib1g-dev libxml2-dev libzip-dev zip unzip -y
 # Install PHP extensions
 RUN docker-php-ext-install zip intl mysqli pdo pdo_mysql opcache
 # Install required dependencies for cypress testing
-RUN apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+RUN apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
 # Install NPM
 RUN apt-get install npm -y
 # Upgrade npm to latest version
