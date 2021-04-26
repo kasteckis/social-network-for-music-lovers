@@ -23,8 +23,8 @@ jobs:
         run: docker exec music_web bin/console d:s:u --force
 #      - name: Add fixtures
 #        run: docker exec music_web bin/console doctrine:fixtures:load --append
-#      - name: Run PHPUNIT
-#        run: docker exec music_web ./vendor/bin/phpunit
+      - name: Run PHPUNIT
+        run: docker exec music_web ./vendor/bin/phpunit
 #       - name: Deploy to live
 #         if: ${{ github.ref == 'refs/heads/master' }}
 #         run: wget ${{ secrets.DEPLOY_WEBHOOK }}
