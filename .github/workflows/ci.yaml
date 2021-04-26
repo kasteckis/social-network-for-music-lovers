@@ -26,7 +26,7 @@ jobs:
       - name: Run PHPUNIT tests
         run: docker exec music_web ./vendor/bin/phpunit
       - name: Run Cypress tests
-        run: docker exec music_web ./node_modules/.bin/cypress install && ./node_modules/.bin/cypress run
+        run: docker exec music_web ./node_modules/.bin/cypress install --force && ./node_modules/.bin/cypress run
 #       - name: Deploy to live
 #         if: ${{ github.ref == 'refs/heads/master' }}
 #         run: wget ${{ secrets.DEPLOY_WEBHOOK }}
