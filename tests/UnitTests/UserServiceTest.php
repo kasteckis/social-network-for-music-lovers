@@ -166,4 +166,9 @@ class UserServiceTest extends TestCase
         $this->assertEquals('slapyvardis', $result['username']);
         $this->assertEquals('random', $result['bio']);
     }
+    
+    public function testFailTest():void
+    {
+        $this->assertTrue(false);
+    }
 }
