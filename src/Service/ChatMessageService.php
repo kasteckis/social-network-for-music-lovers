@@ -38,7 +38,6 @@ class ChatMessageService
 
         $chatMessagesArray = [];
 
-        // TODO: pafixint timezone
         foreach ($chatMessages as $chatMessage) {
             $chatMessagesArray[] = $this->chatMessageEntityToArray($chatMessage);
         }
