@@ -29,6 +29,6 @@ jobs:
         run: docker exec music_web bin/console lexik:jwt:generate-keypair
       - name: Run Cypress tests
         run: ./node_modules/.bin/cypress install --force && ./node_modules/.bin/cypress run
-#       - name: Deploy to live
-#         if: ${{ github.ref == 'refs/heads/master' }}
-#         run: wget ${{ secrets.DEPLOY_WEBHOOK }}
+      - name: Deploy to live
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: wget ${{ secrets.DEPLOY_URL }}
