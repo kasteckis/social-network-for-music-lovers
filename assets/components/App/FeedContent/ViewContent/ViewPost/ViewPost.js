@@ -425,11 +425,9 @@ class ViewPost extends Component {
                                                 <p style={{ textAlign: "left", color: "gray" }}>
                                                     {comment.createdAt + ' '}
                                                     {comment.modifiedAt ?
-                                                        <Tooltip title={comment.modifiedAt}>
-                                                            <IconButton size="small">
-                                                                <Edit style={{width: '18px'}} />
-                                                            </IconButton>
-                                                        </Tooltip>
+                                                        <IconButton size="small">
+                                                            <Edit style={{width: '18px'}} />
+                                                        </IconButton>
                                                         :
                                                         null
                                                     }
