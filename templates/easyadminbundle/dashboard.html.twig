@@ -1,9 +1,14 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
 {% block page_content %}
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h2>Sveiki atvykę į Music.lt admin valdymo dalį.</h2>
     <p>Šiame puslapyje galima valdyti turinį, kuris yra atvaizduojamas per pagrindinį puslapį.</p>
 
     <h3>Administratorių veiksmai:</h3>
-    <a href="{{ path('reload_top40_for_admins') }}" target="_blank">Perkrauti savaitinį TOP40 rankiniu būdų (paspaudus iš karto persikraus)</a>
+    <a href="{{ path('reload_top40_for_admins') }}">Perkrauti savaitinį TOP40 rankiniu būdų (paspaudus iš karto persikraus)</a>
 {% endblock page_content %}

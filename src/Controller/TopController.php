@@ -73,8 +73,11 @@ class TopController extends AbstractController
     {
         $this->topService->reloadTop40();
 
-        return $this->json([
-            'message' => 'Perkrauta!'
-        ]);
+        $this->addFlash(
+            'success',
+            'TOP40 Atnaujintas!'
+        );
+
+        return $this->redirectToRoute('admin');
     }
 }
