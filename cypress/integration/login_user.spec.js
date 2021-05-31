@@ -11,7 +11,7 @@ context('Location', () => {
         cy.get('input[type=text]').first().type('cypress@cypress.dev')
         cy.get('input[type=password]').type('cypress')
         cy.get('button[type=submit]').click()
-        cy.wait(500)
+        cy.wait(1000)
 
         cy.url().should('eq', Cypress.env('CYPRESS_BASE_URL') + '/')
     })
@@ -22,7 +22,7 @@ context('Location', () => {
         cy.get('input[type=text]').first().type('notexistant@user.dev')
         cy.get('input[type=password]').type('passwordwhichdoesntexist')
         cy.get('button[type=submit]').click()
-        cy.wait(500)
+        cy.wait(1000)
 
         cy.contains('Neteisingi prisijungimo duomenys!');
     })

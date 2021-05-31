@@ -7,7 +7,7 @@ context('Location', () => {
         cy.get('input[type=text]').first().type('cypress@cypress.dev')
         cy.get('input[type=password]').type('cypress')
         cy.get('button[type=submit]').click()
-        cy.wait(500)
+        cy.wait(1000)
     })
 
     it('Comment on the post', () => {
