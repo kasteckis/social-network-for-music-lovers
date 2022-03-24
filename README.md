@@ -3,7 +3,7 @@
 
 Social network dedicated specifically for music lovers! This website was specifically designed and created around everything that happens in music culture.
 
-![Social Network](readme.gif)
+<img src="./readme.gif" width="350">
 
 # What has been used?
 1. Symfony (PHP)
